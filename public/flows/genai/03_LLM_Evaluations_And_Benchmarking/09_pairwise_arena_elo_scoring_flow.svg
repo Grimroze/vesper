@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .node-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; font-weight: 700; text-anchor: middle; fill: #0f172a; }
+      .node-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; text-anchor: middle; fill: #64748b; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+      .math { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 12px; font-weight: 600; fill: #1e3a8a; }
+    </style>
+
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arr-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(60, 44)">
+    <text class="title" x="0" y="0">Pairwise Arena &amp; Elo Rating Convergence Flow</text>
+    <text class="subtitle" x="0" y="22">Blind comparative evaluation: Parallel inference, randomized judge arbitration, and iterative Bradley-Terry rating update</text>
+  </g>
+
+  <!-- Flow Visual Canvas -->
+  <g transform="translate(60, 100)">
+    <rect width="1180" height="610" rx="20" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+
+    <!-- Step 1: Input Prompt (Circular Node) -->
+    <g transform="translate(110, 305)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+      <circle cx="0" cy="0" r="46" fill="#f8fafc"/>
+      <text class="node-txt" x="0" y="-4">Eval Prompt</text>
+      <text class="node-sub" x="0" y="14">Blind Input</text>
+    </g>
+
+    <!-- Curved Arrows from Prompt to Model A & B -->
+    <path d="M 158 280 C 230 220, 270 170, 340 170" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 158 330 C 230 390, 270 440, 340 440" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Step 2A: Model A (Circular Node) -->
+    <g transform="translate(400, 170)">
+      <circle cx="0" cy="0" r="56" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-6" fill="#1e3a8a">Model A</text>
+      <text class="node-sub" x="0" y="12" fill="#2563eb">Candidate 1</text>
+    </g>
+
+    <!-- Step 2B: Model B (Circular Node) -->
+    <g transform="translate(400, 440)">
+      <circle cx="0" cy="0" r="56" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-6" fill="#1e3a8a">Model B</text>
+      <text class="node-sub" x="0" y="12" fill="#2563eb">Candidate 2</text>
+    </g>
+
+    <!-- Curved Convergence Arrows to Judge -->
+    <path d="M 460 170 C 540 170, 590 260, 650 285" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arr-purple)"/>
+    <path d="M 460 440 C 540 440, 590 350, 650 325" fill="none" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arr-purple)"/>
+
+    <!-- Step 3: Blind Judge / Arbiter (Central Large Circular Node) -->
+    <g transform="translate(710, 305)">
+      <circle cx="0" cy="0" r="64" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2.5"/>
+      <text class="node-txt" x="0" y="-8" fill="#4c1d95">Blind Judge</text>
+      <text class="node-sub" x="0" y="10" fill="#6d28d9">GPT-4o / Human</text>
+      <text class="node-sub" x="0" y="24" fill="#6d28d9">Swap Order</text>
+    </g>
+
+    <!-- Decision Branching Curves -->
+    <path d="M 778 305 C 830 305, 860 305, 905 305" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arr-emerald)"/>
+
+    <!-- Step 4: Bradley-Terry Elo Engine (Circular Node) -->
+    <g transform="translate(965, 305)">
+      <circle cx="0" cy="0" r="58" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-6" fill="#064e3b">Elo Update</text>
+      <text class="node-sub" x="0" y="12" fill="#047857">Bradley-Terry</text>
+    </g>
+
+    <!-- Step 5: Leaderboard (Stadium Capsule Node) -->
+    <path d="M 1025 305 C 1055 305, 1075 305, 1100 305" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arr-emerald)"/>
+
+    <!-- Feedback Arc Loop (Curved from Elo Engine back to Models) -->
+    <path d="M 965 245 C 965 75, 400 75, 400 110" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,5" marker-end="url(#arr-blue)"/>
+    <rect x="630" y="65" width="130" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text class="code" x="695" y="81" text-anchor="middle" fill="#64748b">Update Rating R_A</text>
+
+    <path d="M 965 365 C 965 535, 400 535, 400 500" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5,5" marker-end="url(#arr-blue)"/>
+    <rect x="630" y="525" width="130" height="24" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+    <text class="code" x="695" y="541" text-anchor="middle" fill="#64748b">Update Rating R_B</text>
+
+    <!-- Bottom Flow Formula Card (Clean & Minimal) -->
+    <g transform="translate(390, 565)">
+      <rect width="400" height="34" rx="17" fill="#ffffff" stroke="#cbd5e1"/>
+      <text class="math" x="200" y="22" text-anchor="middle">R_A_new = R_A + K * ( Actual_Score - Expected_Score )</text>
+    </g>
+
+    <!-- Top Left Legend Chip -->
+    <g transform="translate(30, 24)">
+      <rect width="180" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#3b82f6"/>
+      <text class="lbl" x="30" y="18">LMSYS Arena Standard</text>
+    </g>
+
+    <!-- Top Right Legend Chip -->
+    <g transform="translate(980, 24)">
+      <rect width="170" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#10b981"/>
+      <text class="lbl" x="30" y="18">Win / Loss / Tie Vote</text>
+    </g>
+  </g>
+</svg>

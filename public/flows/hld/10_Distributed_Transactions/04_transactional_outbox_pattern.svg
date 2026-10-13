@@ -1,0 +1,62 @@
+<svg width="100%" viewBox="0 0 800 380" role="img" xmlns="http://www.w3.org/2000/svg">
+<title style="font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">Transactional Outbox Pattern</title>
+<desc style="font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">Solving the dual-write problem by saving business data and outgoing events inside the same local ACID database transaction, then relaying events asynchronously to the message broker</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Step 1: Order Service -->
+<rect x="25" y="135" width="140" height="75" rx="10" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183)"/>
+<text x="95" y="162" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">Order Service</text>
+<text x="95" y="182" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">handles POST /order</text>
+
+<!-- Arrow into Local DB Transaction -->
+<line x1="165" y1="172" x2="225" y2="172" marker-end="url(#arrow)" style="fill:none;stroke:rgb(0, 119, 99);stroke-width:1.5px"/>
+<text x="195" y="152" text-anchor="middle" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">1. BEGIN TX</text>
+
+<!-- Order Database Container (Single ACID Transaction) -->
+<rect x="228" y="40" width="235" height="255" rx="14" stroke-width="1" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);opacity:0.75"/>
+<text x="345" y="66" text-anchor="middle" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">Order Database (Single ACID TX)</text>
+<text x="345" y="84" text-anchor="middle" style="fill:rgb(15, 110, 86);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">both tables commit or roll back together</text>
+
+<!-- Table 1: orders table -->
+<rect x="250" y="102" width="190" height="68" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90)"/>
+<text x="345" y="124" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:13px;font-weight:500">INSERT INTO orders</text>
+<text x="345" y="144" text-anchor="middle" dominant-baseline="central" style="fill:rgb(82, 81, 78);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">id: 101, status: CREATED</text>
+
+<!-- Table 2: outbox table -->
+<rect x="250" y="190" width="190" height="80" rx="8" stroke-width="0.5" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11)"/>
+<text x="345" y="212" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:13px;font-weight:500">INSERT INTO outbox_events</text>
+<text x="345" y="232" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">event: OrderCreated(101)</text>
+<text x="345" y="250" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">published = false</text>
+
+<!-- Arrow from Outbox Table to Relay Worker -->
+<line x1="440" y1="230" x2="508" y2="230" marker-end="url(#arrow)" style="fill:none;stroke:rgb(133, 79, 11);stroke-width:1.5px;stroke-dasharray:4 3"/>
+<text x="474" y="216" text-anchor="middle" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">2. poll / CDC</text>
+
+<!-- Step 3: Outbox Relay / Debezium CDC -->
+<rect x="510" y="190" width="125" height="80" rx="10" stroke-width="0.5" style="fill:rgb(230, 241, 251);stroke:rgb(24, 95, 165)"/>
+<text x="572" y="215" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12, 68, 124);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:13px;font-weight:500">Outbox Relay</text>
+<text x="572" y="234" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">polls unpublished</text>
+<text x="572" y="250" text-anchor="middle" dominant-baseline="central" style="fill:rgb(24, 95, 165);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">or tails WAL (CDC)</text>
+
+<!-- Arrow from Relay to Broker -->
+<line x1="635" y1="230" x2="672" y2="230" marker-end="url(#arrow)" style="fill:none;stroke:rgb(137, 135, 129);stroke-width:1.5px"/>
+<text x="653" y="216" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">3. publish</text>
+
+<!-- Step 4: Message Broker (Kafka) -->
+<rect x="675" y="190" width="105" height="80" rx="10" stroke-width="0.5" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11)"/>
+<text x="727" y="218" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:13px;font-weight:500">Kafka / Queue</text>
+<text x="727" y="238" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">at-least-once</text>
+<text x="727" y="253" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">delivery</text>
+
+<!-- Mark Published Feedback Loop -->
+<path d="M572 190 L572 145 L442 205" fill="none" stroke="rgb(0, 119, 99)" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+<text x="545" y="136" text-anchor="middle" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">4. mark published = true after broker ACK</text>
+
+<!-- Bottom Explanation -->
+<rect x="25" y="318" width="755" height="42" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90)"/>
+<text x="402" y="339" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400">Eliminates dual-write bug (where DB commits but Kafka publish fails on crash) — downstream consumers must be idempotent</text>
+</svg>

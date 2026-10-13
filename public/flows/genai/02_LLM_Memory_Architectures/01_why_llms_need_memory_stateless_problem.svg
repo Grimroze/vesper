@@ -1,0 +1,97 @@
+<svg width="100%" viewBox="0 0 960 560" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Why LLMs Need Memory: The Stateless Amnesia Problem</title>
+<desc>Diagram showing why LLM APIs are completely stateless and how an external memory layer solves amnesia by prepending past context</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Why LLMs Need Memory: The Stateless API Problem</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">LLM weights are frozen and APIs are stateless HTTP calls — Memory is an engineering illusion created by passing past context</text>
+
+<!-- ============================================== -->
+<!-- LEFT: THE PROBLEM (STATELESS AMNESIA)          -->
+<!-- ============================================== -->
+<rect x="25" y="80" width="440" height="385" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="40" y="95" width="130" height="22" rx="4" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.5"/>
+<text x="105" y="106" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">WITHOUT MEMORY</text>
+<text x="180" y="106" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Stateless API (Each Call is Isolated)</text>
+
+<!-- Turn 1 Box -->
+<rect x="40" y="130" width="410" height="120" rx="8" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="55" y="150" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">TURN 1 (HTTP POST #1)</text>
+
+<rect x="55" y="165" width="170" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="65" y="181" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:500">"My name is Aman &amp; I'm</text>
+<text x="165" y="181" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">allergic to peanuts."</text>
+
+<path d="M 230 181 C 248 181, 248 181, 260 181" fill="none" stroke="rgb(107, 114, 128)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+<rect x="265" y="165" width="170" height="32" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="275" y="181" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:500">LLM: "Nice to meet you Aman!"</text>
+
+<text x="55" y="228" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">HTTP Connection closes → Server forgets EVERYTHING.</text>
+
+<!-- Turn 2 Box (Failure) -->
+<rect x="40" y="270" width="410" height="150" rx="8" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.8"/>
+<text x="55" y="290" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">TURN 2 (HTTP POST #2 — Separate isolated request)</text>
+
+<rect x="55" y="308" width="170" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="65" y="324" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:500">"Can I eat peanut cookies?"</text>
+
+<path d="M 230 324 C 248 324, 248 324, 260 324" fill="none" stroke="rgb(153, 60, 29)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+<rect x="265" y="308" width="170" height="42" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(153, 60, 29);stroke-width:0.8"/>
+<text x="275" y="322" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">LLM: "Sure, cookies are</text>
+<text x="275" y="336" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">delicious and safe to eat!"</text>
+
+<rect x="55" y="365" width="380" height="40" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(153, 60, 29);stroke-width:0.5"/>
+<text x="65" y="380" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">DANGEROUS AMNESIA / HALLUCINATION:</text>
+<text x="65" y="394" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">LLM does not know who Aman is or that he has a fatal peanut allergy!</text>
+
+<!-- ============================================== -->
+<!-- RIGHT: THE SOLUTION (EXTERNAL MEMORY LAYER)   -->
+<!-- ============================================== -->
+<rect x="495" y="80" width="440" height="385" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="510" y="95" width="115" height="22" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="567" y="106" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">WITH MEMORY</text>
+<text x="635" y="106" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">External Memory Layer Prepending Context</text>
+
+<!-- Memory Storage Store -->
+<rect x="510" y="130" width="410" height="65" rx="8" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="525" y="148" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">External Memory Store (Redis / Postgres / Vector / Graph)</text>
+<text x="525" y="168" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Key: session_user_101 → Stored Fact: { allergy: 'peanuts', name: 'Aman' }</text>
+<text x="525" y="182" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Stores state outside the LLM so it persists permanently.</text>
+
+<!-- Curve from Store down to Context Assembly -->
+<path d="M 715 195 C 715 210, 715 210, 715 220" fill="none" stroke="rgb(107, 114, 128)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+<!-- Assembled Payload Box -->
+<rect x="510" y="225" width="410" height="110" rx="8" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+<text x="525" y="242" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Dynamic Context Re-assembly for Turn 2</text>
+
+<rect x="525" y="258" width="380" height="65" rx="4" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:0.5"/>
+<text x="535" y="272" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">[System]: You are a helpful health assistant.</text>
+<text x="535" y="286" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">[Memory]: User Aman is severely allergic to peanuts.</text>
+<text x="535" y="300" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">[User]: "Can I eat peanut cookies?"</text>
+<text x="535" y="314" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">→ All 3 blocks sent together into the Prompt Window!</text>
+
+<!-- Curve to Result -->
+<path d="M 715 335 C 715 348, 715 348, 715 358" fill="none" stroke="rgb(15, 110, 86)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+
+<!-- Safe Output Box -->
+<rect x="510" y="365" width="410" height="70" rx="8" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+<text x="525" y="385" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Safe, Personalized &amp; Consistent Response:</text>
+<text x="525" y="405" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">"No Aman! You mentioned you have a peanut allergy,</text>
+<text x="525" y="420" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">so peanut cookies are dangerous for you."</text>
+
+<!-- Bottom Summary Note -->
+<rect x="25" y="480" width="910" height="48" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="480" y="497" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Fundamental Concept:</text>
+<text x="480" y="513" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">The LLM never remembers anything on its own. Memory is managed entirely by the application server orchestrating context.</text>
+
+<!-- Global Footer -->
+<text x="480" y="550" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">LLM Memory Fundamentals • 01 The Stateless Problem</text>
+</svg>

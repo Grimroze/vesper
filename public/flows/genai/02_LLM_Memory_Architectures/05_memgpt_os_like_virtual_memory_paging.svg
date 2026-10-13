@@ -1,0 +1,97 @@
+<svg width="100%" viewBox="0 0 960 580" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>MemGPT / Letta OS Virtual Memory Architecture for LLMs</title>
+<desc>Diagram illustrating MemGPT's OS-style virtual memory architecture, where the LLM context acts as RAM and external stores act as disk storage managed via autonomous memory function calls</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">MemGPT (Letta): OS-Style Virtual Memory Architecture</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Treating the Context Window like RAM and External Databases like Disk Storage via Autonomous Function Calling</text>
+
+<!-- ============================================== -->
+<!-- LEFT: IN-CONTEXT RAM (CORE WORKING MEMORY)     -->
+<!-- ============================================== -->
+<rect x="25" y="80" width="440" height="385" rx="10" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:1"/>
+<rect x="40" y="95" width="165" height="24" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(83, 74, 183);stroke-width:0.8"/>
+<text x="122" y="107" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">IN-CONTEXT (RAM)</text>
+<text x="215" y="107" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Limited, Fast, Editable Context</text>
+
+<!-- Core Memory Block 1: Persona -->
+<rect x="40" y="130" width="410" height="65" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="55" y="148" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Core Memory: [Persona Block]</text>
+<text x="55" y="166" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:400">"I am a senior AI architect. I prioritize modular code &amp; tests."</text>
+<text x="55" y="180" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Always visible in prompt • Fully editable by LLM</text>
+
+<!-- Core Memory Block 2: Human -->
+<rect x="40" y="205" width="410" height="65" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="55" y="223" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Core Memory: [Human Block]</text>
+<text x="55" y="241" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:400">"Name: Aman • Role: Founder • Tech Stack: Next.js + FastAPI"</text>
+<text x="55" y="255" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Always visible in prompt • Auto-updates when user shares facts</text>
+
+<!-- FIFO Message Queue -->
+<rect x="40" y="280" width="410" height="100" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="55" y="298" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">FIFO Message Queue (Sliding Chat turns)</text>
+<text x="55" y="316" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">• User: "Can you review the auth schema?"</text>
+<text x="55" y="332" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">• Assistant: "Checking the JWT expiration logic..."</text>
+<text x="55" y="348" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">• User: "Make sure refresh tokens rotate."</text>
+<text x="55" y="366" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:500">When queue fills up → Agent triggers "Memory Paging" to disk!</text>
+
+<rect x="40" y="390" width="410" height="60" rx="6" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="55" y="408" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">The LLM Acts as the OS Kernel:</text>
+<text x="55" y="426" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">The LLM itself decides when to read/write memory using tool calls</text>
+<text x="55" y="440" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">e.g. core_memory_replace() or archival_memory_insert()</text>
+
+<!-- ============================================== -->
+<!-- CENTER: BIDIRECTIONAL MEMORY FUNCTION CALLS    -->
+<!-- ============================================== -->
+<!-- Write Arrow (Page Out to Disk) -->
+<path d="M 450 170 C 495 170, 495 170, 508 170" fill="none" stroke="rgb(15, 110, 86)" stroke-width="1.8" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="480" y="155" text-anchor="middle" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">Write / Page-Out</text>
+
+<!-- Read Arrow (Page In to RAM) -->
+<path d="M 510 330 C 490 330, 490 330, 455 330" fill="none" stroke="rgb(83, 74, 183)" stroke-width="1.8" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="480" y="318" text-anchor="middle" style="fill:rgb(60, 52, 137);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">Read / Page-In</text>
+
+<!-- ============================================== -->
+<!-- RIGHT: OUT-OF-CONTEXT DISK STORAGE             -->
+<!-- ============================================== -->
+<rect x="515" y="80" width="420" height="385" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="530" y="95" width="180" height="24" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+<text x="620" y="107" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">OUT-OF-CONTEXT (DISK)</text>
+<text x="720" y="107" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Unlimited External Storage</text>
+
+<!-- External Store 1: Recall Storage -->
+<rect x="530" y="130" width="390" height="95" rx="8" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="545" y="148" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">1. Recall Storage (Vector DB / Full Text Index)</text>
+<text x="545" y="168" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Complete historical event log of all prior conversation turns</text>
+<text x="545" y="185" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Tool: conversation_search(query="auth token decisions")</text>
+<text x="545" y="200" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Pages past conversations back into FIFO queue on demand</text>
+
+<!-- External Store 2: Archival Storage -->
+<rect x="530" y="235" width="390" height="95" rx="8" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="545" y="253" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">2. Archival Storage (Large Document Store / Graph)</text>
+<text x="545" y="273" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Stores giant PDF uploads, codebase docs, company wikis</text>
+<text x="545" y="290" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Tool: archival_memory_search(query="Stripe webhook security")</text>
+<text x="545" y="305" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Allows the agent to self-teach from external documentation</text>
+
+<!-- External Store 3: Self-Editing Functions List -->
+<rect x="530" y="340" width="390" height="110" rx="8" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.5"/>
+<text x="545" y="358" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">MemGPT Autonomous Memory Functions:</text>
+<text x="545" y="378" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">• core_memory_append("human", "Prefers TypeScript over JS")</text>
+<text x="545" y="394" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">• core_memory_replace("persona", old_fact, new_fact)</text>
+<text x="545" y="410" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">• archival_memory_insert(passage="Decided on OAuth2 PKCE")</text>
+<text x="545" y="426" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">The LLM modifies its own long-term state autonomously!</text>
+
+<!-- ============================================== -->
+<!-- BOTTOM SUMMARY BAR                             -->
+<!-- ============================================== -->
+<rect x="25" y="480" width="910" height="48" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="480" y="497" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Why MemGPT is Revolutionary:</text>
+<text x="480" y="513" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Instead of hardcoding memory in Python wrappers, the LLM itself is given native tools to read, write, and page its own memory store.</text>
+
+<!-- Global Footer -->
+<text x="480" y="550" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">State-of-the-Art Agent Memory • 05 MemGPT OS Virtual Memory</text>
+</svg>

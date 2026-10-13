@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 10px; }
+      .th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #475569; letter-spacing: 0.5px; }
+      .td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1e293b; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#8b5cf6"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(50, 40)">
+    <text class="title" x="0" y="0">RAG Evaluation Triad &amp; Ragas Metric Architecture</text>
+    <text class="subtitle" x="0" y="22">Systematic evaluation vectors isolating retrieval noise, synthesis hallucinations, and intent drift</text>
+  </g>
+
+  <!-- Left: The RAG Triad Visual Diagram -->
+  <g transform="translate(50, 85)">
+    <rect width="780" height="490" rx="12" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+
+    <!-- Triangle Guide -->
+    <path d="M 390 70 L 140 370 L 640 370 Z" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="5,5"/>
+
+    <!-- Node 1: User Query (Top) -->
+    <g transform="translate(280, 30)">
+      <rect width="220" height="75" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+      <rect x="12" y="10" width="55" height="18" rx="4" fill="#dbeafe"/>
+      <text class="lbl" x="18" y="23" fill="#1d4ed8">INPUT</text>
+      <text class="head" x="78" y="24" fill="#1e3a8a">User Query</text>
+      <text class="code" x="12" y="52" fill="#1e40af">Prompt / Question text</text>
+    </g>
+
+    <!-- Node 2: Retrieved Context (Bottom-Left) -->
+    <g transform="translate(30, 335)">
+      <rect width="220" height="85" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+      <rect x="12" y="10" width="75" height="18" rx="4" fill="#d1fae5"/>
+      <text class="lbl" x="18" y="23" fill="#047857">RETRIEVAL</text>
+      <text class="head" x="98" y="24" fill="#064e3b">Context Chunks</text>
+      <text class="code" x="12" y="52" fill="#047857">Top-K fetched snippets</text>
+      <text class="code" x="12" y="70" fill="#047857">Vector / Hybrid Index</text>
+    </g>
+
+    <!-- Node 3: Generated Answer (Bottom-Right) -->
+    <g transform="translate(530, 335)">
+      <rect width="220" height="85" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+      <rect x="12" y="10" width="65" height="18" rx="4" fill="#ede9fe"/>
+      <text class="lbl" x="18" y="23" fill="#6d28d9">OUTPUT</text>
+      <text class="head" x="88" y="24" fill="#4c1d95">Generated Answer</text>
+      <text class="code" x="12" y="52" fill="#6d28d9">LLM Response synthesis</text>
+      <text class="code" x="12" y="70" fill="#6d28d9">Candidate generation</text>
+    </g>
+
+    <!-- VECTOR 1: Context Relevance (Query -> Context) -->
+    <g transform="translate(45, 150)">
+      <rect width="225" height="110" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.2"/>
+      <rect x="10" y="10" width="130" height="18" rx="4" fill="#eff6ff"/>
+      <text class="lbl" x="16" y="23" fill="#1d4ed8">VECTOR 1: RETRIEVER</text>
+      <text class="head" x="10" y="44" fill="#1e3a8a">Context Relevance</text>
+      
+      <rect x="10" y="56" width="205" height="24" rx="4" fill="#f8fafc"/>
+      <text class="code" x="16" y="72" fill="#0369a1">Rel_Chunks / Total_Chunks</text>
+      <text class="lbl" x="10" y="96" fill="#b91c1c">Prevents: Retrieval noise</text>
+    </g>
+    <!-- Connectors -->
+    <path d="M 320 105 L 210 150" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+    <path d="M 155 260 L 140 335" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+
+    <!-- VECTOR 2: Faithfulness (Context -> Answer) -->
+    <g transform="translate(280, 340)">
+      <rect width="220" height="110" rx="8" fill="#ffffff" stroke="#6ee7b7" stroke-width="1.2"/>
+      <rect x="10" y="10" width="135" height="18" rx="4" fill="#ecfdf5"/>
+      <text class="lbl" x="16" y="23" fill="#047857">VECTOR 2: GROUNDING</text>
+      <text class="head" x="10" y="44" fill="#064e3b">Faithfulness (NLI)</text>
+      
+      <rect x="10" y="56" width="200" height="24" rx="4" fill="#f8fafc"/>
+      <text class="code" x="16" y="72" fill="#047857">Grounded_Claims / Total_Claims</text>
+      <text class="lbl" x="10" y="96" fill="#b91c1c">Prevents: Hallucinations</text>
+    </g>
+    <!-- Horizontal Connectors -->
+    <path d="M 250 375 L 280 375" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+    <path d="M 500 375 L 530 375" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- VECTOR 3: Answer Relevance (Query -> Answer) -->
+    <g transform="translate(510, 150)">
+      <rect width="225" height="110" rx="8" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.2"/>
+      <rect x="10" y="10" width="135" height="18" rx="4" fill="#f5f3ff"/>
+      <text class="lbl" x="16" y="23" fill="#6d28d9">VECTOR 3: SYNTHESIS</text>
+      <text class="head" x="10" y="44" fill="#4c1d95">Answer Relevance</text>
+      
+      <rect x="10" y="56" width="205" height="24" rx="4" fill="#f8fafc"/>
+      <text class="code" x="16" y="72" fill="#6d28d9">Cosine(Embed(Q), Embed(Ans))</text>
+      <text class="lbl" x="10" y="96" fill="#b91c1c">Prevents: Intent drift</text>
+    </g>
+    <!-- Connectors -->
+    <path d="M 460 105 L 570 150" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+    <path d="M 625 260 L 640 335" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+  </g>
+
+  <!-- Right: Diagnostic Matrix Table (Zero text flood) -->
+  <g transform="translate(850, 85)">
+    <rect width="400" height="490" rx="12" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+    <text class="head" x="20" y="30" fill="#0f172a">Failure Diagnosis Matrix</text>
+
+    <!-- Table Header -->
+    <g transform="translate(20, 50)">
+      <rect width="360" height="28" rx="4" fill="#f1f5f9"/>
+      <text class="th" x="10" y="18">LOW METRIC</text>
+      <text class="th" x="130" y="18">ROOT CAUSE</text>
+      <text class="th" x="250" y="18">REMEDY</text>
+
+      <!-- Row 1 -->
+      <g transform="translate(0, 36)">
+        <rect width="360" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="lbl" x="10" y="26" fill="#b91c1c">Context Rel &lt; 0.7</text>
+        <text class="td" x="130" y="26">Noisy retrieval</text>
+        <text class="code" x="250" y="26" fill="#0369a1">Add Reranker</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 86)">
+        <rect width="360" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="lbl" x="10" y="26" fill="#b91c1c">Faithful &lt; 0.8</text>
+        <text class="td" x="130" y="26">Hallucination</text>
+        <text class="code" x="250" y="26" fill="#0369a1">Temp = 0.0</text>
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 136)">
+        <rect width="360" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="lbl" x="10" y="26" fill="#b91c1c">Answer Rel &lt; 0.8</text>
+        <text class="td" x="130" y="26">Drift / Fluff</text>
+        <text class="code" x="250" y="26" fill="#0369a1">Prompt Format</text>
+      </g>
+
+      <!-- Row 4 -->
+      <g transform="translate(0, 186)">
+        <rect width="360" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="lbl" x="10" y="26" fill="#b91c1c">Recall &lt; 0.75</text>
+        <text class="td" x="130" y="26">Missed chunks</text>
+        <text class="code" x="250" y="26" fill="#0369a1">Increase Top-K</text>
+      </g>
+    </g>
+
+    <!-- DeepEval Code Block -->
+    <g transform="translate(20, 305)">
+      <rect width="360" height="165" rx="6" fill="#0f172a"/>
+      <text class="code" x="14" y="24" fill="#94a3b8"># Ragas / DeepEval Triad</text>
+      <text class="code" x="14" y="46" fill="#f43f5e">from</text>
+      <text class="code" x="48" y="46" fill="#f8fafc"> deepeval.metrics </text>
+      <text class="code" x="175" y="46" fill="#f43f5e">import</text>
+      <text class="code" x="14" y="66" fill="#38bdf8">  FaithfulnessMetric,</text>
+      <text class="code" x="14" y="86" fill="#38bdf8">  AnswerRelevancyMetric,</text>
+      <text class="code" x="14" y="106" fill="#38bdf8">  ContextualRelevancyMetric</text>
+
+      <text class="code" x="14" y="132" fill="#f8fafc">f_metric = </text>
+      <text class="code" x="90" y="132" fill="#facc15">FaithfulnessMetric</text>
+      <text class="code" x="220" y="132" fill="#f8fafc">(0.85)</text>
+      <text class="code" x="14" y="150" fill="#38bdf8">assert_test</text>
+      <text class="code" x="90" y="150" fill="#f8fafc">(case, [f_metric])</text>
+    </g>
+  </g>
+
+  <!-- Bottom: Ground Truth Reference Metrics (Clean Pills) -->
+  <g transform="translate(50, 595)">
+    <rect width="1200" height="120" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+    <text class="head" x="24" y="26" fill="#0f172a">Supervised Reference Metrics (With Golden Ground Truth)</text>
+
+    <g transform="translate(24, 40)">
+      <!-- Box 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="360" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+        <text class="lbl" x="14" y="22" fill="#0f172a">Context Recall</text>
+        <text class="code" x="14" y="42" fill="#0369a1">GT_Facts in Context / Total_GT_Facts</text>
+      </g>
+
+      <!-- Box 2 -->
+      <g transform="translate(390, 0)">
+        <rect width="360" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+        <text class="lbl" x="14" y="22" fill="#0f172a">Context Precision (MAP@K)</text>
+        <text class="code" x="14" y="42" fill="#0369a1">Precision at rank k of relevant chunks</text>
+      </g>
+
+      <!-- Box 3 -->
+      <g transform="translate(780, 0)">
+        <rect width="370" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+        <text class="lbl" x="14" y="22" fill="#0f172a">Semantic Answer Similarity</text>
+        <text class="code" x="14" y="42" fill="#0369a1">CrossEncoderScore(actual, expected)</text>
+      </g>
+    </g>
+  </g>
+</svg>

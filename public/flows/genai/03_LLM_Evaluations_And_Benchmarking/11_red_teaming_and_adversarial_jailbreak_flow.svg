@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .node-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .node-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; text-anchor: middle; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+    </style>
+
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(60, 44)">
+    <text class="title" x="0" y="0">Automated Red-Teaming &amp; Adversarial Attack Flow</text>
+    <text class="subtitle" x="0" y="22">Adversarial evaluation loop: Automated jailbreak mutation, target testing, safety arbitration, and defense hardening</text>
+  </g>
+
+  <!-- Canvas -->
+  <g transform="translate(60, 95)">
+    <rect width="1180" height="625" rx="24" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+
+    <!-- Left Circular Node: Attacker Model (Adversarial Generator) -->
+    <g transform="translate(180, 310)">
+      <circle cx="0" cy="0" r="70" fill="#fff5f5" stroke="#ef4444" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="58" fill="#ffffff" stroke="#fca5a5" stroke-width="1.5"/>
+      <text class="node-txt" x="0" y="-8" fill="#991b1b">Attacker LLM</text>
+      <text class="node-sub" x="0" y="10" fill="#dc2626">Jailbreak Gen</text>
+      <text class="code" x="0" y="26" text-anchor="middle" fill="#b91c1c">Evol-Attack</text>
+    </g>
+
+    <!-- Curved Attack Arrow -> Target -->
+    <path d="M 252 310 C 340 310, 420 310, 490 310" fill="none" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arr-red)"/>
+    <g transform="translate(325, 275)">
+      <rect width="120" height="24" rx="12" fill="#ffffff" stroke="#fecaca"/>
+      <text class="code" x="60" y="16" text-anchor="middle" fill="#b91c1c">Adversarial Prompt</text>
+    </g>
+
+    <!-- Center Circular Node: Target Model Under Test -->
+    <g transform="translate(570, 310)">
+      <circle cx="0" cy="0" r="75" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="62" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5"/>
+      <text class="node-txt" x="0" y="-8" fill="#1e3a8a">Target Model</text>
+      <text class="node-sub" x="0" y="10" fill="#2563eb">System Under Test</text>
+      <text class="code" x="0" y="26" text-anchor="middle" fill="#1d4ed8">Production RAG</text>
+    </g>
+
+    <!-- Curved Output Arrow -> Safety Judge -->
+    <path d="M 648 310 C 730 310, 810 310, 880 310" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arr-blue)"/>
+    <g transform="translate(720, 275)">
+      <rect width="115" height="24" rx="12" fill="#ffffff" stroke="#bfdbfe"/>
+      <text class="code" x="57" y="16" text-anchor="middle" fill="#1d4ed8">Raw Generation</text>
+    </g>
+
+    <!-- Right Circular Node: Safety Judge & Guardrail -->
+    <g transform="translate(960, 310)">
+      <circle cx="0" cy="0" r="75" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="62" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5"/>
+      <text class="node-txt" x="0" y="-8" fill="#4c1d95">Safety Judge</text>
+      <text class="node-sub" x="0" y="10" fill="#6d28d9">Llama Guard / NLI</text>
+      <text class="code" x="0" y="26" text-anchor="middle" fill="#6d28d9">ASR Metric</text>
+    </g>
+
+    <!-- BRANCH 1: Jailbreak Succeeded -> Feedback Loop to Attacker (Top Curved Arc) -->
+    <path d="M 960 235 C 960 90, 180 90, 180 235" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,6" marker-end="url(#arr-red)"/>
+    <g transform="translate(510, 75)">
+      <rect width="180" height="30" rx="15" fill="#fff5f5" stroke="#fca5a5"/>
+      <text class="lbl" x="90" y="20" text-anchor="middle" fill="#b91c1c">Breach! Mutate Payload</text>
+    </g>
+
+    <!-- BRANCH 2: Attack Blocked -> Defense Hardening Arc (Bottom Curved Arc to Target) -->
+    <path d="M 960 385 C 960 535, 570 535, 570 390" fill="none" stroke="#10b981" stroke-width="2.5" marker-end="url(#arr-green)"/>
+    <g transform="translate(710, 520)">
+      <rect width="190" height="30" rx="15" fill="#f0fdf4" stroke="#86efac"/>
+      <text class="lbl" x="95" y="20" text-anchor="middle" fill="#047857">Blocked: Patch System Prompt</text>
+    </g>
+
+    <!-- Top Left Capsule -->
+    <g transform="translate(30, 24)">
+      <rect width="190" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#ef4444"/>
+      <text class="lbl" x="30" y="18">Red-Teaming Loop</text>
+    </g>
+
+    <!-- Top Right Capsule -->
+    <g transform="translate(970, 24)">
+      <rect width="180" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#10b981"/>
+      <text class="lbl" x="30" y="18">Attack Success Rate (ASR)</text>
+    </g>
+
+    <!-- Bottom Metric Capsule -->
+    <g transform="translate(380, 580)">
+      <rect width="420" height="32" rx="16" fill="#ffffff" stroke="#cbd5e1"/>
+      <text class="code" x="210" y="21" text-anchor="middle" fill="#0f172a">Metric: ASR = Breached_Prompts / Total_Attacks &lt; 0.01</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,85 @@
+<svg width="100%" viewBox="0 0 760 560" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Consistent Hashing: Basic Hash Ring</title>
+<desc>Diagram showing keys and server nodes mapped onto a circular 360-degree hash ring, where requests route clockwise to the next available server</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Consistent Hashing: The Circular Hash Ring</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Servers and keys are hashed into the same 0 to 2³²-1 space; keys route clockwise to the first server encountered</text>
+
+<!-- Outer Canvas Track -->
+<circle cx="360" cy="290" r="185" fill="none" stroke="rgb(229, 231, 235)" stroke-width="16"/>
+<circle cx="360" cy="290" r="185" fill="none" stroke="rgb(209, 213, 219)" stroke-width="2" stroke-dasharray="6 6"/>
+
+<!-- 0 / 2^32-1 Top Marker -->
+<line x1="360" y1="85" x2="360" y2="115" stroke="rgb(107, 114, 128)" stroke-width="2"/>
+<text x="360" y="76" text-anchor="middle" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:11px;font-weight:600">Position 0 / 2³² - 1 (wraps around)</text>
+
+<!-- Clockwise Direction Indicator Curve in Center of Ring -->
+<path d="M 330 290 A 30 30 0 1 1 360 320" fill="none" stroke="rgb(156, 163, 175)" stroke-width="1.8" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="360" y="285" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Clockwise</text>
+<text x="360" y="300" text-anchor="middle" dominant-baseline="central" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Route Direction</text>
+
+<!-- ============================================== -->
+<!-- SERVER NODES (ON THE CIRCUMFERENCE)           -->
+<!-- ============================================== -->
+
+<!-- NODE A (Top-Right: ~35 degrees) -->
+<!-- Angle 35 deg: x = 360 + 185*cos(-55) = 360 + 106 = 466, y = 290 + 185*sin(-55) = 290 - 151 = 139 -->
+<circle cx="475" cy="145" r="22" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:2"/>
+<text x="475" y="145" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:700">Node A</text>
+<rect x="505" y="130" width="105" height="30" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="557" y="145" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">hash("10.0.0.1")</text>
+
+<!-- NODE B (Bottom-Right: ~110 degrees) -->
+<!-- Angle 110 deg from top: x = 360 + 185*cos(20) = 360 + 173 = 533, y = 290 + 185*sin(20) = 290 + 63 = 353 -->
+<circle cx="515" cy="385" r="22" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:2"/>
+<text x="515" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:700">Node B</text>
+<rect x="545" y="370" width="105" height="30" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="597" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">hash("10.0.0.2")</text>
+
+<!-- NODE C (Bottom-Left: ~240 degrees) -->
+<circle cx="200" cy="385" r="22" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:2"/>
+<text x="200" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:700">Node C</text>
+<rect x="85" y="370" width="105" height="30" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(133, 79, 11);stroke-width:0.5"/>
+<text x="137" y="385" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">hash("10.0.0.3")</text>
+
+<!-- ============================================== -->
+<!-- KEYS & CLOCKWISE ARCS                          -->
+<!-- ============================================== -->
+
+<!-- Key 1: user_42 (at ~330 deg: Top Left) -->
+<circle cx="230" cy="165" r="9" style="fill:rgb(83, 74, 183);stroke:rgb(255, 255, 255);stroke-width:2"/>
+<rect x="135" y="145" width="85" height="26" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="177" y="158" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">k1: user_42</text>
+<!-- Arc from Key 1 clockwise to Node A -->
+<path d="M 235 160 A 185 185 0 0 1 450 140" fill="none" stroke="rgb(83, 74, 183)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+<!-- Key 2: user_17 (at ~75 deg: Right of Node A) -->
+<circle cx="538" cy="240" r="9" style="fill:rgb(15, 110, 86);stroke:rgb(255, 255, 255);stroke-width:2"/>
+<rect x="555" y="225" width="85" height="26" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="597" y="238" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">k2: user_17</text>
+<!-- Arc from Key 2 clockwise to Node B -->
+<path d="M 540 248 A 185 185 0 0 1 520 360" fill="none" stroke="rgb(15, 110, 86)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+<!-- Key 3: user_89 (at ~180 deg: Bottom center) -->
+<circle cx="360" cy="475" r="9" style="fill:rgb(133, 79, 11);stroke:rgb(255, 255, 255);stroke-width:2"/>
+<rect x="315" y="495" width="90" height="26" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="360" y="508" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">k3: user_89</text>
+<!-- Arc from Key 3 clockwise to Node C (wait, Node C is at 200,385, so from 360,475 going clockwise reaches Node C!) -->
+<!-- In SVG circle, (0,0) is top-left. Clockwise means from bottom (6 o'clock) towards left (9 o'clock) towards top (12 o'clock). -->
+<!-- From 360,475 (6 o'clock) going clockwise reaches Node C at 200,385! -->
+<path d="M 350 475 A 185 185 0 0 1 225 395" fill="none" stroke="rgb(133, 79, 11)" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+<!-- Bottom Rule Card -->
+<rect x="40" y="500" width="250" height="42" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="50" y="515" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">The Lookup Rule:</text>
+<text x="50" y="530" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">hash(key) → scan clockwise → first server owns key</text>
+
+<!-- Global Footer -->
+<text x="550" y="530" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Consistent Hashing Fundamentals • Basic Ring</text>
+</svg>

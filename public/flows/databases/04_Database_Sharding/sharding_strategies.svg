@@ -1,0 +1,145 @@
+<svg width="100%" viewBox="0 0 960 490" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Database Sharding Strategies</title>
+  <desc>Comparison of Range-Based, Hash-Based, and Directory-Based sharding strategies with trade-offs.</desc>
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="490" fill="#ffffff" rx="14" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="160" height="22" rx="11" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="80" y="15" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">PARTITION ALGORITHMS</text>
+    <text x="0" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0f172a">Database Sharding Partitioning Strategies</text>
+    <text x="0" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">Three architectural patterns to distribute keys across physical shard instances</text>
+  </g>
+
+  <!-- ==================== 3 STRATEGY CARDS ==================== -->
+  <g transform="translate(40, 92)">
+    
+    <!-- Strategy 1: Range-Based -->
+    <g transform="translate(0, 0)">
+      <rect width="280" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+      
+      <!-- Header -->
+      <rect x="14" y="14" width="252" height="28" rx="5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+      <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#1e3a8a">1. Range-Based Sharding</text>
+
+      <!-- Visual Routing Model -->
+      <g transform="translate(14, 54)">
+        <rect width="252" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#64748b">KEY RANGE PARTITIONS:</text>
+        
+        <rect x="12" y="28" width="228" height="18" rx="3" fill="#f1f5f9"/>
+        <text x="20" y="41" font-family="ui-monospace, monospace" font-size="9" fill="#0f172a">ID [ 0001 - 1000 ]  -> Shard 1</text>
+
+        <rect x="12" y="49" width="228" height="18" rx="3" fill="#f1f5f9"/>
+        <text x="20" y="62" font-family="ui-monospace, monospace" font-size="9" fill="#0f172a">ID [ 1001 - 2000 ]  -> Shard 2</text>
+
+        <rect x="12" y="70" width="228" height="18" rx="3" fill="#eff6ff"/>
+        <text x="20" y="83" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#2563eb">ID [ 2001 - 3000 ]  -> Shard 3</text>
+      </g>
+
+      <!-- Characteristics -->
+      <g transform="translate(14, 160)">
+        <text x="0" y="14" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">PROS:</text>
+        <text x="0" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Simple logic. Excellent for range scans</text>
+        <text x="0" y="46" font-family="ui-monospace, monospace" font-size="9" fill="#15803d">WHERE id BETWEEN 50 AND 150</text>
+
+        <line x1="0" y1="58" x2="252" y2="58" stroke="#e2e8f0" stroke-width="1"/>
+
+        <text x="0" y="74" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">CONS (THE FLAW):</text>
+        <text x="0" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Severe Hotspots on auto-increment IDs.</text>
+        <text x="0" y="106" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">100% of new writes hit only the latest shard.</text>
+      </g>
+
+      <!-- Best for pill -->
+      <rect x="14" y="300" width="252" height="34" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="126" y="321" font-family="ui-monospace, monospace" font-size="9.5" font-weight="600" fill="#1e3a8a" text-anchor="middle">Fit: Natural ranges (Zipcodes, Years)</text>
+    </g>
+
+    <!-- Strategy 2: Hash-Based -->
+    <g transform="translate(300, 0)">
+      <rect width="280" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <!-- Header -->
+      <rect x="14" y="14" width="252" height="28" rx="5" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="0.8"/>
+      <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#15803d">2. Hash-Based Sharding</text>
+
+      <!-- Visual Routing Model -->
+      <g transform="translate(14, 54)">
+        <rect width="252" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#64748b">MODULUS HASH FUNCTION:</text>
+
+        <rect x="12" y="28" width="228" height="22" rx="3" fill="#f0fdf4" stroke="#bbf7d0"/>
+        <text x="126" y="42" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d" text-anchor="middle">shard_id = hash(key) % N</text>
+
+        <text x="12" y="68" font-family="ui-monospace, monospace" font-size="8.5" fill="#475569">hash("user_99") % 3  = 0 (Shard 1)</text>
+        <text x="12" y="84" font-family="ui-monospace, monospace" font-size="8.5" fill="#475569">hash("user_100") % 3 = 1 (Shard 2)</text>
+      </g>
+
+      <!-- Characteristics -->
+      <g transform="translate(14, 160)">
+        <text x="0" y="14" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">PROS:</text>
+        <text x="0" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Uniform distribution. Zero hotspots.</text>
+        <text x="0" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#15803d">Writes evenly spread across all N nodes.</text>
+
+        <line x1="0" y1="58" x2="252" y2="58" stroke="#e2e8f0" stroke-width="1"/>
+
+        <text x="0" y="74" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">CONS:</text>
+        <text x="0" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Range queries are impossible locally.</text>
+        <text x="0" y="106" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Must query all shards (scatter-gather).</text>
+      </g>
+
+      <!-- Best for pill -->
+      <rect x="14" y="300" width="252" height="34" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="126" y="321" font-family="ui-monospace, monospace" font-size="9.5" font-weight="600" fill="#15803d" text-anchor="middle">Fit: Default high-throughput OLTP</text>
+    </g>
+
+    <!-- Strategy 3: Directory-Based -->
+    <g transform="translate(600, 0)">
+      <rect width="280" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <!-- Header -->
+      <rect x="14" y="14" width="252" height="28" rx="5" fill="#fffbeb" stroke="#fde68a" stroke-width="0.8"/>
+      <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#b45309">3. Directory / Lookup Table</text>
+
+      <!-- Visual Routing Model -->
+      <g transform="translate(14, 54)">
+        <rect width="252" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#64748b">CENTRAL LOOKUP SERVICE:</text>
+
+        <rect x="12" y="28" width="228" height="18" rx="3" fill="#fffbeb"/>
+        <text x="20" y="41" font-family="ui-monospace, monospace" font-size="8.5" fill="#0f172a">Tenant "Apple"   -> Shard 1 (Ded.)</text>
+
+        <rect x="12" y="49" width="228" height="18" rx="3" fill="#f1f5f9"/>
+        <text x="20" y="62" font-family="ui-monospace, monospace" font-size="8.5" fill="#0f172a">Tenant "Stripe"  -> Shard 2</text>
+
+        <rect x="12" y="70" width="228" height="18" rx="3" fill="#f1f5f9"/>
+        <text x="20" y="83" font-family="ui-monospace, monospace" font-size="8.5" fill="#0f172a">Tenant "SmallCo" -> Shard 3</text>
+      </g>
+
+      <!-- Characteristics -->
+      <g transform="translate(14, 160)">
+        <text x="0" y="14" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">PROS:</text>
+        <text x="0" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Total flexibility. Dynamic rebalancing.</text>
+        <text x="0" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#15803d">Move tenants to new shards seamlessly.</text>
+
+        <line x1="0" y1="58" x2="252" y2="58" stroke="#e2e8f0" stroke-width="1"/>
+
+        <text x="0" y="74" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">CONS:</text>
+        <text x="0" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Extra network lookup latency.</text>
+        <text x="0" y="106" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Lookup service is a critical bottleneck.</text>
+      </g>
+
+      <!-- Best for pill -->
+      <rect x="14" y="300" width="252" height="34" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="126" y="321" font-family="ui-monospace, monospace" font-size="9.5" font-weight="600" fill="#b45309" text-anchor="middle">Fit: Multi-tenant B2B SaaS platforms</text>
+    </g>
+
+  </g>
+</svg>

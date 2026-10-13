@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .col-hdr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; font-weight: 700; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 600; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+      .meta { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #475569; }
+    </style>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(50, 40)">
+    <text class="title" x="0" y="0">LLM-as-a-Judge: Systematic Biases &amp; Mitigations</text>
+    <text class="subtitle" x="0" y="22">Architectural protocols to eliminate cognitive distortion in automated evaluator models</text>
+  </g>
+
+  <!-- Headers -->
+  <g transform="translate(50, 85)">
+    <rect width="560" height="32" rx="4" fill="#fee2e2"/>
+    <text class="col-hdr" x="14" y="21" fill="#991b1b">Identified Judge Bias (Failure Mode)</text>
+
+    <rect x="640" y="0" width="560" height="32" rx="4" fill="#dcfce7"/>
+    <text class="col-hdr" x="654" y="21" fill="#166534">Production Engineering Mitigation</text>
+  </g>
+
+  <!-- Row 1: Position Bias -->
+  <g transform="translate(50, 130)">
+    <!-- Bias -->
+    <rect width="560" height="95" rx="8" fill="#fff5f5" stroke="#fecaca" stroke-width="1.2"/>
+    <rect x="12" y="10" width="60" height="18" rx="4" fill="#fee2e2"/>
+    <text class="lbl" x="18" y="22" fill="#991b1b">BIAS 1</text>
+    <text class="head" x="80" y="23" fill="#7f1d1d">Position &amp; Order Bias</text>
+    <text class="meta" x="12" y="48">Evaluator systematically favors Candidate A over Candidate B</text>
+    <text class="code" x="12" y="72" fill="#b91c1c">Primacy skew: up to 25% artificial preference for first token</text>
+
+    <!-- Arrow -->
+    <path d="M 570 48 L 630 48" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Mitigation -->
+    <g transform="translate(640, 0)">
+      <rect width="560" height="95" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+      <rect x="12" y="10" width="85" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="18" y="22" fill="#15803d">MITIGATION</text>
+      <text class="head" x="105" y="23" fill="#14532d">Bidirectional Swap Evaluation</text>
+      <text class="meta" x="12" y="48">Evaluate pair twice: [A vs B] and [B vs A]; average scores</text>
+      <text class="code" x="12" y="72" fill="#047857">if decision(A, B) == reverse(decision(B, A)): accept() else: tie()</text>
+    </g>
+  </g>
+
+  <!-- Row 2: Verbosity Bias -->
+  <g transform="translate(50, 240)">
+    <!-- Bias -->
+    <rect width="560" height="95" rx="8" fill="#fff5f5" stroke="#fecaca" stroke-width="1.2"/>
+    <rect x="12" y="10" width="60" height="18" rx="4" fill="#fee2e2"/>
+    <text class="lbl" x="18" y="22" fill="#991b1b">BIAS 2</text>
+    <text class="head" x="80" y="23" fill="#7f1d1d">Verbosity &amp; Length Bias</text>
+    <text class="meta" x="12" y="48">Wordy responses score higher than concise answers</text>
+    <text class="code" x="12" y="72" fill="#b91c1c">Length confounding: model equates token volume with quality</text>
+
+    <!-- Arrow -->
+    <path d="M 570 48 L 630 48" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Mitigation -->
+    <g transform="translate(640, 0)">
+      <rect width="560" height="95" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+      <rect x="12" y="10" width="85" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="18" y="22" fill="#15803d">MITIGATION</text>
+      <text class="head" x="105" y="23" fill="#14532d">Length-Normalized Density Rubric</text>
+      <text class="meta" x="12" y="48">Explicitly penalize conversational fluff and evaluate per-token facts</text>
+      <text class="code" x="12" y="72" fill="#047857">rubric="Score per-token factual density; deduct points for fluff"</text>
+    </g>
+  </g>
+
+  <!-- Row 3: Self-Enhancement Bias -->
+  <g transform="translate(50, 350)">
+    <!-- Bias -->
+    <rect width="560" height="95" rx="8" fill="#fff5f5" stroke="#fecaca" stroke-width="1.2"/>
+    <rect x="12" y="10" width="60" height="18" rx="4" fill="#fee2e2"/>
+    <text class="lbl" x="18" y="22" fill="#991b1b">BIAS 3</text>
+    <text class="head" x="80" y="23" fill="#7f1d1d">Self-Enhancement / Model Family Bias</text>
+    <text class="meta" x="12" y="48">Evaluator models favor outputs from their own model lineage</text>
+    <text class="code" x="12" y="72" fill="#b91c1c">GPT-4 prefers GPT outputs; Claude prefers Claude outputs</text>
+
+    <!-- Arrow -->
+    <path d="M 570 48 L 630 48" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Mitigation -->
+    <g transform="translate(640, 0)">
+      <rect width="560" height="95" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+      <rect x="12" y="10" width="85" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="18" y="22" fill="#15803d">MITIGATION</text>
+      <text class="head" x="105" y="23" fill="#14532d">Multi-Model Jury Ensemble</text>
+      <text class="meta" x="12" y="48">Aggregate judgments across diverse model families</text>
+      <text class="code" x="12" y="72" fill="#047857">final_score = median([judge_gpt4(), judge_claude(), judge_gemini()])</text>
+    </g>
+  </g>
+
+  <!-- Row 4: Grade Inflation Bias -->
+  <g transform="translate(50, 460)">
+    <!-- Bias -->
+    <rect width="560" height="95" rx="8" fill="#fff5f5" stroke="#fecaca" stroke-width="1.2"/>
+    <rect x="12" y="10" width="60" height="18" rx="4" fill="#fee2e2"/>
+    <text class="lbl" x="18" y="22" fill="#991b1b">BIAS 4</text>
+    <text class="head" x="80" y="23" fill="#7f1d1d">Scale Drift &amp; Grade Inflation</text>
+    <text class="meta" x="12" y="48">Scores cluster around 4 and 5; lacks discrimination on 1-5 scale</text>
+    <text class="code" x="12" y="72" fill="#b91c1c">Variance compression: unable to distinguish mediocre vs great</text>
+
+    <!-- Arrow -->
+    <path d="M 570 48 L 630 48" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Mitigation -->
+    <g transform="translate(640, 0)">
+      <rect width="560" height="95" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+      <rect x="12" y="10" width="85" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="18" y="22" fill="#15803d">MITIGATION</text>
+      <text class="head" x="105" y="23" fill="#14532d">Few-Shot Exemplar Anchors</text>
+      <text class="meta" x="12" y="48">Provide concrete gold calibration samples for score 1, 3, and 5</text>
+      <text class="code" x="12" y="72" fill="#047857">anchors = {"score_1": sample_bad, "score_3": mid, "score_5": gold}</text>
+    </g>
+  </g>
+
+  <!-- Row 5: Premature Scoring Bias -->
+  <g transform="translate(50, 570)">
+    <!-- Bias -->
+    <rect width="560" height="95" rx="8" fill="#fff5f5" stroke="#fecaca" stroke-width="1.2"/>
+    <rect x="12" y="10" width="60" height="18" rx="4" fill="#fee2e2"/>
+    <text class="lbl" x="18" y="22" fill="#991b1b">BIAS 5</text>
+    <text class="head" x="80" y="23" fill="#7f1d1d">Scoring Before Thinking Bias</text>
+    <text class="meta" x="12" y="48">Emitting the number first causes confirmation bias in reasoning</text>
+    <text class="code" x="12" y="72" fill="#b91c1c">Model rationalizes preliminary token rather than analyzing flaws</text>
+
+    <!-- Arrow -->
+    <path d="M 570 48 L 630 48" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- Mitigation -->
+    <g transform="translate(640, 0)">
+      <rect width="560" height="95" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+      <rect x="12" y="10" width="85" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="18" y="22" fill="#15803d">MITIGATION</text>
+      <text class="head" x="105" y="23" fill="#14532d">Reasoning-First Output Schema</text>
+      <text class="meta" x="12" y="48">Force detailed critique tokens before emitting final score token</text>
+      <text class="code" x="12" y="72" fill="#047857">grammar = "&lt;reasoning&gt;...&lt;/reasoning&gt;&lt;score&gt;X&lt;/score&gt;"</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <g transform="translate(50, 690)">
+    <text class="meta" x="0" y="0">DeepEval and G-Eval incorporate swap evaluation, reasoning-first CoT, and log-probability weighting natively</text>
+  </g>
+</svg>

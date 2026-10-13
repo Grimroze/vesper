@@ -1,0 +1,75 @@
+<svg width="100%" viewBox="0 0 800 480" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Leaky Bucket Rate Limiting Algorithm</title>
+<desc>Diagram illustrating the Leaky Bucket traffic shaping algorithm where bursty requests enter a queue and are processed at a strictly constant, smoothed rate</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Rate Limiting: Leaky Bucket Algorithm</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Traffic shaping: Bursty requests are buffered in a FIFO queue and processed at a strictly constant output rate</text>
+
+<!-- ============================================== -->
+<!-- LEFT: LEAKY BUCKET FUNNEL VISUAL               -->
+<!-- ============================================== -->
+<rect x="25" y="80" width="370" height="340" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+
+<!-- Bursty Inflow (Top) -->
+<rect x="140" y="95" width="140" height="26" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="210" y="108" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:600">Bursty Inflow (Random)</text>
+
+<!-- Multiple Inflow Arrows -->
+<path d="M 185 121 L 185 145" fill="none" stroke="rgb(107, 114, 128)" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M 210 121 L 210 145" fill="none" stroke="rgb(107, 114, 128)" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M 235 121 L 235 145" fill="none" stroke="rgb(107, 114, 128)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- Funnel / Bucket Body with a Bottom Spout Hole -->
+<!-- Bucket rim: (130, 150) to (290, 150), narrows to spout: (195, 290) to (225, 290) -->
+<path d="M 125 150 L 175 285 L 175 315 L 245 315 L 245 285 L 295 150" fill="rgb(255, 255, 255)" stroke="rgb(24, 95, 165)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+<!-- Overflow Spill Arrows (Left and Right of Rim) -->
+<path d="M 125 155 Q 95 160, 95 190" fill="none" stroke="rgb(153, 60, 29)" stroke-width="1.8" stroke-dasharray="3 2" marker-end="url(#arrow)"/>
+<rect x="50" y="195" width="85" height="24" rx="4" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.6"/>
+<text x="92" y="207" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:9px;font-weight:700">Overflow (429)</text>
+
+<!-- Water / FIFO Request queue queued inside the bucket -->
+<rect x="150" y="235" width="120" height="20" rx="3" style="fill:rgb(230, 241, 251);stroke:rgb(24, 95, 165);stroke-width:0.8"/>
+<text x="210" y="245" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12, 68, 124);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">Request #3 (Queued)</text>
+
+<rect x="160" y="260" width="100" height="20" rx="3" style="fill:rgb(230, 241, 251);stroke:rgb(24, 95, 165);stroke-width:0.8"/>
+<text x="210" y="270" text-anchor="middle" dominant-baseline="central" style="fill:rgb(12, 68, 124);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">Request #2 (Queued)</text>
+
+<!-- Constant Outflow Leak from Spout -->
+<path d="M 210 315 L 210 360" fill="none" stroke="rgb(15, 110, 86)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="145" y="370" width="130" height="26" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+<text x="210" y="383" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:10px;font-weight:700">Constant: r req/sec</text>
+
+<!-- ============================================== -->
+<!-- RIGHT: EXPLANATION & COMPARISON                -->
+<!-- ============================================== -->
+<rect x="415" y="80" width="320" height="340" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<text x="435" y="105" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">HOW LEAKY BUCKET OPERATES</text>
+
+<rect x="435" y="125" width="280" height="70" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="445" y="142" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">1. FIFO Queue Buffering</text>
+<text x="445" y="160" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Incoming requests wait in a queue of size Q.</text>
+<text x="445" y="176" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Unlike Token Bucket, bursts do NOT pass instantly.</text>
+
+<rect x="435" y="205" width="280" height="70" rx="6" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+<text x="445" y="222" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">2. Strict Smooth Output (Traffic Shaping)</text>
+<text x="445" y="240" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Pours out 1 request every (1/r) seconds.</text>
+<text x="445" y="256" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Protects downstream databases from spike shocks.</text>
+
+<rect x="435" y="285" width="280" height="60" rx="6" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.8"/>
+<text x="445" y="302" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">3. Drop on Queue Overflow</text>
+<text x="445" y="322" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">If queue is full (size &gt; Q) → Instant HTTP 429.</text>
+
+<rect x="435" y="355" width="280" height="50" rx="6" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="445" y="372" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Token Bucket vs Leaky Bucket:</text>
+<text x="445" y="388" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Token Bucket allows burst peaks; Leaky Bucket flattens bursts.</text>
+
+<!-- Bottom Architecture Note -->
+<text x="400" y="450" text-anchor="middle" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Commonly implemented with NGINX limit_req_zone to enforce steady processing rates across web workers</text>
+</svg>

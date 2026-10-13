@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+      .th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: #475569; letter-spacing: 0.5px; }
+      .td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1e293b; }
+    </style>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(50, 40)">
+    <text class="title" x="0" y="0">LLM Evaluation Taxonomy &amp; Metric Landscape</text>
+    <text class="subtitle" x="0" y="22">Layered evaluation hierarchy balancing cost, latency, and semantic comprehension</text>
+  </g>
+
+  <!-- Left: 3-Tier Pyramid / Stack -->
+  <g transform="translate(50, 90)">
+    <rect width="520" height="580" rx="12" fill="#fafafa" stroke="#e2e8f0" stroke-width="1"/>
+    <text class="head" x="24" y="32">Evaluation Hierarchy</text>
+
+    <!-- Tier 3: Cognitive / LLM-as-a-Judge -->
+    <g transform="translate(24, 52)">
+      <rect width="472" height="155" rx="8" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.2"/>
+      <rect x="16" y="14" width="60" height="20" rx="4" fill="#ede9fe"/>
+      <text class="lbl" x="24" y="28" fill="#6d28d9">TIER 3</text>
+      <text class="head" x="84" y="28" fill="#4c1d95">Cognitive: LLM-as-a-Judge</text>
+
+      <!-- Metric Pills -->
+      <g transform="translate(16, 48)">
+        <rect x="0" y="0" width="65" height="24" rx="4" fill="#ffffff" stroke="#c4b5fd"/>
+        <text class="lbl" x="10" y="16" fill="#6d28d9">G-Eval</text>
+
+        <rect x="75" y="0" width="80" height="24" rx="4" fill="#ffffff" stroke="#c4b5fd"/>
+        <text class="lbl" x="85" y="16" fill="#6d28d9">Faithfulness</text>
+
+        <rect x="165" y="0" width="95" height="24" rx="4" fill="#ffffff" stroke="#c4b5fd"/>
+        <text class="lbl" x="175" y="16" fill="#6d28d9">Hallucination</text>
+
+        <rect x="270" y="0" width="85" height="24" rx="4" fill="#ffffff" stroke="#c4b5fd"/>
+        <text class="lbl" x="280" y="16" fill="#6d28d9">Tone Rubric</text>
+
+        <rect x="365" y="0" width="65" height="24" rx="4" fill="#ffffff" stroke="#c4b5fd"/>
+        <text class="lbl" x="375" y="16" fill="#6d28d9">Ragas</text>
+      </g>
+
+      <!-- Attributes -->
+      <g transform="translate(16, 92)">
+        <text class="td" x="0" y="14">Evaluator:</text>
+        <text class="code" x="70" y="14" fill="#6d28d9">GPT-4o / Claude 3.5 Sonnet</text>
+
+        <text class="td" x="0" y="38">Latency:</text>
+        <text class="code" x="70" y="38" fill="#6d28d9">1.5s - 3.5s</text>
+        <text class="td" x="170" y="38">Cost:</text>
+        <text class="code" x="210" y="38" fill="#6d28d9">High ($$)</text>
+        <text class="td" x="300" y="38">Volume:</text>
+        <text class="code" x="355" y="38" fill="#6d28d9">5-10% Sampled</text>
+      </g>
+    </g>
+
+    <!-- Tier 2: Statistical & Embedding -->
+    <g transform="translate(24, 222)">
+      <rect width="472" height="155" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.2"/>
+      <rect x="16" y="14" width="60" height="20" rx="4" fill="#dbeafe"/>
+      <text class="lbl" x="24" y="28" fill="#1d4ed8">TIER 2</text>
+      <text class="head" x="84" y="28" fill="#1e3a8a">Statistical &amp; Embedding Metrics</text>
+
+      <!-- Metric Pills -->
+      <g transform="translate(16, 48)">
+        <rect x="0" y="0" width="105" height="24" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+        <text class="lbl" x="10" y="16" fill="#1d4ed8">Cosine Similarity</text>
+
+        <rect x="115" y="0" width="75" height="24" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+        <text class="lbl" x="125" y="16" fill="#1d4ed8">BERTScore</text>
+
+        <rect x="200" y="0" width="70" height="24" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+        <text class="lbl" x="210" y="16" fill="#1d4ed8">ROUGE-L</text>
+
+        <rect x="280" y="0" width="55" height="24" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+        <text class="lbl" x="290" y="16" fill="#1d4ed8">BLEU</text>
+
+        <rect x="345" y="0" width="75" height="24" rx="4" fill="#ffffff" stroke="#93c5fd"/>
+        <text class="lbl" x="355" y="16" fill="#1d4ed8">Perplexity</text>
+      </g>
+
+      <!-- Attributes -->
+      <g transform="translate(16, 92)">
+        <text class="td" x="0" y="14">Evaluator:</text>
+        <text class="code" x="70" y="14" fill="#1d4ed8">Vector Embeddings / Cross-Encoder</text>
+
+        <text class="td" x="0" y="38">Latency:</text>
+        <text class="code" x="70" y="38" fill="#1d4ed8">20ms - 80ms</text>
+        <text class="td" x="170" y="38">Cost:</text>
+        <text class="code" x="210" y="38" fill="#1d4ed8">Low ($)</text>
+        <text class="td" x="300" y="38">Volume:</text>
+        <text class="code" x="355" y="38" fill="#1d4ed8">20% Offline</text>
+      </g>
+    </g>
+
+    <!-- Tier 1: Deterministic Code -->
+    <g transform="translate(24, 392)">
+      <rect width="472" height="155" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.2"/>
+      <rect x="16" y="14" width="60" height="20" rx="4" fill="#d1fae5"/>
+      <text class="lbl" x="24" y="28" fill="#047857">TIER 1</text>
+      <text class="head" x="84" y="28" fill="#064e3b">Deterministic &amp; Rule-Based</text>
+
+      <!-- Metric Pills -->
+      <g transform="translate(16, 48)">
+        <rect x="0" y="0" width="85" height="24" rx="4" fill="#ffffff" stroke="#6ee7b7"/>
+        <text class="lbl" x="10" y="16" fill="#047857">Exact Match</text>
+
+        <rect x="95" y="0" width="95" height="24" rx="4" fill="#ffffff" stroke="#6ee7b7"/>
+        <text class="lbl" x="105" y="16" fill="#047857">JSON Schema</text>
+
+        <rect x="200" y="0" width="85" height="24" rx="4" fill="#ffffff" stroke="#6ee7b7"/>
+        <text class="lbl" x="210" y="16" fill="#047857">Regex Rules</text>
+
+        <rect x="295" y="0" width="80" height="24" rx="4" fill="#ffffff" stroke="#6ee7b7"/>
+        <text class="lbl" x="305" y="16" fill="#047857">Levenshtein</text>
+      </g>
+
+      <!-- Attributes -->
+      <g transform="translate(16, 92)">
+        <text class="td" x="0" y="14">Evaluator:</text>
+        <text class="code" x="70" y="14" fill="#047857">Python Assert / Pydantic / Regex</text>
+
+        <text class="td" x="0" y="38">Latency:</text>
+        <text class="code" x="70" y="38" fill="#047857">&lt; 1ms</text>
+        <text class="td" x="170" y="38">Cost:</text>
+        <text class="code" x="210" y="38" fill="#047857">Free ($0)</text>
+        <text class="td" x="300" y="38">Volume:</text>
+        <text class="code" x="355" y="38" fill="#047857">100% All CI</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right: Comparison Table Grid (Clean, zero text flood) -->
+  <g transform="translate(600, 90)">
+    <rect width="650" height="580" rx="12" fill="#fafafa" stroke="#e2e8f0" stroke-width="1"/>
+    <text class="head" x="24" y="32">Metric Trade-Off Matrix</text>
+
+    <!-- Table Container -->
+    <g transform="translate(24, 52)">
+      <!-- Header Row -->
+      <rect width="602" height="32" rx="4" fill="#f1f5f9"/>
+      <text class="th" x="14" y="20">METRIC FAMILY</text>
+      <text class="th" x="160" y="20">LATENCY</text>
+      <text class="th" x="245" y="20">UNIT COST</text>
+      <text class="th" x="330" y="20">DETERMINISM</text>
+      <text class="th" x="445" y="20">PRIMARY GATE</text>
+
+      <!-- Row 1: JSON / Regex -->
+      <g transform="translate(0, 42)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">Schema &amp; Regex</text>
+        <text class="code" x="160" y="26">&lt; 1ms</text>
+        <text class="code" x="245" y="26">$0.00</text>
+        <text class="td" x="330" y="26">100% (Strict)</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#d1fae5"/>
+        <text class="lbl" x="453" y="25" fill="#047857">Pre-Commit / PR</text>
+      </g>
+
+      <!-- Row 2: ROUGE / BLEU -->
+      <g transform="translate(0, 92)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">ROUGE-L / BLEU</text>
+        <text class="code" x="160" y="26">10ms</text>
+        <text class="code" x="245" y="26">$0.00</text>
+        <text class="td" x="330" y="26">High (Token)</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#d1fae5"/>
+        <text class="lbl" x="453" y="25" fill="#047857">CI Unit Test</text>
+      </g>
+
+      <!-- Row 3: Embedding Cosine -->
+      <g transform="translate(0, 142)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">Embedding Sim</text>
+        <text class="code" x="160" y="26">40ms</text>
+        <text class="code" x="245" y="26">&lt; $0.0001</text>
+        <text class="td" x="330" y="26">Medium</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#dbeafe"/>
+        <text class="lbl" x="453" y="25" fill="#1d4ed8">Regression Gate</text>
+      </g>
+
+      <!-- Row 4: RAG Triad -->
+      <g transform="translate(0, 192)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">RAG Triad (Ragas)</text>
+        <text class="code" x="160" y="26">1.8s</text>
+        <text class="code" x="245" y="26">$0.004</text>
+        <text class="td" x="330" y="26">High (NLI)</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#ede9fe"/>
+        <text class="lbl" x="453" y="25" fill="#6d28d9">Pre-Release Gate</text>
+      </g>
+
+      <!-- Row 5: G-Eval -->
+      <g transform="translate(0, 242)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">G-Eval (DeepEval)</text>
+        <text class="code" x="160" y="26">2.5s</text>
+        <text class="code" x="245" y="26">$0.008</text>
+        <text class="td" x="330" y="26">High (Logprob)</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#ede9fe"/>
+        <text class="lbl" x="453" y="25" fill="#6d28d9">Staging Canary</text>
+      </g>
+
+      <!-- Row 6: Human Evaluation -->
+      <g transform="translate(0, 292)">
+        <rect width="602" height="42" rx="4" fill="#ffffff" stroke="#f1f5f9"/>
+        <text class="td" x="14" y="26" font-weight="600">Human Expert</text>
+        <text class="code" x="160" y="26">Hours</text>
+        <text class="code" x="245" y="26">$1.50+</text>
+        <text class="td" x="330" y="26">Subjective</text>
+        <rect x="445" y="10" width="105" height="22" rx="4" fill="#fef3c7"/>
+        <text class="lbl" x="453" y="25" fill="#b45309">Quarterly Audit</text>
+      </g>
+
+      <!-- Bottom Allocation Summary Bar -->
+      <g transform="translate(0, 360)">
+        <rect width="602" height="130" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+        <text class="head" x="16" y="26">Recommended Production Test Allocation</text>
+
+        <!-- Segmented Progress Bar -->
+        <g transform="translate(16, 42)">
+          <rect x="0" y="0" width="400" height="20" rx="4" fill="#10b981"/>
+          <rect x="400" y="0" width="115" height="20" fill="#3b82f6"/>
+          <rect x="515" y="0" width="55" height="20" rx="4" fill="#8b5cf6"/>
+        </g>
+
+        <!-- Bar Legend -->
+        <g transform="translate(16, 80)">
+          <circle cx="6" cy="6" r="5" fill="#10b981"/>
+          <text class="lbl" x="18" y="10" fill="#064e3b">70% Unit / Deterministic</text>
+
+          <circle cx="210" cy="6" r="5" fill="#3b82f6"/>
+          <text class="lbl" x="222" y="10" fill="#1e3a8a">20% Semantic Vectors</text>
+
+          <circle cx="395" cy="6" r="5" fill="#8b5cf6"/>
+          <text class="lbl" x="407" y="10" fill="#4c1d95">10% LLM Judge</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <g transform="translate(50, 705)">
+    <text class="caption" x="0" y="0" font-family="-apple-system, sans-serif" font-size="11px" fill="#94a3b8">DeepEval and Ragas evaluation taxonomy framework</text>
+  </g>
+</svg>

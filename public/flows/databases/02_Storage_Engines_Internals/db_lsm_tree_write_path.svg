@@ -1,0 +1,217 @@
+<svg width="100%" viewBox="0 0 1000 520" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>LSM-Tree Write Path and Compaction Architecture</title>
+  <desc>Storage engine write path showing WAL append, MemTable RAM skiplist, immutable flush, SSTables, Bloom filters, and background compaction.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="520" fill="#ffffff" rx="14" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="180" height="22" rx="11" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="90" y="15" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">STORAGE ENGINE WRITE PATH</text>
+    <text x="0" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0f172a">LSM-Tree Write Path &amp; Compaction</text>
+    <text x="0" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">Sequential append writes to WAL and MemTable, flushed to immutable SSTables with leveled compaction</text>
+  </g>
+
+  <!-- Top Right Throughput Badge -->
+  <g transform="translate(730, 24)">
+    <rect width="230" height="42" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+    <text x="14" y="17" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">WRITE ADVANTAGE:</text>
+    <text x="14" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#0f172a">10x to 50x Faster Writes (Zero Random I/O)</text>
+  </g>
+
+  <!-- ==================== TIER 1: IN-MEMORY & SYNC WRITE PATH ==================== -->
+  <!-- Client Box -->
+  <g transform="translate(40, 88)">
+    <rect width="120" height="56" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="60" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">Client Write</text>
+    <text x="60" y="40" font-family="ui-monospace, monospace" font-size="10" font-weight="600" fill="#2563eb" text-anchor="middle">PUT(key, val)</text>
+
+    <!-- Branching arrows -->
+    <path d="M 120 22 C 145 22, 145 22, 170 22" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr-amber)"/>
+    <path d="M 120 40 C 145 40, 145 40, 345 40" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  </g>
+
+  <!-- WAL Box (Disk) -->
+  <g transform="translate(175, 88)">
+    <rect width="150" height="56" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1"/>
+    <rect width="150" height="18" rx="6" fill="#fef3c7"/>
+    <text x="75" y="13" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">WAL (DISK)</text>
+    <text x="12" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" font-weight="600" fill="#0f172a">Sequential Append Log</text>
+    <text x="12" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="#78350f">Crash recovery durability</text>
+  </g>
+
+  <!-- MemTable Box (RAM) -->
+  <g transform="translate(350, 88)">
+    <rect width="170" height="56" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <rect width="170" height="18" rx="6" fill="#dbeafe"/>
+    <text x="85" y="13" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#1d4ed8" text-anchor="middle">MEMTABLE (RAM)</text>
+    <text x="12" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" font-weight="600" fill="#0f172a">In-Memory Sorted SkipList</text>
+    <text x="12" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="#1e40af">Fast O(log N) inserts</text>
+  </g>
+
+  <!-- Immediate ACK Arrow -->
+  <g transform="translate(40, 150)">
+    <rect width="120" height="24" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+    <text x="60" y="16" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d" text-anchor="middle">ACK 200 OK (Fast)</text>
+    <path d="M 350 116 C 250 116, 200 162, 165 162" fill="none" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  </g>
+
+  <!-- Arrow to Immutable MemTable -->
+  <path d="M 520 116 L 575 116" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arr-purple)"/>
+  <text x="548" y="108" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="#7c3aed" text-anchor="middle">Full</text>
+
+  <!-- Immutable MemTable Box -->
+  <g transform="translate(580, 88)">
+    <rect width="190" height="56" rx="6" fill="#faf5ff" stroke="#a855f7" stroke-width="1.2"/>
+    <rect width="190" height="18" rx="6" fill="#f3e8ff"/>
+    <text x="95" y="13" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#6b21a8" text-anchor="middle">IMMUTABLE MEMTABLE</text>
+    <text x="12" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" font-weight="600" fill="#0f172a">Frozen Read-Only Buffer</text>
+    <text x="12" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="#7e22ce">New MemTable takes writes</text>
+  </g>
+
+  <!-- Flush Arrow from Immutable down to Disk -->
+  <path d="M 675 144 L 675 186" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arr-purple)"/>
+  <text x="735" y="165" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#7c3aed">Sequential Flush</text>
+
+  <!-- ==================== TIER 2: DISK STORAGE (SSTABLES & COMPACTION) ==================== -->
+  <!-- Left Box: SSTable Anatomy -->
+  <g transform="translate(40, 192)">
+    <rect width="320" height="186" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="12" y="10" width="130" height="18" rx="3" fill="#eff6ff"/>
+    <text x="77" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#1d4ed8" text-anchor="middle">SSTABLE ANATOMY</text>
+
+    <!-- Bloom filter -->
+    <g transform="translate(12, 36)">
+      <rect width="296" height="38" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="0.8"/>
+      <text x="10" y="16" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">Bloom Filter (RAM)</text>
+      <text x="10" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#166534">Eliminates 99% of disk seeks for missing keys</text>
+    </g>
+
+    <!-- Index Block -->
+    <g transform="translate(12, 80)">
+      <rect width="296" height="38" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+      <text x="10" y="16" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#1d4ed8">Sparse Index Block</text>
+      <text x="10" y="30" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#1e40af">Stores key offsets for binary search on disk</text>
+    </g>
+
+    <!-- Data Block -->
+    <g transform="translate(12, 124)">
+      <rect width="296" height="48" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+      <text x="10" y="16" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#0f172a">Sorted Data Blocks (Compressed)</text>
+      <text x="10" y="32" font-family="ui-monospace, monospace" font-size="9" fill="#475569">[k: "user:10" | v] [k: "user:25" | v] [k: "user:42" | v]</text>
+    </g>
+  </g>
+
+  <!-- Right Box: Leveled SSTable Compaction -->
+  <g transform="translate(385, 192)">
+    <rect width="575" height="186" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="12" y="10" width="180" height="18" rx="3" fill="#fef3c7"/>
+    <text x="102" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">LEVELED DISK TIERS (SSTABLES)</text>
+
+    <!-- Level 0 (L0) -->
+    <g transform="translate(12, 36)">
+      <rect width="550" height="38" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="12" y="23" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#64748b">Level 0 (Flushed):</text>
+      
+      <!-- 4 L0 files -->
+      <g transform="translate(145, 7)">
+        <rect x="0" y="0" width="90" height="24" rx="3" fill="#eff6ff" stroke="#bfdbfe"/>
+        <text x="45" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#1e40af" text-anchor="middle">SSTable-01</text>
+
+        <rect x="100" y="0" width="90" height="24" rx="3" fill="#eff6ff" stroke="#bfdbfe"/>
+        <text x="145" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#1e40af" text-anchor="middle">SSTable-02</text>
+
+        <rect x="200" y="0" width="90" height="24" rx="3" fill="#eff6ff" stroke="#bfdbfe"/>
+        <text x="245" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#1e40af" text-anchor="middle">SSTable-03</text>
+
+        <rect x="300" y="0" width="90" height="24" rx="3" fill="#eff6ff" stroke="#bfdbfe"/>
+        <text x="345" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#1e40af" text-anchor="middle">SSTable-04</text>
+      </g>
+    </g>
+
+    <!-- Compaction Arrow down -->
+    <path d="M 380 78 L 380 92" stroke="#d97706" stroke-width="1.8" marker-end="url(#arr-amber)"/>
+    <text x="450" y="88" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="#d97706">Merge Compaction</text>
+
+    <!-- Level 1 (L1) -->
+    <g transform="translate(12, 96)">
+      <rect width="550" height="38" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="12" y="23" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">Level 1 (Merged):</text>
+      
+      <!-- 3 L1 non-overlapping files -->
+      <g transform="translate(145, 7)">
+        <rect x="0" y="0" width="120" height="24" rx="3" fill="#f0fdf4" stroke="#86efac"/>
+        <text x="60" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#166534" text-anchor="middle">[ A to G ]</text>
+
+        <rect x="135" y="0" width="120" height="24" rx="3" fill="#f0fdf4" stroke="#86efac"/>
+        <text x="195" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#166534" text-anchor="middle">[ H to P ]</text>
+
+        <rect x="270" y="0" width="120" height="24" rx="3" fill="#f0fdf4" stroke="#86efac"/>
+        <text x="330" y="16" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#166534" text-anchor="middle">[ Q to Z ]</text>
+      </g>
+    </g>
+
+    <!-- Level 2 summary -->
+    <g transform="translate(12, 144)">
+      <rect width="550" height="28" rx="4" fill="#f1f5f9"/>
+      <text x="12" y="18" font-family="ui-monospace, monospace" font-size="9.5" fill="#475569">Level 2 (L2): Non-overlapping 100MB+ partitions with 10x capacity multiplier</text>
+    </g>
+  </g>
+
+  <!-- ==================== TIER 3: CLEAN SUMMARY CARDS (NO TEXT FLOOD, NO EMOJIS) ==================== -->
+  <g transform="translate(40, 396)">
+    <!-- Card 1: Writes -->
+    <g transform="translate(0, 0)">
+      <rect width="285" height="92" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#f0fdf4"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#15803d" text-anchor="middle">WRITES: O(1)</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Sequential Disk Append</text>
+
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">No In-Place Overwrites</text>
+      <text x="12" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Inserts into RAM + append-only WAL</text>
+      <text x="12" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Deletes write tombstone markers</text>
+    </g>
+
+    <!-- Card 2: Reads -->
+    <g transform="translate(315, 0)">
+      <rect width="285" height="92" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#fffbeb"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#b45309" text-anchor="middle">READ PATH</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Multi-File Inspection</text>
+
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">Bloom Filter Acceleration</text>
+      <text x="12" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Checks MemTable then L0 to LN SSTables</text>
+      <text x="12" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Bloom filter skips 99% of SSTable reads</text>
+    </g>
+
+    <!-- Card 3: Compaction -->
+    <g transform="translate(635, 0)">
+      <rect width="285" height="92" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#eff6ff"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#1d4ed8" text-anchor="middle">COMPACTION</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Merge Maintenance</text>
+
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">Background Merge-Sort</text>
+      <text x="12" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Deduplicates updated keys across files</text>
+      <text x="12" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Purges deleted tombstones to reclaim space</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,103 @@
+<svg width="100%" viewBox="0 0 960 580" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Customer Knowledge Graph: Multi-Hop Conflict Reasoning Deep Dive</title>
+<desc>Detailed breakdown of how an AI Agent traverses connected nodes between User Health conditions and Favorites to detect multi-hop dietary conflicts</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Customer Knowledge Graph: Multi-Hop Reasoning Deep Dive</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Why Vector DB fails at multi-hop reasoning, and how Graph Traversal links User Health constraints with Favorites</text>
+
+<!-- ============================================== -->
+<!-- LEFT: THE GRAPH TOPOLOGY                       -->
+<!-- ============================================== -->
+<rect x="25" y="80" width="480" height="370" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<text x="45" y="105" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">CUSTOMER KNOWLEDGE GRAPH (NEO4J)</text>
+
+<!-- Central Root Node: User (Rahul) -->
+<rect x="45" y="225" width="105" height="50" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.8"/>
+<text x="97" y="244" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:13px;font-weight:600">User: Rahul</text>
+<text x="97" y="260" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:10px;font-weight:400">user_id: 1042</text>
+
+<!-- Curve to Health Condition (Upper Branch) -->
+<path d="M 150 235 C 185 235, 185 165, 220 165" fill="none" stroke="rgb(153, 60, 29)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="180" y="190" text-anchor="middle" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">[:HAS_CONDITION]</text>
+
+<!-- Health Condition Node -->
+<rect x="225" y="140" width="115" height="50" rx="8" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.8"/>
+<text x="282" y="158" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Type-2 Diabetes</text>
+<text x="282" y="174" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:500">Hard Constraint</text>
+
+<!-- Curve from Health to Blood Glucose -->
+<path d="M 340 165 C 365 165, 365 165, 385 165" fill="none" stroke="rgb(153, 60, 29)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="362" y="153" text-anchor="middle" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:8px;font-weight:600">[:RESTRICTS]</text>
+
+<!-- Blood Sugar Spike Node -->
+<rect x="390" y="140" width="95" height="50" rx="8" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.8"/>
+<text x="437" y="158" text-anchor="middle" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Glucose Spike</text>
+<text x="437" y="174" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">max: 140 mg/dL</text>
+
+<!-- Curve to Favorite Food (Lower Branch) -->
+<path d="M 150 265 C 185 265, 185 335, 220 335" fill="none" stroke="rgb(83, 74, 183)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="180" y="310" text-anchor="middle" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">[:FAVORITE_FOOD]</text>
+
+<!-- Favorite Food Node -->
+<rect x="225" y="310" width="115" height="50" rx="8" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.8"/>
+<text x="282" y="328" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Chicken Biryani</text>
+<text x="282" y="344" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:500">Prefers spicy</text>
+
+<!-- Curve from Biryani to Nutritional Property -->
+<path d="M 340 335 C 365 335, 365 335, 385 335" fill="none" stroke="rgb(83, 74, 183)" stroke-width="1.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="362" y="323" text-anchor="middle" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:8px;font-weight:600">[:CONTAINS]</text>
+
+<!-- Food Property Node -->
+<rect x="390" y="310" width="95" height="50" rx="8" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.8"/>
+<text x="437" y="328" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">White Rice</text>
+<text x="437" y="344" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">High GI Carbs</text>
+
+<!-- Crucial Vertical Conflict Arrow between White Rice and Glucose Spike! -->
+<path d="M 437 310 C 437 260, 437 230, 437 195" fill="none" stroke="rgb(153, 60, 29)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+<rect x="405" y="240" width="65" height="22" rx="4" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.5"/>
+<text x="437" y="251" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:9px;font-weight:700">CONFLICT!</text>
+
+<text x="265" y="420" text-anchor="middle" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Traversal path: (Rahul) → (Biryani) → (White Rice) → (Spike) → (Diabetes)</text>
+
+<!-- ============================================== -->
+<!-- RIGHT: VECTOR RAG vs GRAPH REASONING           -->
+<!-- ============================================== -->
+<rect x="525" y="80" width="410" height="370" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<text x="545" y="105" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">HOW AI PROCESSES: "WHAT SHOULD I ORDER TONIGHT?"</text>
+
+<!-- Case A: Vector Search (Failure Mode) -->
+<rect x="545" y="125" width="370" height="110" rx="8" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.5"/>
+<text x="560" y="145" dominant-baseline="central" style="fill:rgb(113, 43, 19);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">1. Naive Vector DB (Cosine Similarity Only)</text>
+<text x="560" y="166" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• Searches chunks similar to "favorite dinner food"</text>
+<text x="560" y="182" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• Retrieves: "Rahul loves spicy Biryani"</text>
+<text x="560" y="198" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• MISSES: "Diagnosed with diabetes" (stored in a separate chunk)</text>
+<text x="560" y="216" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Result: "Order Biryani!" (UNSAFE recommendation)</text>
+
+<!-- Case B: Knowledge Graph Traversal (Success Mode) -->
+<rect x="545" y="250" width="370" height="185" rx="8" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="560" y="270" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">2. Knowledge Graph Traversal (Multi-Hop Safe)</text>
+<text x="560" y="291" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• Traverses Rahul's node in Neo4j to depth = 2</text>
+<text x="560" y="307" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• Fetches Favorite: Biryani AND Health Constraint: Diabetes</text>
+<text x="560" y="323" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">• Detects conflict: Biryani's white rice spikes glucose</text>
+
+<rect x="560" y="340" width="340" height="55" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="570" y="356" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Intelligent Synthesis by LLM:</text>
+<text x="570" y="372" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">"I know you love Biryani, but your Diabetes requires low carbs.</text>
+<text x="570" y="386" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">How about Brown Basmati or Cauliflower Rice Biryani?"</text>
+
+<!-- ============================================== -->
+<!-- BOTTOM SUMMARY BAR                             -->
+<!-- ============================================== -->
+<rect x="25" y="465" width="910" height="65" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="480" y="490" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">Core Takeaway for AI Engineering Interviews</text>
+<text x="480" y="510" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Vector DB performs point-in-time similarity matching; Knowledge Graph enables rule-based multi-hop relationship verification</text>
+
+<!-- Global Footer -->
+<text x="480" y="560" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Customer Knowledge Graph Reasoning • Production HLD</text>
+</svg>

@@ -1,0 +1,94 @@
+<svg width="100%" viewBox="0 0 760 560" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Consistent Hashing: Virtual Nodes (Vnodes) for Uniform Balance</title>
+<desc>Diagram showing how multiple virtual nodes per physical server interleave evenly around the hash ring to guarantee uniform load distribution and eliminate hotspots</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Consistent Hashing: Virtual Nodes (Vnodes)</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Each physical node has multiple virtual replicas interleaved around the ring, guaranteeing ~33% balanced traffic</text>
+
+<!-- Outer Canvas Track -->
+<circle cx="330" cy="290" r="175" fill="none" stroke="rgb(229, 231, 235)" stroke-width="16"/>
+<circle cx="330" cy="290" r="175" fill="none" stroke="rgb(209, 213, 219)" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+<!-- 9 Interleaved Virtual Nodes around the circle (3 of each: A, B, C) -->
+<!-- 12 o'clock (0 deg) -> A1 -->
+<circle cx="330" cy="115" r="16" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:2"/>
+<text x="330" y="115" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">A1</text>
+
+<!-- 40 deg -> B1 -->
+<circle cx="442" cy="155" r="16" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:2"/>
+<text x="442" y="155" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">B1</text>
+
+<!-- 80 deg -> C1 -->
+<circle cx="502" cy="260" r="16" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:2"/>
+<text x="502" y="260" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">C1</text>
+
+<!-- 120 deg -> A2 -->
+<circle cx="481" cy="377" r="16" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:2"/>
+<text x="481" y="377" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">A2</text>
+
+<!-- 160 deg -> B2 -->
+<circle cx="390" cy="454" r="16" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:2"/>
+<text x="390" y="454" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">B2</text>
+
+<!-- 200 deg -> C2 -->
+<circle cx="270" cy="454" r="16" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:2"/>
+<text x="270" y="454" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">C2</text>
+
+<!-- 240 deg -> A3 -->
+<circle cx="178" cy="377" r="16" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:2"/>
+<text x="178" y="377" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">A3</text>
+
+<!-- 280 deg -> B3 -->
+<circle cx="158" cy="260" r="16" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:2"/>
+<text x="158" y="260" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">B3</text>
+
+<!-- 320 deg -> C3 -->
+<circle cx="218" cy="155" r="16" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:2"/>
+<text x="218" y="155" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:11px;font-weight:700">C3</text>
+
+<!-- Center Explanatory Badge -->
+<rect x="250" y="265" width="160" height="50" rx="8" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:1"/>
+<text x="330" y="282" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">PERFECT BALANCE</text>
+<text x="330" y="300" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Each node ≈ 33.3% load</text>
+
+<!-- Right Side Details Card -->
+<g transform="translate(540, 110)">
+  <rect width="195" height="340" rx="8" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+  
+  <text x="15" y="25" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:600">How Vnodes Work:</text>
+
+  <!-- Physical Node A Mapping -->
+  <rect x="15" y="42" width="165" height="60" rx="6" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.8"/>
+  <text x="25" y="58" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">Physical Node A</text>
+  <text x="25" y="74" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Replicas: [A1, A2, A3]</text>
+  <text x="25" y="88" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Total keys held: 33.2%</text>
+
+  <!-- Physical Node B Mapping -->
+  <rect x="15" y="112" width="165" height="60" rx="6" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.8"/>
+  <text x="25" y="128" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">Physical Node B</text>
+  <text x="25" y="144" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Replicas: [B1, B2, B3]</text>
+  <text x="25" y="158" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Total keys held: 33.4%</text>
+
+  <!-- Physical Node C Mapping -->
+  <rect x="15" y="182" width="165" height="60" rx="6" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.8"/>
+  <text x="25" y="198" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:700">Physical Node C</text>
+  <text x="25" y="214" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Replicas: [C1, C2, C3]</text>
+  <text x="25" y="228" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Total keys held: 33.4%</text>
+
+  <!-- Production Rule -->
+  <rect x="15" y="255" width="165" height="70" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="272" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Production Rule:</text>
+  <text x="25" y="288" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Real systems (DynamoDB,</text>
+  <text x="25" y="302" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Cassandra) use 100–256</text>
+  <text x="25" y="316" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">vnodes per machine.</text>
+</g>
+
+<!-- Global Footer -->
+<text x="330" y="530" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Consistent Hashing Optimization • Virtual Nodes</text>
+</svg>

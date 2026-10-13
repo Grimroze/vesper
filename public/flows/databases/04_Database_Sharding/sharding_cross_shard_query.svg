@@ -1,0 +1,160 @@
+<svg width="100%" viewBox="0 0 960 500" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Cross-Shard Querying and Scatter-Gather Pattern</title>
+  <desc>System design diagram showing how queries without a shard key execute across all shards using scatter-gather merging.</desc>
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="500" fill="#ffffff" rx="14" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="180" height="22" rx="11" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+    <text x="90" y="15" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle">DISTRIBUTED QUERY ENGINE</text>
+    <text x="0" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0f172a">Cross-Shard Querying: The Scatter-Gather Pattern</text>
+    <text x="0" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">Executing queries that lack the partition shard key across all database instances</text>
+  </g>
+
+  <!-- ==================== FLOW: CLIENT -> COORDINATOR -> SHARDS ==================== -->
+  <g transform="translate(40, 92)">
+    
+    <!-- Client Request Box -->
+    <g transform="translate(0, 0)">
+      <rect width="180" height="74" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="90" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">Client Query</text>
+      <rect x="10" y="32" width="160" height="30" rx="4" fill="#fee2e2" stroke="#fecaca"/>
+      <text x="90" y="46" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="#991b1b" text-anchor="middle">WHERE status = 'PENDING'</text>
+      <text x="90" y="56" font-family="ui-monospace, monospace" font-size="7.5" fill="#dc2626" text-anchor="middle">[NO SHARD KEY PRESENT]</text>
+    </g>
+
+    <!-- Arrow Client -> Coordinator -->
+    <path d="M 180 37 L 245 37" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <text x="212" y="28" font-family="ui-monospace, monospace" font-size="8" font-weight="700" fill="#2563eb" text-anchor="middle">Query</text>
+
+    <!-- Coordinator Node -->
+    <g transform="translate(250, -10)">
+      <rect width="210" height="96" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="105" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#1e3a8a" text-anchor="middle">Query Coordinator / Proxy</text>
+      
+      <rect x="14" y="36" width="182" height="48" rx="4" fill="#ffffff" stroke="#bfdbfe"/>
+      <text x="22" y="52" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#1d4ed8">1. Scatter: Broadcast query</text>
+      <text x="22" y="68" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#059669">2. Gather: Merge &amp; Re-sort</text>
+    </g>
+
+    <!-- Scatter Fan-Out Arrows to Shards -->
+    <path d="M 460 25 C 500 25, 500 15, 540 15" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+    <path d="M 460 37 C 500 37, 500 48, 540 48" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+    <path d="M 460 50 C 500 50, 500 82, 540 82" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+    <text x="495" y="16" font-family="ui-monospace, monospace" font-size="8" font-weight="700" fill="#2563eb">Scatter</text>
+
+    <!-- 3 Shards -->
+    <!-- Shard 1 -->
+    <g transform="translate(545, -2)">
+      <rect width="335" height="34" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="12" y="18" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#0f172a">Shard 1</text>
+      <text x="90" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#475569">Executes local filter -> returns top 10</text>
+      <rect x="270" y="8" width="55" height="18" rx="3" fill="#f0fdf4"/>
+      <text x="297" y="20" font-family="ui-monospace, monospace" font-size="8.5" fill="#15803d" text-anchor="middle">10 rows</text>
+    </g>
+
+    <!-- Shard 2 -->
+    <g transform="translate(545, 36)">
+      <rect width="335" height="34" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="12" y="18" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#0f172a">Shard 2</text>
+      <text x="90" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#475569">Executes local filter -> returns top 10</text>
+      <rect x="270" y="8" width="55" height="18" rx="3" fill="#f0fdf4"/>
+      <text x="297" y="20" font-family="ui-monospace, monospace" font-size="8.5" fill="#15803d" text-anchor="middle">10 rows</text>
+    </g>
+
+    <!-- Shard 3 -->
+    <g transform="translate(545, 74)">
+      <rect width="335" height="34" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="12" y="18" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#0f172a">Shard 3</text>
+      <text x="90" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#475569">Executes local filter -> returns top 10</text>
+      <rect x="270" y="8" width="55" height="18" rx="3" fill="#f0fdf4"/>
+      <text x="297" y="20" font-family="ui-monospace, monospace" font-size="8.5" fill="#15803d" text-anchor="middle">10 rows</text>
+    </g>
+  </g>
+
+  <!-- Gather Stream back into Coordinator -->
+  <g transform="translate(40, 220)">
+    <rect width="880" height="110" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+    <rect x="14" y="12" width="220" height="22" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="124" y="26" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d" text-anchor="middle">GATHER &amp; MERGE PIPELINE</text>
+
+    <!-- 3 Step Horizontal Pipeline -->
+    <g transform="translate(14, 46)">
+      <!-- Box 1 -->
+      <g transform="translate(0, 0)">
+        <rect width="265" height="50" rx="5" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#1d4ed8">1. Receive 30 Partial Rows</text>
+        <text x="12" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#64748b">10 rows collected from each of 3 shards</text>
+      </g>
+
+      <!-- Arrow -->
+      <path d="M 270 25 L 290 25" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+      <!-- Box 2 -->
+      <g transform="translate(295, 0)">
+        <rect width="265" height="50" rx="5" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">2. Global In-Memory Sort</text>
+        <text x="12" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#64748b">Coordinator sorts 30 rows by created_at</text>
+      </g>
+
+      <!-- Arrow -->
+      <path d="M 565 25 L 585 25" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+      <!-- Box 3 -->
+      <g transform="translate(590, 0)">
+        <rect width="260" height="50" rx="5" fill="#ffffff" stroke="#e2e8f0"/>
+        <text x="12" y="20" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#0f172a">3. Slice Top 10 to Client</text>
+        <text x="12" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9.5" fill="#15803d">Discards 20 rows, returns final top 10</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== BOTTOM TRADEOFF CARDS ==================== -->
+  <g transform="translate(40, 350)">
+    <!-- Card 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="280" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#fee2e2"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#dc2626" text-anchor="middle">LATENCY</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Tail Latency Trap</text>
+      
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">Tied to Slowest Shard</text>
+      <text x="12" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">If 1 out of 100 shards is slow,</text>
+      <text x="12" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">the entire query waits.</text>
+    </g>
+
+    <!-- Card 2 -->
+    <g transform="translate(300, 0)">
+      <rect width="280" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#fffbeb"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#b45309" text-anchor="middle">PAGINATION</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Deep Offset Problem</text>
+
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">OFFSET 10000 LIMIT 10</text>
+      <text x="12" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">Every shard must return 10,010 rows;</text>
+      <text x="12" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">coordinator merges 100k+ rows in RAM.</text>
+    </g>
+
+    <!-- Card 3 -->
+    <g transform="translate(600, 0)">
+      <rect width="280" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="12" y="10" width="80" height="18" rx="3" fill="#f0fdf4"/>
+      <text x="52" y="22" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#15803d" text-anchor="middle">MITIGATION</text>
+      <text x="100" y="23" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a">Architectural Fixes</text>
+
+      <text x="12" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#334155">Index &amp; Search Engines</text>
+      <text x="12" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">1. Global Secondary Index</text>
+      <text x="12" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#64748b">2. Replicate to Elasticsearch / ClickHouse</text>
+    </g>
+  </g>
+</svg>

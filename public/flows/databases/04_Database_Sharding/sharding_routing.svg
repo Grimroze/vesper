@@ -1,0 +1,154 @@
+<svg width="100%" viewBox="0 0 960 490" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Database Sharding Routing Architectures</title>
+  <desc>Comparison of Application-Level Client Routing versus Proxy-Based Middleware Routing in a sharded database.</desc>
+  <defs>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="490" fill="#ffffff" rx="14" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Header -->
+  <g transform="translate(40, 24)">
+    <rect x="0" y="0" width="160" height="22" rx="11" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="80" y="15" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">ROUTING TOPOLOGY</text>
+    <text x="0" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#0f172a">Sharding Routing: Client-Side vs Proxy-Based</text>
+    <text x="0" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" fill="#64748b">Where the shard key calculation and connection mapping is executed</text>
+  </g>
+
+  <!-- ==================== LEFT: CLIENT-SIDE ROUTING ==================== -->
+  <g transform="translate(40, 92)">
+    <rect width="425" height="260" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+    <!-- Title Pill -->
+    <rect x="14" y="14" width="397" height="28" rx="5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+    <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#1e3a8a">1. Application-Level (Client) Routing</text>
+    <text x="390" y="32" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#2563eb" text-anchor="end">Zero Extra Hop</text>
+
+    <!-- App Node with Embedded Shard Driver -->
+    <g transform="translate(14, 55)">
+      <rect width="130" height="85" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="65" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">App Service</text>
+      
+      <rect x="10" y="36" width="110" height="38" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+      <text x="65" y="50" font-family="ui-monospace, monospace" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Shard Driver</text>
+      <text x="65" y="64" font-family="ui-monospace, monospace" font-size="7.5" fill="#2563eb" text-anchor="middle">hash(key) % N</text>
+    </g>
+
+    <!-- Direct Connection Arrows to Shards -->
+    <path d="M 144 80 C 180 80, 200 65, 240 65" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    <path d="M 144 95 C 180 95, 200 100, 240 100" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+    <path d="M 144 110 C 180 110, 200 135, 240 135" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+    <!-- Shards (Right side of left panel) -->
+    <g transform="translate(245, 50)">
+      <rect width="140" height="26" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1"/>
+      <text x="70" y="17" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Shard 1 [001-100]</text>
+    </g>
+    <g transform="translate(245, 85)">
+      <rect width="140" height="26" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1"/>
+      <text x="70" y="17" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Shard 2 [101-200]</text>
+    </g>
+    <g transform="translate(245, 120)">
+      <rect width="140" height="26" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1"/>
+      <text x="70" y="17" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#15803d" text-anchor="middle">Shard 3 [201-300]</text>
+    </g>
+
+    <!-- Characteristics Box -->
+    <g transform="translate(14, 155)">
+      <rect width="397" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <g transform="translate(12, 16)">
+        <text x="0" y="0" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">PROS:</text>
+        <text x="50" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Fastest performance (direct TCP socket to shard).</text>
+
+        <text x="0" y="24" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">CONS:</text>
+        <text x="50" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Connection explosion (Apps x Shards = thousands of open sockets).</text>
+
+        <text x="0" y="48" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">RISK:</text>
+        <text x="50" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Re-deploying all services when sharding logic updates.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT: PROXY-BASED ROUTING ==================== -->
+  <g transform="translate(495, 92)">
+    <rect width="425" height="260" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+    <!-- Title Pill -->
+    <rect x="14" y="14" width="397" height="28" rx="5" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="0.8"/>
+    <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#15803d">2. Proxy-Based (Middleware) Routing</text>
+    <text x="390" y="32" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#16a34a" text-anchor="end">Vitess / ProxySQL</text>
+
+    <!-- App Node (Simple SQL Client) -->
+    <g transform="translate(14, 65)">
+      <rect width="85" height="60" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="42" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">App Service</text>
+      <text x="42" y="44" font-family="ui-monospace, monospace" font-size="8.5" fill="#64748b" text-anchor="middle">Plain SQL</text>
+    </g>
+
+    <!-- Arrow App -> Proxy -->
+    <path d="M 99 95 L 138 95" stroke="#059669" stroke-width="1.8" marker-end="url(#arr-green)"/>
+
+    <!-- Database Proxy Node -->
+    <g transform="translate(142, 55)">
+      <rect width="105" height="85" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="52" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">DB Proxy</text>
+      <text x="52" y="42" font-family="ui-monospace, monospace" font-size="8" fill="#166534" text-anchor="middle">Query Parser</text>
+      <text x="52" y="56" font-family="ui-monospace, monospace" font-size="8" fill="#166534" text-anchor="middle">Conn Pooler</text>
+      <text x="52" y="70" font-family="ui-monospace, monospace" font-size="8" fill="#166534" text-anchor="middle">Route Coordinator</text>
+    </g>
+
+    <!-- Arrows from Proxy to Shards -->
+    <path d="M 247 80 C 265 80, 265 65, 280 65" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)"/>
+    <path d="M 247 95 C 265 95, 265 100, 280 100" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)"/>
+    <path d="M 247 110 C 265 110, 265 135, 280 135" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+    <!-- Shards (Right side of right panel) -->
+    <g transform="translate(285, 50)">
+      <rect width="125" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="62" y="17" font-family="ui-monospace, monospace" font-size="9" fill="#0f172a" text-anchor="middle">Shard 1</text>
+    </g>
+    <g transform="translate(285, 85)">
+      <rect width="125" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="62" y="17" font-family="ui-monospace, monospace" font-size="9" fill="#0f172a" text-anchor="middle">Shard 2</text>
+    </g>
+    <g transform="translate(285, 120)">
+      <rect width="125" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="62" y="17" font-family="ui-monospace, monospace" font-size="9" fill="#0f172a" text-anchor="middle">Shard 3</text>
+    </g>
+
+    <!-- Characteristics Box -->
+    <g transform="translate(14, 155)">
+      <rect width="397" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <g transform="translate(12, 16)">
+        <text x="0" y="0" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">PROS:</text>
+        <text x="50" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Decoupled architecture. Apps treat cluster as single DB.</text>
+
+        <text x="0" y="24" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#15803d">BENEFIT:</text>
+        <text x="50" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Central connection pooling and live resharding support.</text>
+
+        <text x="0" y="48" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#b91c1c">CONS:</text>
+        <text x="50" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" fill="#334155">Extra network hop (adds 1-2ms latency). Proxy must be HA.</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== BOTTOM SYSTEM ADOPTION BAR ==================== -->
+  <g transform="translate(40, 365)">
+    <rect width="880" height="90" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="16" y="24" font-family="ui-monospace, monospace" font-size="9.5" font-weight="700" fill="#334155">REAL-WORLD IMPLEMENTATION EXAMPLES</text>
+    
+    <g transform="translate(16, 38)">
+      <text x="0" y="12" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#0f172a">Proxy-Based Tools:</text>
+      <text x="140" y="12" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#475569">Vitess (YouTube/Slack MySQL sharding), ProxySQL, Citus (Postgres coordinator).</text>
+
+      <text x="0" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10.5" font-weight="600" fill="#0f172a">Client-Side Drivers:</text>
+      <text x="140" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="10" fill="#475569">ShardingSphere JDBC driver, Cassandra smart client tokens, MongoDB native mongos routing.</text>
+    </g>
+  </g>
+</svg>

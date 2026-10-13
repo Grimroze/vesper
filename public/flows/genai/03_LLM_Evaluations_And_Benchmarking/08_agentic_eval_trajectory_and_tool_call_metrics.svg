@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 700; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 10px; }
+      .td { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; fill: #1e293b; }
+    </style>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(50, 40)">
+    <text class="title" x="0" y="0">Agentic Trajectory &amp; Multi-Step Tool Evaluation Architecture</text>
+    <text class="subtitle" x="0" y="22">Autonomous agent validation: Tool selection precision, parameter schema conformance, path efficiency, and goal completion</text>
+  </g>
+
+  <!-- Left: Visual Execution Trace (Steps 1, 2, 3) -->
+  <g transform="translate(50, 85)">
+    <rect width="780" height="465" rx="10" fill="#fafafa" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text class="head" x="20" y="28">ReAct Agent Trajectory &amp; Evaluation Checkpoints</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(20, 45)">
+      <rect width="500" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="90" height="18" rx="4" fill="#eff6ff"/>
+      <text class="lbl" x="16" y="21" fill="#1d4ed8">STEP 1: ACTION</text>
+      <text class="code" x="110" y="21" fill="#0f172a">search_orders(cust_id="C49")</text>
+
+      <rect x="10" y="34" width="480" height="24" rx="4" fill="#f8fafc"/>
+      <text class="code" x="16" y="50" fill="#64748b">Observation: {order_id: "O-912", amount: 42.50, status: "pending"}</text>
+
+      <text class="lbl" x="10" y="76" fill="#475569">Thought:</text>
+      <text class="code" x="65" y="76" fill="#0369a1">"Amount $42.50 &lt; $50 threshold; proceeding to refund call"</text>
+    </g>
+
+    <!-- Eval Checkpoint 1 (Right of Step 1) -->
+    <g transform="translate(535, 45)">
+      <rect width="225" height="95" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+      <rect x="10" y="8" width="90" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="16" y="21" fill="#15803d">CHECKPOINT 1</text>
+      <text class="head" x="10" y="44" fill="#166534">Tool Selection</text>
+      <text class="code" x="10" y="62" fill="#047857">Selected: search_orders</text>
+      <text class="lbl" x="10" y="80" fill="#15803d">Score: 1.0 (PASS)</text>
+    </g>
+
+    <!-- Connector 1 -> 2 -->
+    <path d="M 270 142 L 270 162" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+
+    <!-- Step 2 -->
+    <g transform="translate(20, 168)">
+      <rect width="500" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="90" height="18" rx="4" fill="#eff6ff"/>
+      <text class="lbl" x="16" y="21" fill="#1d4ed8">STEP 2: ACTION</text>
+      <text class="code" x="110" y="21" fill="#0f172a">process_refund(order_id="O-912", amount=42.50)</text>
+
+      <rect x="10" y="34" width="480" height="24" rx="4" fill="#f8fafc"/>
+      <text class="code" x="16" y="50" fill="#64748b">Observation: {success: true, tx_id: "tx_8819"}</text>
+
+      <text class="lbl" x="10" y="76" fill="#475569">Thought:</text>
+      <text class="code" x="65" y="76" fill="#0369a1">"Transaction confirmed; synthesizing final customer answer"</text>
+    </g>
+
+    <!-- Eval Checkpoint 2 (Right of Step 2) -->
+    <g transform="translate(535, 168)">
+      <rect width="225" height="95" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+      <rect x="10" y="8" width="90" height="18" rx="4" fill="#dcfce7"/>
+      <text class="lbl" x="16" y="21" fill="#15803d">CHECKPOINT 2</text>
+      <text class="head" x="10" y="44" fill="#166534">Argument Schema</text>
+      <text class="code" x="10" y="62" fill="#047857">Valid: JSON types matched</text>
+      <text class="lbl" x="10" y="80" fill="#15803d">Score: 1.0 (PASS)</text>
+    </g>
+
+    <!-- Connector 2 -> 3 -->
+    <path d="M 270 265 L 270 285" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+
+    <!-- Step 3: Synthesis Output -->
+    <g transform="translate(20, 291)">
+      <rect width="500" height="95" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="105" height="18" rx="4" fill="#eff6ff"/>
+      <text class="lbl" x="16" y="21" fill="#1d4ed8">STEP 3: SYNTHESIS</text>
+      
+      <rect x="10" y="32" width="480" height="48" rx="4" fill="#ecfdf5" stroke="#a7f3d0"/>
+      <text class="code" x="18" y="52" fill="#047857">Output: "Refund of $42.50 processed for order O-912.</text>
+      <text class="code" x="18" y="68" fill="#047857">Transaction ID: tx_8819."</text>
+    </g>
+
+    <!-- Eval Checkpoint 3 (Right of Step 3) -->
+    <g transform="translate(535, 291)">
+      <rect width="225" height="95" rx="6" fill="#ecfdf5" stroke="#a7f3d0"/>
+      <rect x="10" y="8" width="90" height="18" rx="4" fill="#d1fae5"/>
+      <text class="lbl" x="16" y="21" fill="#047857">CHECKPOINT 3</text>
+      <text class="head" x="10" y="44" fill="#064e3b">Goal Completion</text>
+      <text class="code" x="10" y="62" fill="#047857">Steps: 2 (Optimal)</text>
+      <text class="lbl" x="10" y="80" fill="#047857">Status: PASS (100%)</text>
+    </g>
+
+    <!-- Trajectory Stats Bar -->
+    <g transform="translate(20, 400)">
+      <rect width="740" height="50" rx="6" fill="#f1f5f9"/>
+      <text class="lbl" x="14" y="28" fill="#0f172a">Trajectory Efficiency:</text>
+      <text class="code" x="140" y="28" fill="#047857">Optimal=2, Actual=2 (Ratio 1.0)</text>
+
+      <text class="lbl" x="400" y="28" fill="#0f172a">Loop Count:</text>
+      <text class="code" x="475" y="28" fill="#047857">0 (No Repetitions)</text>
+
+      <text class="lbl" x="620" y="28" fill="#0f172a">State:</text>
+      <text class="code" x="660" y="28" fill="#047857">Success</text>
+    </g>
+  </g>
+
+  <!-- Right: 4 Agentic Dimensions Grid -->
+  <g transform="translate(850, 85)">
+    <rect width="400" height="465" rx="10" fill="#fafafa" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text class="head" x="20" y="28">Core Agentic Metrics</text>
+
+    <!-- Dim 1 -->
+    <g transform="translate(20, 42)">
+      <rect width="360" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="85" height="18" rx="4" fill="#eff6ff"/>
+      <text class="lbl" x="16" y="21" fill="#1d4ed8">METRIC 1</text>
+      <text class="head" x="10" y="44">Tool Selection Accuracy</text>
+      <text class="code" x="10" y="62" fill="#64748b">|Invoked INTERSECT Gold| / |Gold|</text>
+      <text class="code" x="10" y="78" fill="#0369a1">Assert: Score &gt;= 0.90</text>
+    </g>
+
+    <!-- Dim 2 -->
+    <g transform="translate(20, 142)">
+      <rect width="360" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="85" height="18" rx="4" fill="#f5f3ff"/>
+      <text class="lbl" x="16" y="21" fill="#6d28d9">METRIC 2</text>
+      <text class="head" x="10" y="44">Tool Argument Precision</text>
+      <text class="code" x="10" y="62" fill="#64748b">Valid_Keys / Total_Required_Keys</text>
+      <text class="code" x="10" y="78" fill="#6d28d9">Assert: 100% Pydantic match</text>
+    </g>
+
+    <!-- Dim 3 -->
+    <g transform="translate(20, 242)">
+      <rect width="360" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="85" height="18" rx="4" fill="#fee2e2"/>
+      <text class="lbl" x="16" y="21" fill="#b91c1c">METRIC 3</text>
+      <text class="head" x="10" y="44">Trajectory Efficiency</text>
+      <text class="code" x="10" y="62" fill="#64748b">Optimal_Steps / Actual_Steps - Loops</text>
+      <text class="code" x="10" y="78" fill="#b91c1c">Penalizes redundant loops</text>
+    </g>
+
+    <!-- Dim 4 -->
+    <g transform="translate(20, 342)">
+      <rect width="360" height="90" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect x="10" y="8" width="85" height="18" rx="4" fill="#ecfdf5"/>
+      <text class="lbl" x="16" y="21" fill="#047857">METRIC 4</text>
+      <text class="head" x="10" y="44">Goal Completion Rate</text>
+      <text class="code" x="10" y="62" fill="#64748b">Final state == user objective</text>
+      <text class="code" x="10" y="78" fill="#047857">Assert: True (Binary / Strict)</text>
+    </g>
+  </g>
+
+  <!-- Bottom: DeepEval Agentic Metric Code & Failure Modes -->
+  <g transform="translate(50, 565)">
+    <rect width="1200" height="155" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
+    
+    <!-- Code on Left -->
+    <g transform="translate(20, 18)">
+      <text class="code" x="0" y="14" fill="#94a3b8"># DeepEval Agent Evaluation</text>
+      <text class="code" x="0" y="34" fill="#f43f5e">from</text>
+      <text class="code" x="38" y="34" fill="#f8fafc"> deepeval.metrics </text>
+      <text class="code" x="175" y="34" fill="#f43f5e">import</text>
+      <text class="code" x="225" y="34" fill="#38bdf8"> ToolCallMetric</text>
+
+      <text class="code" x="0" y="58" fill="#38bdf8">metric</text>
+      <text class="code" x="45" y="58" fill="#f8fafc"> = </text>
+      <text class="code" x="60" y="58" fill="#facc15">ToolCallMetric</text>
+      <text class="code" x="155" y="58" fill="#f8fafc">(</text>
+      <text class="code" x="165" y="58" fill="#f8fafc">expected_tools=[</text>
+      <text class="code" x="275" y="58" fill="#4ade80">"search_orders"</text>
+      <text class="code" x="380" y="58" fill="#f8fafc">, </text>
+      <text class="code" x="390" y="58" fill="#4ade80">"process_refund"</text>
+      <text class="code" x="500" y="58" fill="#f8fafc">],</text>
+
+      <text class="code" x="20" y="78" fill="#f8fafc">enforce_order=</text>
+      <text class="code" x="115" y="78" fill="#facc15">True</text>
+      <text class="code" x="145" y="78" fill="#f8fafc">, threshold=</text>
+      <text class="code" x="220" y="78" fill="#facc15">0.90</text>
+      <text class="code" x="250" y="78" fill="#f8fafc">)</text>
+      
+      <text class="code" x="0" y="100" fill="#38bdf8">assert_test</text>
+      <text class="code" x="80" y="100" fill="#f8fafc">(agent_test_case, [metric])</text>
+    </g>
+
+    <!-- Failure Patterns Pills on Right -->
+    <g transform="translate(680, 20)">
+      <rect width="495" height="115" rx="6" fill="#1e293b"/>
+      <text class="head" x="16" y="24" fill="#38bdf8">Common Agent Trajectory Failure Modes</text>
+
+      <g transform="translate(16, 40)">
+        <rect x="0" y="0" width="105" height="24" rx="4" fill="#fee2e2"/>
+        <text class="lbl" x="10" y="16" fill="#991b1b">Circular Loops</text>
+
+        <rect x="115" y="0" width="105" height="24" rx="4" fill="#fee2e2"/>
+        <text class="lbl" x="10" y="16" fill="#991b1b">Early Halting</text>
+
+        <rect x="230" y="0" width="115" height="24" rx="4" fill="#fee2e2"/>
+        <text class="lbl" x="10" y="16" fill="#991b1b">Schema Errors</text>
+
+        <rect x="355" y="0" width="105" height="24" rx="4" fill="#fee2e2"/>
+        <text class="lbl" x="10" y="16" fill="#991b1b">Crash on 500</text>
+      </g>
+
+      <text class="code" x="16" y="94" fill="#94a3b8">DeepEval detects these patterns automatically during multi-turn ReAct runs</text>
+    </g>
+  </g>
+</svg>

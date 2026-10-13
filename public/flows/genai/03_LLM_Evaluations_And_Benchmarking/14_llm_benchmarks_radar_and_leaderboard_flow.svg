@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .node-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; fill: #0f172a; }
+      .node-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; text-anchor: middle; fill: #64748b; }
+      .center-txt { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; font-weight: 700; text-anchor: middle; fill: #1e3a8a; }
+      .center-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; text-anchor: middle; fill: #2563eb; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+    </style>
+
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(60, 44)">
+    <text class="title" x="0" y="0">Multi-Domain LLM Benchmark Hub &amp; Evaluation Topology</text>
+    <text class="subtitle" x="0" y="22">Radial benchmark flow: Reasoning, code, mathematics, scientific reasoning, software engineering, and instruction following</text>
+  </g>
+
+  <!-- Flow Canvas -->
+  <g transform="translate(60, 95)">
+    <rect width="1180" height="625" rx="24" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+
+    <!-- Central Core Hub: Foundation Model Evaluated -->
+    <g transform="translate(590, 310)">
+      <circle cx="0" cy="0" r="85" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+      <circle cx="0" cy="0" r="70" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5"/>
+      <text class="center-txt" x="0" y="-8">Evaluated LLM</text>
+      <text class="center-sub" x="0" y="12">Target Checkpoint</text>
+      <text class="code" x="0" y="30" text-anchor="middle" fill="#1d4ed8">v2.4-preview</text>
+    </g>
+
+    <!-- 6 Radial Benchmark Nodes (Satellite Circles) -->
+
+    <!-- Satellite 1: Top (12 o'clock) - MMLU-Pro -->
+    <g transform="translate(590, 90)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#4c1d95">MMLU-Pro</text>
+      <text class="node-sub" x="0" y="14" fill="#6d28d9">Reasoning</text>
+    </g>
+
+    <!-- Satellite 2: Top-Right (2 o'clock) - GSM8K -->
+    <g transform="translate(890, 160)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#1e3a8a">GSM8K</text>
+      <text class="node-sub" x="0" y="14" fill="#2563eb">Math &amp; Logic</text>
+    </g>
+
+    <!-- Satellite 3: Bottom-Right (4 o'clock) - HumanEval -->
+    <g transform="translate(890, 460)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#064e3b">HumanEval</text>
+      <text class="node-sub" x="0" y="14" fill="#047857">Code Python</text>
+    </g>
+
+    <!-- Satellite 4: Bottom (6 o'clock) - SWE-bench -->
+    <g transform="translate(590, 530)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#064e3b">SWE-bench</text>
+      <text class="node-sub" x="0" y="14" fill="#047857">Software Agent</text>
+    </g>
+
+    <!-- Satellite 5: Bottom-Left (8 o'clock) - GPQA -->
+    <g transform="translate(290, 460)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#78350f">GPQA</text>
+      <text class="node-sub" x="0" y="14" fill="#b45309">PhD Science</text>
+    </g>
+
+    <!-- Satellite 6: Top-Left (10 o'clock) - IFEval -->
+    <g transform="translate(290, 160)">
+      <circle cx="0" cy="0" r="54" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+      <text class="node-txt" x="0" y="-4" fill="#4c1d95">IFEval</text>
+      <text class="node-sub" x="0" y="14" fill="#6d28d9">Strict Follow</text>
+    </g>
+
+    <!-- Radial Curved Spokes (Center Hub Outward to Satellites) -->
+    <path d="M 590 225 L 590 148" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 655 245 C 720 210, 770 190, 835 175" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 655 375 C 720 410, 770 430, 835 445" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 590 395 L 590 472" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 525 375 C 460 410, 410 430, 345 445" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+    <path d="M 525 245 C 460 210, 410 190, 345 175" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+    <!-- Outer Orbital Flow Ring (Connecting Benchmark Outputs to Aggregate) -->
+    <path d="M 945 460 C 1040 440, 1080 370, 1080 310 C 1080 250, 1040 180, 945 160" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="5,5"/>
+
+    <!-- Right Terminal Node: Leaderboard Vector Index -->
+    <g transform="translate(1080, 310)">
+      <circle cx="0" cy="0" r="58" fill="#f0fdf4" stroke="#86efac" stroke-width="2.5"/>
+      <text class="node-txt" x="0" y="-6" fill="#166534">Composite</text>
+      <text class="node-sub" x="0" y="12" fill="#15803d">Score: 84.7</text>
+      <text class="code" x="0" y="28" text-anchor="middle" fill="#15803d">Top 1% Tier</text>
+    </g>
+
+    <!-- Top Left Capsule -->
+    <g transform="translate(30, 24)">
+      <rect width="180" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#3b82f6"/>
+      <text class="lbl" x="30" y="18">Benchmark Topology</text>
+    </g>
+
+    <!-- Top Right Capsule -->
+    <g transform="translate(980, 24)">
+      <rect width="170" height="28" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+      <circle cx="16" cy="14" r="5" fill="#10b981"/>
+      <text class="lbl" x="30" y="18">Standard Evaluation</text>
+    </g>
+  </g>
+</svg>

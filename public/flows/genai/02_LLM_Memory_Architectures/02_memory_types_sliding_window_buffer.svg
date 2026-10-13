@@ -1,0 +1,119 @@
+<svg width="100%" viewBox="0 0 960 580" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Short-Term Working Memory Strategies: Full Buffer vs Window vs Summary</title>
+<desc>Comparison of the 3 primary short-term memory strategies: ConversationBufferMemory, ConversationBufferWindowMemory, and ConversationSummaryBufferMemory</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">Short-Term Working Memory: The 3 Core Strategies</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Managing context window limits, token costs, and long-conversation retention in production agents</text>
+
+<!-- ============================================== -->
+<!-- STRATEGY 1: FULL BUFFER MEMORY                 -->
+<!-- ============================================== -->
+<rect x="25" y="80" width="290" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="40" y="95" width="160" height="24" rx="4" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+<text x="120" y="107" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">1. Full Buffer Memory</text>
+
+<text x="40" y="138" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Keeps every turn verbatim:</text>
+
+<!-- Turn Blocks -->
+<rect x="40" y="150" width="260" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="50" y="166" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Turn 1: "My budget is $5,000"</text>
+
+<rect x="40" y="190" width="260" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="50" y="206" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Turn 2: "Target audience is US"</text>
+
+<rect x="40" y="230" width="260" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="50" y="246" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Turn 3: "Need React frontend"</text>
+
+<rect x="40" y="270" width="260" height="32" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="50" y="286" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Turn 4: "Add Stripe payments"</text>
+
+<text x="170" y="325" text-anchor="middle" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:10px;font-weight:600">... Turn 40 (Token explosion!)</text>
+
+<!-- Pros / Cons -->
+<rect x="40" y="345" width="260" height="100" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="50" y="365" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">PRO: 100% exact raw recall</text>
+<text x="50" y="388" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">CON: Cost scales O(N)</text>
+<text x="50" y="408" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Hits token limit; crashes on long chat</text>
+<text x="50" y="425" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">Class: ConversationBufferMemory</text>
+
+<!-- ============================================== -->
+<!-- STRATEGY 2: SLIDING WINDOW BUFFER              -->
+<!-- ============================================== -->
+<rect x="335" y="80" width="290" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="350" y="95" width="170" height="24" rx="4" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.5"/>
+<text x="435" y="107" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">2. Sliding Window Buffer</text>
+
+<text x="350" y="138" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Keeps only last K turns (e.g. K=2):</text>
+
+<!-- Dropped Turns -->
+<rect x="350" y="150" width="260" height="32" rx="4" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.5;stroke-dasharray:3 2"/>
+<text x="360" y="166" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:10px;font-weight:500;text-decoration:line-through">Turn 1: "My budget is $5,000"</text>
+
+<rect x="350" y="190" width="260" height="32" rx="4" style="fill:rgb(250, 236, 231);stroke:rgb(153, 60, 29);stroke-width:0.5;stroke-dasharray:3 2"/>
+<text x="360" y="206" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:10px;font-weight:500;text-decoration:line-through">Turn 2: "Target audience is US"</text>
+
+<text x="480" y="235" text-anchor="middle" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:500">▲ Older turns permanently discarded</text>
+
+<!-- Active Window -->
+<rect x="345" y="248" width="270" height="85" rx="6" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:1"/>
+<text x="355" y="262" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">ACTIVE WINDOW (K=2)</text>
+
+<rect x="355" y="272" width="250" height="26" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="365" y="285" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Turn 3: "Need React frontend"</text>
+
+<rect x="355" y="302" width="250" height="26" rx="4" style="fill:rgb(255, 255, 255);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="365" y="315" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Turn 4: "Add Stripe payments"</text>
+
+<!-- Pros / Cons -->
+<rect x="350" y="345" width="260" height="100" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="360" y="365" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">PRO: Constant token cost &amp; speed</text>
+<text x="360" y="388" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">CON: Early amnesia</text>
+<text x="360" y="408" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Agent forgets budget &amp; initial goals</text>
+<text x="360" y="425" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">Class: ConversationBufferWindowMemory</text>
+
+<!-- ============================================== -->
+<!-- STRATEGY 3: SUMMARY BUFFER MEMORY              -->
+<!-- ============================================== -->
+<rect x="645" y="80" width="290" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+<rect x="660" y="95" width="180" height="24" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="750" y="107" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">3. Summary Buffer (Best!)</text>
+
+<text x="660" y="138" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Compresses old; keeps recent exact:</text>
+
+<!-- Summary Container -->
+<rect x="660" y="150" width="260" height="85" rx="6" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.8"/>
+<text x="670" y="165" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">ROLLING SUMMARY (Turns 1..38)</text>
+<text x="670" y="184" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">"User is building a React app with</text>
+<text x="670" y="198" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Stripe payment for US market under</text>
+<text x="670" y="212" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">$5,000 budget." (Only 28 tokens!)</text>
+
+<text x="790" y="247" text-anchor="middle" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:600">+ Plus Recent Exact Turns:</text>
+
+<!-- Verbatim Recent Turns -->
+<rect x="660" y="260" width="260" height="30" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="670" y="275" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Turn 39: "Can we use Tailwind CSS?"</text>
+
+<rect x="660" y="296" width="260" height="30" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+<text x="670" y="311" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Turn 40: "Yes, Tailwind is supported."</text>
+
+<!-- Pros / Cons -->
+<rect x="660" y="345" width="260" height="100" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+<text x="670" y="365" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">PRO: Infinite conversation length</text>
+<text x="670" y="388" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">PRO: Preserves critical constraints</text>
+<text x="670" y="408" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Tiny background LLM handles summary</text>
+<text x="670" y="425" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:ui-monospace, monospace;font-size:9px;font-weight:400">Class: ConversationSummaryBufferMemory</text>
+
+<!-- Bottom Architecture Note -->
+<rect x="25" y="480" width="910" height="48" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="480" y="497" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Production Recommendation:</text>
+<text x="480" y="513" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Use Strategy 3 (Summary Buffer) for single-session chatbots; combine with Vector/Graph memory for multi-week persistence.</text>
+
+<!-- Global Footer -->
+<text x="480" y="550" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">LLM Memory Fundamentals • 02 Short-Term Working Buffer Strategies</text>
+</svg>

@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 760" width="100%" height="100%">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #64748b; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0f172a; }
+      .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 11px; font-weight: 600; }
+      .code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 11px; }
+      .math { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size: 12px; font-weight: 600; fill: #1e3a8a; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <rect width="1300" height="760" fill="#ffffff"/>
+
+  <!-- Title -->
+  <g transform="translate(50, 40)">
+    <text class="title" x="0" y="0">G-Eval Framework Internals &amp; Scoring Mechanics</text>
+    <text class="subtitle" x="0" y="22">DeepEval / Microsoft Research: Criteria formulation, auto-CoT derivation, and log-probability expectation</text>
+  </g>
+
+  <!-- 4-Stage Horizontal Flow -->
+  <g transform="translate(50, 85)">
+    <!-- Stage 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="265" height="175" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+      <rect x="14" y="12" width="60" height="20" rx="4" fill="#e2e8f0"/>
+      <text class="lbl" x="22" y="26" fill="#475569">STEP 1</text>
+      <text class="head" x="82" y="26">Evaluation Inputs</text>
+
+      <rect x="14" y="44" width="237" height="34" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+      <text class="lbl" x="24" y="65" fill="#334155">Task Rubric: Coherence</text>
+
+      <rect x="14" y="86" width="237" height="34" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+      <text class="lbl" x="24" y="107" fill="#334155">Prompt: User Query</text>
+
+      <rect x="14" y="128" width="237" height="34" rx="4" fill="#ffffff" stroke="#e2e8f0"/>
+      <text class="lbl" x="24" y="149" fill="#334155">Actual LLM Output</text>
+    </g>
+
+    <!-- Connector 1 -> 2 -->
+    <path d="M 268 87 L 308 87" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+    <!-- Stage 2 -->
+    <g transform="translate(312, 0)">
+      <rect width="280" height="175" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.2"/>
+      <rect x="14" y="12" width="60" height="20" rx="4" fill="#dbeafe"/>
+      <text class="lbl" x="22" y="26" fill="#1d4ed8">STEP 2</text>
+      <text class="head" x="82" y="26" fill="#1e3a8a">Auto Chain-of-Thought</text>
+
+      <rect x="14" y="44" width="252" height="118" rx="4" fill="#ffffff" stroke="#bfdbfe"/>
+      <text class="code" x="22" y="66" fill="#0369a1">1. Read query &amp; output</text>
+      <text class="code" x="22" y="88" fill="#0369a1">2. Detect contradictions</text>
+      <text class="code" x="22" y="110" fill="#0369a1">3. Check logical flow</text>
+      <text class="code" x="22" y="132" fill="#0369a1">4. Emit score token (1-5)</text>
+    </g>
+
+    <!-- Connector 2 -> 3 -->
+    <path d="M 595 87 L 635 87" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+    <!-- Stage 3 -->
+    <g transform="translate(640, 0)">
+      <rect width="275" height="175" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.2"/>
+      <rect x="14" y="12" width="60" height="20" rx="4" fill="#ede9fe"/>
+      <text class="lbl" x="22" y="26" fill="#6d28d9">STEP 3</text>
+      <text class="head" x="82" y="26" fill="#4c1d95">Judge LLM Execution</text>
+
+      <rect x="14" y="44" width="247" height="50" rx="4" fill="#ffffff" stroke="#ddd6fe"/>
+      <text class="lbl" x="22" y="64" fill="#4c1d95">Evaluator: GPT-4o</text>
+      <text class="code" x="22" y="82" fill="#6d28d9">Outputs Reasoning First</text>
+
+      <rect x="14" y="104" width="247" height="58" rx="4" fill="#ede9fe"/>
+      <text class="lbl" x="22" y="124" fill="#6d28d9">Emits Score Token:</text>
+      <text class="code" x="22" y="144" fill="#4c1d95">Token = "4" (Logprobs)</text>
+    </g>
+
+    <!-- Connector 3 -> 4 -->
+    <path d="M 918 87 L 958 87" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+    <!-- Stage 4 -->
+    <g transform="translate(962, 0)">
+      <rect width="238" height="175" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.2"/>
+      <rect x="14" y="12" width="60" height="20" rx="4" fill="#d1fae5"/>
+      <text class="lbl" x="22" y="26" fill="#047857">STEP 4</text>
+      <text class="head" x="82" y="26" fill="#064e3b">Final Score</text>
+
+      <rect x="14" y="44" width="210" height="52" rx="4" fill="#ffffff" stroke="#a7f3d0"/>
+      <text class="lbl" x="22" y="64" fill="#064e3b">Continuous Value</text>
+      <text class="head" x="22" y="84" fill="#047857">4.19 / 5.00</text>
+
+      <rect x="14" y="106" width="210" height="56" rx="4" fill="#ffffff" stroke="#a7f3d0"/>
+      <text class="lbl" x="22" y="126" fill="#064e3b">Normalized Metric</text>
+      <text class="code" x="22" y="146" fill="#047857">0.838 (Passed &gt;= 0.70)</text>
+    </g>
+  </g>
+
+  <!-- Middle: Logprob Visualizer & Formula (Clean, no text flood) -->
+  <g transform="translate(50, 285)">
+    <rect width="690" height="295" rx="10" fill="#fafafa" stroke="#e2e8f0" stroke-width="1.2"/>
+    <text class="head" x="24" y="28">Token Probability Expectation vs Discrete Grading</text>
+
+    <!-- Formula Box -->
+    <g transform="translate(24, 46)">
+      <rect width="642" height="42" rx="4" fill="#eff6ff" stroke="#bfdbfe"/>
+      <text class="math" x="16" y="26">Score = SUM( i * P(Token = i) ) / SUM( P(Token = i) )</text>
+    </g>
+
+    <!-- Visual Bars for P(Token = i) -->
+    <g transform="translate(24, 110)">
+      <rect width="642" height="155" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+      <text class="lbl" x="16" y="22" fill="#475569">Judge Token Log-Probability Distribution</text>
+
+      <!-- Bar 1 -->
+      <g transform="translate(24, 40)">
+        <rect x="0" y="48" width="80" height="6" rx="3" fill="#cbd5e1"/>
+        <text class="code" x="0" y="38" fill="#64748b">"1": 0.01</text>
+        <text class="code" x="0" y="70" fill="#94a3b8">P=1%</text>
+      </g>
+
+      <!-- Bar 2 -->
+      <g transform="translate(124, 40)">
+        <rect x="0" y="44" width="80" height="10" rx="3" fill="#cbd5e1"/>
+        <text class="code" x="0" y="38" fill="#64748b">"2": 0.03</text>
+        <text class="code" x="0" y="70" fill="#94a3b8">P=3%</text>
+      </g>
+
+      <!-- Bar 3 -->
+      <g transform="translate(224, 40)">
+        <rect x="0" y="34" width="80" height="20" rx="3" fill="#93c5fd"/>
+        <text class="code" x="0" y="26" fill="#1d4ed8">"3": 0.12</text>
+        <text class="code" x="0" y="70" fill="#94a3b8">P=12%</text>
+      </g>
+
+      <!-- Bar 4 -->
+      <g transform="translate(324, 40)">
+        <rect x="0" y="10" width="80" height="44" rx="3" fill="#3b82f6"/>
+        <text class="code" x="0" y="0" fill="#1e3a8a">"4": 0.44</text>
+        <text class="code" x="0" y="70" fill="#1e3a8a">P=44%</text>
+      </g>
+
+      <!-- Bar 5 -->
+      <g transform="translate(424, 40)">
+        <rect x="0" y="14" width="80" height="40" rx="3" fill="#60a5fa"/>
+        <text class="code" x="0" y="4" fill="#1e3a8a">"5": 0.40</text>
+        <text class="code" x="0" y="70" fill="#1e3a8a">P=40%</text>
+      </g>
+
+      <!-- Result Callout -->
+      <g transform="translate(524, 30)">
+        <rect x="0" y="0" width="102" height="70" rx="4" fill="#f0fdf4" stroke="#86efac"/>
+        <text class="lbl" x="10" y="22" fill="#15803d">Expectation:</text>
+        <text class="head" x="10" y="44" fill="#166534">4.19 / 5.0</text>
+        <text class="code" x="10" y="60" fill="#15803d">Smooth</text>
+      </g>
+
+      <line x1="16" y1="124" x2="626" y2="124" stroke="#f1f5f9"/>
+      <text class="code" x="16" y="142" fill="#64748b">Advantage: Eliminates discrete rounding jumps; achieves >0.51 Spearman correlation with human graders</text>
+    </g>
+  </g>
+
+  <!-- Right: Compact DeepEval Code (Zero text flood) -->
+  <g transform="translate(760, 285)">
+    <rect width="490" height="295" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.2"/>
+    <text class="code" x="20" y="26" fill="#94a3b8"># test_geval.py</text>
+
+    <g transform="translate(20, 48)">
+      <text class="code" x="0" y="14" fill="#f43f5e">from</text>
+      <text class="code" x="38" y="14" fill="#f8fafc"> deepeval.metrics </text>
+      <text class="code" x="160" y="14" fill="#f43f5e">import</text>
+      <text class="code" x="210" y="14" fill="#38bdf8"> GEval</text>
+
+      <text class="code" x="0" y="34" fill="#f43f5e">from</text>
+      <text class="code" x="38" y="34" fill="#f8fafc"> deepeval.test_case </text>
+      <text class="code" x="175" y="34" fill="#f43f5e">import</text>
+      <text class="code" x="225" y="34" fill="#38bdf8"> LLMTestCaseParams</text>
+
+      <text class="code" x="0" y="64" fill="#38bdf8">metric</text>
+      <text class="code" x="45" y="64" fill="#f8fafc"> = </text>
+      <text class="code" x="60" y="64" fill="#facc15">GEval</text>
+      <text class="code" x="98" y="64" fill="#f8fafc">(</text>
+
+      <text class="code" x="20" y="84" fill="#f8fafc">name=</text>
+      <text class="code" x="55" y="84" fill="#4ade80">"Coherence"</text>
+      <text class="code" x="130" y="84" fill="#f8fafc">,</text>
+
+      <text class="code" x="20" y="104" fill="#f8fafc">criteria=</text>
+      <text class="code" x="78" y="104" fill="#4ade80">"Determine if actual output flows logically"</text>
+      <text class="code" x="380" y="104" fill="#f8fafc">,</text>
+
+      <text class="code" x="20" y="124" fill="#f8fafc">evaluation_params=[</text>
+      <text class="code" x="20" y="144" fill="#38bdf8">  LLMTestCaseParams.INPUT</text>
+      <text class="code" x="175" y="144" fill="#f8fafc">,</text>
+      <text class="code" x="20" y="164" fill="#38bdf8">  LLMTestCaseParams.ACTUAL_OUTPUT</text>
+      <text class="code" x="20" y="184" fill="#f8fafc">],</text>
+
+      <text class="code" x="20" y="204" fill="#f8fafc">threshold=</text>
+      <text class="code" x="90" y="204" fill="#facc15">0.7</text>
+      <text class="code" x="110" y="204" fill="#f8fafc">, model=</text>
+      <text class="code" x="170" y="204" fill="#4ade80">"gpt-4o"</text>
+      <text class="code" x="0" y="224" fill="#f8fafc">)</text>
+    </g>
+  </g>
+
+  <!-- Bottom: 3 Core Highlights (Pills only, zero text flood) -->
+  <g transform="translate(50, 600)">
+    <rect width="1200" height="85" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    
+    <g transform="translate(24, 20)">
+      <rect x="0" y="0" width="360" height="45" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text class="lbl" x="12" y="18" fill="#0f172a">Continuous Expectation</text>
+      <text class="code" x="12" y="34" fill="#64748b">Weights top-5 token logprobs</text>
+    </g>
+
+    <g transform="translate(420, 20)">
+      <rect x="0" y="0" width="360" height="45" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text class="lbl" x="12" y="18" fill="#0f172a">Chain-of-Thought First</text>
+      <text class="code" x="12" y="34" fill="#64748b">Critique emitted before score token</text>
+    </g>
+
+    <g transform="translate(816, 20)">
+      <rect x="0" y="0" width="360" height="45" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+      <text class="lbl" x="12" y="18" fill="#0f172a">Custom Rubric Flexibility</text>
+      <text class="code" x="12" y="34" fill="#64748b">Adapts to any domain evaluation task</text>
+    </g>
+  </g>
+</svg>

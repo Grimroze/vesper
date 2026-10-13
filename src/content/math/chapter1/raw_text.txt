@@ -1,0 +1,1400 @@
+--- PAGE 17 ---
+CHAPTER 1
+Basic Math and Calculus Review
+We will kick off the first chapter covering what numbers are and how variables and
+functions work on a Cartesian system. We will then cover exponents and logarithms.
+After that, we will learn the two basic operations of calculus: derivatives and integrals.
+Before we dive into the applied areas of essential math such as probability, linear
+algebra, statistics, and machine learning, we should probably review a few basic math
+and calculus concepts. Before you drop this book and run screaming, do not worry!
+I will present how to calculate derivatives and integrals for a function in a way you
+were probably not taught in college. We have Python on our side, not a pencil and
+paper. Even if you are not familiar with derivatives and integrals, you still do not need
+to worry.
+I will make these topics as tight and practical as possible, focusing only on what will
+help us in later chapters and what falls under the “essential math” umbrella.
+This Is Not a Full Math Crash Course!
+This is by no means a comprehensive review of high school and
+college math. If you want that, a great book to check out is No Bull‐
+shit Guide to Math and Physics by Ivan Savov (pardon my French).
+The first few chapters contain the best crash course on high school
+and college math I have ever seen. The book Mathematics 1001 by
+Dr. Richard Elwes has some great content as well, and in bite-sized
+explanations.
+1
+
+
+--- PAGE 18 ---
+Number Theory
+What are numbers? I promise to not be too philosophical in this book, but are
+numbers not a construct we have defined? Why do we have the digits 0 through 9,
+and not have more digits than that? Why do we have fractions and decimals and not
+just whole numbers? This area of math where we muse about numbers and why we
+designed them a certain way is known as number theory.
+Number theory goes all the way back to ancient times, when mathematicians studied
+different number systems, and it explains why we have accepted them the way we do
+today. Here are different number systems that you may recognize:
+Natural numbers
+These are the numbers 1, 2, 3, 4, 5…and so on. Only positive numbers are
+included here, and they are the earliest known system. Natural numbers are so
+ancient cavemen scratched tally marks on bones and cave walls to keep records.
+Whole numbers
+Adding to natural numbers, the concept of “0” was later accepted; we call
+these “whole numbers.” The Babylonians also developed the useful idea for
+place-holding notation for empty “columns” on numbers greater than 9, such as
+“10,” “1,000,” or “1,090.” Those zeros indicate no value occupying that column.
+Integers
+Integers include positive and negative natural numbers as well as 0. We may
+take them for granted, but ancient mathematicians deeply distrusted the idea of
+negative numbers. But when you subtract 5 from 3, you get –2. This is useful
+especially when it comes to finances where we measure profits and losses. In
+628 AD, an Indian mathematician named Brahmagupta showed why negative
+numbers were necessary for arithmetic to progress with the quadratic formula,
+and therefore integers became accepted.
+Rational numbers
+Any number that you can express as a fraction, such as 2/3, is a rational number.
+This includes all finite decimals and integers since they can be expressed as
+fractions, too, such as 687/100 = 6.87 and 2/1 = 2, respectively. They are called
+rational because they are ratios. Rational numbers were quickly deemed neces‐
+sary because time, resources, and other quantities could not always be measured
+in discrete units. Milk does not always come in gallons. We may have to measure
+it as parts of a gallon. If I run for 12 minutes, I cannot be forced to measure in
+whole miles when in actuality I ran 9/10 of a mile.
+Irrational numbers
+Irrational numbers cannot be expressed as a fraction. This includes the famous
+π, square roots of certain numbers like 2, and Euler’s number e, which we will
+2 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 19 ---
+learn about later. These numbers have an infinite number of decimal digits, such
+as 3.141592653589793238462…
+There is an interesting history behind irrational numbers. The Greek mathemati‐
+cian Pythagoras believed all numbers are rational. He believed this so fervently,
+he made a religion that prayed to the number 10. “Bless us, divine number, thou
+who generated gods and men!” he and his followers would pray (why “10” was
+so special, I do not know). There is a legend that one of his followers, Hippasus,
+proved not all numbers are rational simply by demonstrating the square root
+of 2. This severely messed with Pythagoras’s belief system, and he responded by
+drowning Hippasus at sea.
+Regardless, we now know not all numbers are rational.
+Real numbers
+Real numbers include rational as well as irrational numbers. In practicality, when
+you are doing any data science work you can treat any decimals you work with as
+real numbers.
+Complex and imaginary numbers
+You encounter this number type when you take the square root of a negative
+number. While imaginary and complex numbers have relevance in certain types
+of problems, we will mostly steer clear of them.
+In data science, you will find most (if not all) of your work will be using whole
+numbers, natural numbers, integers, and real numbers. Imaginary numbers may be
+encountered in more advanced use cases such as matrix decomposition, which we
+will touch on in Chapter 4.
+Complex and Imaginary Numbers
+If you do want to learn about imaginary numbers, there is a great
+playlist Imaginary Numbers are Real on YouTube.
+Order of Operations
+Hopefully, you are familiar with order of operations, which is the order you solve each
+part of a mathematical expression. As a brief refresher, recall that you evaluate com‐
+ponents in parentheses, followed by exponents, then multiplication, division, addi‐
+tion, and subtraction. You can remember the order of operations by the mnemonic
+device PEMDAS (Please Excuse My Dear Aunt Sally), which corresponds to the
+ordering parentheses, exponents, multiplication, division, addition, and subtraction.
+Order of Operations 
+| 
+3
+
+
+--- PAGE 20 ---
+Take for example this expression:
+2 × 3 + 2 2
+5
+−4
+First we evaluate the parentheses (3 + 2), which equals 5:
+2 × 5 2
+5
+−4
+Next we solve the exponent, which we can see is squaring that 5 we just summed.
+That is 25:
+2 × 25
+5 −4
+Next up we have multiplication and division. The ordering of these two is swappable
+since division is also multiplication (using fractions). Let’s go ahead and multiply the
+2 with the 25
+5 , yielding 50
+5 :
+50
+5 −4
+Next we will perform the division, dividing 50 by 5, which will yield 10:
+10 −4
+And finally, we perform any addition and subtraction. Of course, 10 −4 is going to
+give us 6:
+10 −4 = 6
+Sure enough, if we were to express this in Python we would print a value of 6.0 as
+shown in Example 1-1.
+Example 1-1. Solving an expression in Python
+my_value = 2 * (3 + 2)**2 / 5 - 4
+print(my_value) # prints 6.0
+4 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 21 ---
+This may be elementary but it is still critical. In code, even if you get the correct result
+without them, it is a good practice to liberally use parentheses in complex expressions
+so you establish control of the evaluation order.
+Here I group the fractional part of my expression in parentheses, helping to set it
+apart from the rest of the expression in Example 1-2.
+Example 1-2. Making use of parentheses for clarity in Python
+my_value = 2 * ((3 + 2)**2 / 5) - 4
+print(my_value) # prints 6.0
+While both examples are technically correct, the latter is more clear to us easily con‐
+fused humans. If you or someone else makes changes to your code, the parentheses
+provide an easy reference of operation order as you make changes. This provides a
+line of defense against code changes to prevent bugs as well.
+Variables
+If you have done some scripting with Python or another programming language, you
+have an idea what a variable is. In mathematics, a variable is a named placeholder for
+an unspecified or unknown number.
+You may have a variable x representing any real number, and you can multiply that
+variable without declaring what it is. In Example 1-3 we take a variable input x from a
+user and multiply it by 3.
+Example 1-3. A variable in Python that is then multiplied
+x = int(input("Please input a number\n"))
+product = 3 * x
+print(product)
+There are some standard variable names for certain variable types. If these variable
+names and concepts are unfamiliar, no worries! But some readers might recognize we
+use theta θ to denote angles and beta β for a parameter in a linear regression. Greek
+symbols make awkward variable names in Python, so we would likely name these
+variables theta and beta in Python as shown in Example 1-4.
+Variables 
+| 
+5
+
+
+--- PAGE 22 ---
+Example 1-4. Greek variable names in Python
+beta = 1.75
+theta = 30.0
+Note also that variable names can be subscripted so that several instances of a variable
+name can be used. For practical purposes, just treat these as separate variables. If you
+encounter variables x1, x2, and x3, just treat them as three separate variables as shown
+in Example 1-5.
+Example 1-5. Expressing subscripted variables in Python
+x1 = 3  # or x_1 = 3
+x2 = 10 # or x_2 = 10
+x3 = 44 # or x_3 = 44
+Functions
+Functions are expressions that define relationships between two or more variables.
+More specifically, a function takes input variables (also called domain variables or
+independent variables), plugs them into an expression, and then results in an output
+variable (also called dependent variable).
+Take this simple linear function:
+y = 2x + 1
+For any given x-value, we solve the expression with that x to find y. When x = 1, then
+y = 3. When x = 2, y = 5. When x = 3, y = 7 and so on, as shown in Table 1-1.
+Table 1-1. Different values for y = 2x + 1
+x
+2x + 1
+y
+0 2(0) + 1 1
+1 2(1) + 1 3
+2 2(2) + 1 5
+3 2(3) + 1 7
+Functions are useful because they model a predictable relationship between variables,
+such as how many fires y can we expect at x temperature. We will use linear functions
+to perform linear regressions in Chapter 5.
+6 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 23 ---
+Another convention you may see for the dependent variable y is to explicitly label it
+a function of x, such as f x . So rather than express a function as y = 2x + 1, we can
+also express it as:
+f x = 2x + 1
+Example 1-6 shows how we can declare a mathematical function and iterate it in
+Python.
+Example 1-6. Declaring a linear function in Python
+def f(x):
+    return 2 * x + 1
+x_values = [0, 1, 2, 3]
+for x in x_values:
+    y = f(x)
+    print(y)
+When dealing with real numbers, a subtle but important feature of functions is they
+often have an infinite number of x-values and resulting y-values. Ask yourself this:
+how many x-values can we put through the function y = 2x + 1? Rather than just 0, 1,
+2, 3…why not 0, 0.5, 1, 1.5, 2, 2.5, 3 as shown in Table 1-2?
+Table 1-2. Different values for y = 2x + 1
+x
+2x + 1
+y
+0.0
+2(0) + 1
+1
+0.5
+2(.5) + 1
+2
+1.0
+2(1) + 1
+3
+1.5
+2(1.5) + 1 4
+2.0
+2(2) + 1
+5
+2.5
+2(2.5) + 1 6
+3.0
+2(3) + 1
+7
+Or why not do quarter steps for x? Or 1/10 of a step? We can make these steps
+infinitely small, effectively showing y = 2x + 1 is a continuous function, where for
+every possible value of x there is a value for y. This segues us nicely to visualize our
+function as a line as shown in Figure 1-1.
+Functions 
+| 
+7
+
+
+--- PAGE 24 ---
+Figure 1-1. Graph for function y = 2x + 1
+When we plot on a two-dimensional plane with two number lines (one for each
+variable) it is known as a Cartesian plane, x-y plane, or coordinate plane. We trace a
+given x-value and then look up the corresponding y-value, and plot the intersections
+as a line. Notice that due to the nature of real numbers (or decimals, if you prefer),
+there are an infinite number of x values. This is why when we plot the function f(x)
+we get a continuous line with no breaks in it. There are an infinite number of points
+on that line, or any part of that line.
+If you want to plot this using Python, there are a number of charting libraries from
+Plotly to matplotlib. Throughout this book we will use SymPy to do many tasks, and
+the first we will use is plotting a function. SymPy uses matplotlib so make sure you
+have that package installed. Otherwise it will print an ugly text-based graph to your
+console. After that, just declare the x variable to SymPy using symbols(), declare
+your function, and then plot it as shown in Example 1-7 and Figure 1-2.
+Example 1-7. Charting a linear function in Python using SymPy
+from sympy import *
+x = symbols('x')
+f = 2*x + 1
+plot(f)
+8 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 25 ---
+Figure 1-2. Using SymPy to graph a linear function
+Example 1-8 and Figure 1-3 are another example showing the function f x = x2 + 1.
+Example 1-8. Charting an exponential function
+from sympy import *
+x = symbols('x')
+f = x**2 + 1
+plot(f)
+Note in Figure 1-3 we do not get a straight line but rather a smooth, symmetrical
+curve known as a parabola. It is continuous but not linear, as it does not produce
+values in a straight line. Curvy functions like this are mathematically harder to work
+with, but we will learn some tricks to make it not so bad.
+Curvilinear Functions
+When a function is continuous but curvy, rather than linear and
+straight, we call it a curvilinear function.
+Functions 
+| 
+9
+
+
+--- PAGE 26 ---
+Figure 1-3. Using SymPy to graph an exponential function
+Note that functions utilize multiple input variables, not just one. For example, we can
+have a function with independent variables x and y. Note that y is not dependent like
+in previous examples.
+f x, y = 2x + 3y
+Since we have two independent variables (x and y) and one dependent variable (the
+output of f(x,y)), we need to plot this graph on three dimensions to produce a plane
+of values rather than a line, as shown in Example 1-9 and Figure 1-4.
+Example 1-9. Declaring a function with two independent variables in Python
+from sympy import *
+from sympy.plotting import plot3d
+x, y = symbols('x y')
+f = 2*x + 3*y
+plot3d(f)
+10 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 27 ---
+Figure 1-4. Using SymPy to graph a three-dimensional function
+No matter how many independent variables you have, your function will typically
+output only one dependent variable. When you solve for multiple dependent vari‐
+ables, you will likely be using separate functions for each one.
+Summations
+I promised not to use equations full of Greek symbols in this book. However, there is
+one that is so common and useful that I would be remiss to not cover it. A summation
+is expressed as a sigma Σ and adds elements together.
+For example, if I want to iterate the numbers 1 through 5, multiply each by 2, and
+sum them, here is how I would express that using a summation. Example 1-10 shows
+how to execute this in Python.
+∑
+i = 1
+5
+2i = 2 1 + 2 2 + 2 3 + 2 4 + 2 5 = 30
+Example 1-10. Performing a summation in Python
+summation = sum(2*i for i in range(1,6))
+print(summation)
+Note that i is a placeholder variable representing each consecutive index value we are
+iterating in the loop, which we multiply by 2 and then sum all together. When you
+Summations 
+| 
+11
+
+
+--- PAGE 28 ---
+are iterating data, you may see variables like xi indicating an element in a collection at
+index i.
+The range() function
+Recall that the range() function in Python is end exclusive, mean‐
+ing if you invoke range(1,4) it will iterate the numbers 1, 2, and 3.
+It excludes the 4 as an upper boundary.
+It is also common to see n represent the number of items in a collection, like
+the number of records in a dataset. Here is one such example where we iterate a
+collection of numbers of size n, multiply each one by 10, and sum them:
+∑
+i = 1
+n
+10xi
+In Example 1-11 we use Python to execute this expression on a collection of four
+numbers. Note that in Python (and most programming languages in general) we
+typically reference items starting at index 0, while in math we start at index 1.
+Therefore, we shift accordingly in our iteration by starting at 0 in our range().
+Example 1-11. Summation of elements in Python
+x = [1, 4, 6, 2]
+n = len(x)
+summation = sum(10*x[i] for i in range(0,n))
+print(summation)
+That is the gist of summation. In a nutshell, a summation Σ says, “add a bunch of
+things together,” and uses an index i and a maximum value n to express each iteration
+feeding into the sum. We will see these throughout this book.
+Summations in SymPy
+Feel free to come back to this sidebar later when you learn more about SymPy.
+SymPy, which we use to graph functions, is actually a symbolic math library; we
+will talk about what this means later in this chapter. But note for future reference
+that a summation operation in SymPy is performed using the Sum() operator. In the
+following code, we iterate i from 1 through n, multiply each i, and sum them. But
+then we use the subs() function to specify n as 5, which will then iterate and sum all i
+elements from 1 through n:
+12 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 29 ---
+from sympy import *
+i,n = symbols('i n')
+# iterate each element i from 1 to n,
+# then multiply and sum
+summation = Sum(2*i,(i,1,n))
+# specify n as 5,
+# iterating the numbers 1 through 5
+up_to_5 = summation.subs(n, 5)
+print(up_to_5.doit()) # 30
+Note that summations in SymPy are lazy, meaning they do not automatically calculate
+or get simplified. So use the doit() function to execute the expression.
+Exponents
+Exponents multiply a number by itself a specified number of times. When you raise 2
+to the third power (expressed as 23 using 3 as a superscript), that is multiplying three
+2s together:
+23 = 2 * 2 * 2 = 8
+The base is the variable or value we are exponentiating, and the exponent is the
+number of times we multiply the base value. For the expression 23, 2 is the base and 3
+is the exponent.
+Exponents have a few interesting properties. Say we multiplied x2 and x3 together.
+Observe what happens next when I expand the exponents with simple multiplication
+and then consolidate into a single exponent:
+x2x3 = x * x * x * x * x = x2 + 3 = x5
+When we multiply exponents together with the same base, we simply add the expo‐
+nents, which is known as the product rule. Let me emphasize that the base of all
+multiplied exponents must be the same for the product rule to apply.
+Let’s explore division next. What happens when we divide x2 by x5 ?
+x2
+x5
+Exponents 
+| 
+13
+
+
+--- PAGE 30 ---
+x * x
+x * x * x * x * x
+1
+x * x * x
+1
+x3 = x−3
+As you can see, when we divide x2 by x5 we can cancel out two x’s in the numerator
+and denominator, leaving us with 1
+x3. When a factor exists in both the numerator and
+denominator, we can cancel out that factor.
+What about the x−3, you wonder? This is a good point to introduce negative expo‐
+nents, which is another way of expressing an exponent operation in the denominator
+of a fraction. To demonstrate, 1
+x3 is the same as x−3:
+1
+x3 = x−3
+Tying back the product rule, we can see it applies to negative exponents, too. To get
+intuition behind this, let’s approach this problem a different way. We can express
+this division of two exponents by making the “5” exponent of x5 negative, and then
+multiplying it with x2. When you add a negative number, it is effectively performing
+subtraction. Therefore, the exponent product rule summing the multiplied exponents
+still holds up as shown next:
+x2
+x5 = x2 1
+x5 = x2x−5 = x2 + −5 = x−3
+Last but not least, can you figure out why any base with an exponent of 0 is 1?
+x0 = 1
+The best way to get this intuition is to reason that any number divided by itself is 1.
+If you have x3
+x3 it is algebraically obvious that reduces to 1. But that expression also
+evaluates to x0:
+1 = x3
+x3 = x3x−3 = x3 + −3 = x0
+14 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 31 ---
+By the transitive property, which states that if a = b and b = c, then a = c, we know
+that x0 = 1.
+Simplify Expressions with SymPy
+If you get uncomfortable with simplifying algebraic expressions, you can use the
+SymPy library to do the work for you. Here is how to simplify our previous example:
+from sympy import *
+x = symbols('x')
+expr = x**2 / x**5
+print(expr) # x**(-3)
+Now what about fractional exponents? They are an alternative way to represent roots,
+such as the square root. As a brief refresher, a 4 asks “What number multiplied by
+itself will give me 4?” which of course is 2. Note here that 41/2 is the same as 4:
+41/2 =
+4 = 2
+Cubed roots are similar to square roots, but they seek a number multiplied by itself
+three times to give a result. A cubed root of 8 is expressed as 
+8
+3 and asks “What
+number multiplied by itself three times gives me 8?” This number would be 2 because
+2 * 2 * 2 = 8. In exponents a cubed root is expressed as a fractional exponent, and 8
+3
+can be reexpressed as 81/3:
+81/3 =
+8
+3
+= 2
+To bring it back full circle, what happens when you multiply the cubed root of 8
+three times? This will undo the cubed root and yield 8. Alternatively, if we express
+the cubed root as fractional exponents 81/3, it becomes clear we add the exponents
+together to get an exponent of 1. That also undoes the cubed root:
+8
+3
+*
+8
+3
+*
+8
+3
+= 8
+1
+3 × 8
+1
+3 × 8
+1
+3 = 8
+1
+3 + 1
+3 + 1
+3 = 81 = 8
+And one last property: an exponent of an exponent will multiply the exponents
+together. This is known as the power rule. So 83 2 would simplify to 86:
+83 2 = 83 × 2 = 86
+Exponents 
+| 
+15
+
+
+--- PAGE 32 ---
+If you are skeptical why this is, try expanding it and you will see the sum rule makes it
+clear:
+83 2 = 8383 = 83 + 3 = 86
+Lastly, what does it mean when we have a fractional exponent with a numerator other
+than 1, such as 8
+2
+3? Well, that is taking the cube root of 8 and then squaring it. Take a
+look:
+8
+2
+3 = 8
+1
+3
+2
+= 22 = 4
+And yes, irrational numbers can serve as exponents like 8π, which is 687.2913. This
+may feel unintuitive, and understandably so! In the interest of time, we will not
+dive deep into this as it requires some calculus. But essentially, we can calculate
+irrational exponents by approximating with a rational number. This is effectively
+what computers do since they can compute to only so many decimal places anyway.
+For example π has an infinite number of decimal places. But if we take the first 11
+digits, 3.1415926535, we can approximate π as a rational number 31415926535 /
+10000000000. Sure enough, this gives us approximately 687.2913, which should
+approximately match any calculator:
+8π ≈8
+31415926535
+10000000000 ≈687.2913
+Logarithms
+A logarithm is a math function that finds a power for a specific number and base.
+It may not sound interesting at first, but it actually has many applications. From
+measuring earthquakes to managing volume on your stereo, the logarithm is found
+everywhere. It also finds its way into machine learning and data science a lot. As a
+matter of fact, logarithms will be a key part of logistic regressions in Chapter 6.
+Start your thinking by asking “2 raised to what power gives me 8?” One way to
+express this mathematically is to use an x for the exponent:
+2x = 8
+We intuitively know the answer, x = 3, but we need a more elegant way to express this
+common math operation. This is what the log function is for.
+16 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 33 ---
+log28 = x
+As you can see in the preceding logarithm expression, we have a base 2 and are
+finding a power to give us 8. More generally, we can reexpress a variable exponent as
+a logarithm:
+ax = b
+logab = x
+Algebraically speaking, this is a way of isolating the x, which is important to solve for
+x. Example 1-12 shows how we calculate this logarithm in Python.
+Example 1-12. Using the log function in Python
+from math import log
+# 2 raised to what power gives me 8?
+x = log(8, 2)
+print(x) # prints 3.0
+When you do not supply a base argument to a log() function on a platform like
+Python, it will typically have a default base. In some fields, like earthquake measure‐
+ments, the default base for the log is 10. But in data science the default base for the log
+is Euler’s number e. Python uses the latter, and we will talk about e shortly.
+Just like exponents, logarithms have several properties when it comes to multiplica‐
+tion, division, exponentiation, and so on. In the interest of time and focus, I will just
+present this in Table 1-3. The key idea to focus on is a logarithm finds an exponent
+for a given base to result in a certain number.
+If you need to dive into logarithmic properties, Table 1-3 displays exponent and
+logarithm behaviors side-by-side that you can use for reference.
+Table 1-3. Properties for exponents and logarithms
+Operator
+Exponent property Logarithm property
+Multiplication
+xm × xn = xm + n
+log a × b = log a + log b
+Division
+xm
+xn = xm −n
+log a
+b = log a −log b
+Exponentiation
+xm n = xmn
+log an = n × log a
+Zero Exponent
+x0 = 1
+log 1 = 0
+Inverse
+x−1 = 1
+x
+log x−1 = log 1
+x = −log x
+Logarithms 
+| 
+17
+
+
+--- PAGE 34 ---
+Euler’s Number and Natural Logarithms
+There is a special number that shows up quite a bit in math called Euler’s number e.
+It is a special number much like Pi π and is approximately 2.71828. e is used a lot
+because it mathematically simplifies a lot of problems. We will cover e in the context
+of exponents and logarithms.
+Euler’s Number
+Back in high school, my calculus teacher demonstrated Euler’s number in several
+exponential problems. Finally I asked, “Mr. Nowe, what is e anyway? Where does it
+come from?” I remember never being fully satisfied with the explanations involving
+rabbit populations and other natural phenomena. I hope to give a more satisfying
+explanation here.
+Why Euler’s Number Is Used So Much
+A property of Euler’s number is its exponential function is a derivative to itself,
+which is convenient for exponential and logarithmic functions. We will learn about
+derivatives later in this chapter. In many applications where the base does not really
+matter, we pick the one that results in the simplest derivative, and that is Euler’s
+number. That is also why it is the default base in many data science functions.
+Here is how I like to discover Euler’s number. Let’s say you loan $100 to somebody
+with 20% interest annually. Typically, interest will be compounded monthly, so the
+interest each month would be . 20/12 = . 01666. How much will the loan balance be
+after two years? To keep it simple, let’s assume the loan does not require payments
+(and no payments are made) until the end of those two years.
+Putting together the exponent concepts we learned so far (or perhaps pulling out a
+finance textbook), we can come up with a formula to calculate interest. It consists of
+a balance A for a starting investment P, interest rate r, time span t (number of years),
+and periods n (number of months in each year). Here is the formula:
+A = P × 1 + r
+n
+nt
+So if we were to compound interest every month, the loan would grow to $148.69 as
+calculated here:
+A = P × 1 + r
+n
+nt
+  
+18 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 35 ---
+100 × 1 + .20
+12
+12 × 2
+= 148.6914618  
+If you want to do this in Python, try it out with the code in Example 1-13.
+Example 1-13. Calculating compound interest in Python
+from math import exp
+p = 100
+r = .20
+t = 2.0
+n = 12
+a = p * (1 + (r/n))**(n * t)
+print(a) # prints 148.69146179463576
+But what if we compounded interest daily? What happens then? Change n to 365:
+A = P × 1 + r
+n
+nt
+ 
+100 × 1 + .20
+365
+365 × 2
+= 149.1661279
+Huh! If we compound our interest daily instead of monthly, we would earn 47.4666
+cents more at the end of two years. If we got greedy why not compound every hour as
+shown next? Will that give us even more? There are 8,760 hours in a year, so set n to
+that value:
+A = P × 1 + r
+n
+nt
+ 
+100 × 1 + .20
+8760
+8760 × 2
+= 149.1817886
+Ah, we squeezed out roughly 2 cents more in interest! But are we experiencing a
+diminishing return? Let’s try to compound every minute! Note that there are 525,600
+minutes in a year, so let’s set that value to n:
+A = P × 1 + r
+n
+nt
+ 
+100 × 1 +
+.20
+525600
+525600 × 2
+= 149.1824584
+Euler’s Number and Natural Logarithms 
+| 
+19
+
+
+--- PAGE 36 ---
+OK, we are only gaining smaller and smaller fractions of a cent the more frequently
+we compound. So if I keep making these periods infinitely smaller to the point of
+compounding continuously, where does this lead?
+Let me introduce you to Euler’s number e, which is approximately 2.71828. Here is
+the formula to compound “continuously,” meaning we are compounding nonstop:
+A = P × ert
+Returning to our example, let’s calculate the balance of our loan after two years if we
+compounded continuously:
+A = P × ert
+A = 100 × e . 20 × 2 = 149.1824698
+This is not too surprising considering compounding every minute got us a balance of
+149.1824584. That got us really close to our value of 149.1824698 when compounding
+continuously.
+Typically you use e as an exponent base in Python, Excel, and other platforms using
+the exp() function. You will find that e is so commonly used, it is the default base for
+both exponent and logarithm functions.
+Example 1-14 calculates continuous interest in Python using the exp() function.
+Example 1-14. Calculating continuous interest in Python
+from math import exp
+p = 100 # principal, starting amount
+r = .20 # interest rate, by year
+t = 2.0 # time, number of years
+a = p * exp(r*t)
+print(a) # prints 149.18246976412703
+So where do we derive this constant e? Compare the compounding interest formula
+and the continuous interest formula. They structurally look similar but have some
+differences:
+A = P × 1 + r
+n
+nt
+A = P × ert
+20 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 37 ---
+More technically speaking, e is the resulting value of the expression 1 + 1
+n
+n as n
+forever gets bigger and bigger, thus approaching infinity. Try experimenting with
+increasingly large values for n. By making it larger and larger you will notice
+something:
+1 + 1
+n
+n
+ 
+1 +
+1
+100
+100
+= 2.70481382942 
+1 +
+1
+1000
+1000
+= 2.71692393224 
+1 +
+1
+10000
+10000
+= 2.71814592682 
+1 +
+1
+10000000
+10000000
+= 2.71828169413 
+As you make n larger, there is a diminishing return and it converges approximately
+on the value 2.71828, which is our value e. You will find this e used not just in study‐
+ing populations and their growth. It plays a key role in many areas of mathematics.
+Later in the book, we will use Euler’s number to build normal distributions in
+Chapter 3 and logistic regressions in Chapter 6.
+Natural Logarithms
+When we use e as our base for a logarithm, we call it a natural logarithm. Depending
+on the platform, we may use ln() instead of log() to specify a natural logarithm. So
+rather than express a natural logarithm expressed as loge10 to find the power raised
+on e to get 10, we would shorthand it as ln 10 :
+loge10 = ln 10
+However, in Python, a natural logarithm is specified by the log() function. As
+discussed earlier, the default base for the log() function is e. Just leave the second
+argument for the base empty and it will default to using e as the base shown in
+Example 1-15.
+Example 1-15. Calculating the natural logarithm of 10 in Python
+from math import log
+# e raised to what power gives us 10?
+x = log(10)
+Euler’s Number and Natural Logarithms 
+| 
+21
+
+
+--- PAGE 38 ---
+print(x) # prints 2.302585092994046
+We will use e in a number of places throughout this book. Feel free to experiment
+with exponents and logarithms using Excel, Python, Desmos.com, or any other calcu‐
+lation platform of your choice. Make graphs and get comfortable with what these
+functions look like.
+Limits
+As we have seen with Euler’s number, some interesting ideas emerge when we forever
+increase or decrease an input variable and the output variable keeps approaching a
+value but never reaching it. Let’s formally explore this idea.
+Take this function, which is plotted in Figure 1-5:
+f x = 1
+x
+Figure 1-5. A function that forever approaches 0 but never reaches 0
+We are looking only at positive x values. Notice that as x forever increases, f(x) gets
+closer to 0. Fascinatingly, f(x) never actually reaches 0. It just forever keeps getting
+closer.
+22 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 39 ---
+Therefore the fate of this function is, as x forever extends into infinity, it will keep
+getting closer to 0 but never reach 0. The way we express a value that is forever being
+approached, but never reached, is through a limit:
+lim
+x
+∞
+1
+x = 0
+The way we read this is “as x approaches infinity, the function 1/x approaches 0 (but
+never reaches 0).” You will see this kind of “approach but never touch” behavior a lot,
+especially when we dive into derivatives and integrals.
+Using SymPy, we can calculate what value we approach for f x = 1
+x as x approaches
+infinity ∞ (Example 1-16). Note that ∞ is cleverly expressed in SymPy with oo.
+Example 1-16. Using SymPy to calculate limits
+from sympy import *
+x = symbols('x')
+f = 1 / x
+result = limit(f, x, oo)
+print(result) # 0
+As you have seen, we discovered Euler’s number e this way too. It is the result of
+forever extending n into infinity for this function:
+lim
+n
+∞1 + 1
+n
+n
+= e = 2.71828169413... 
+Funnily enough, when we calculate Euler’s number with limits in SymPy (shown in
+the following code), SymPy immediately recognizes it as Euler’s number. We can call
+evalf() so we can actually display it as a number:
+from sympy import *
+n = symbols('n')
+f = (1 + (1/n))**n
+result = limit(f, n, oo)
+print(result) # E
+print(result.evalf()) # 2.71828182845905
+Limits 
+| 
+23
+
+
+--- PAGE 40 ---
+The Power of SymPy
+SymPy is a powerful and fantastic computer algebra system (CAS) for Python that
+uses exact symbolic computation rather than approximate computation using deci‐
+mals. It’s helpful for those situations when you would use “pencil and paper” to solve
+math and calculus problems, with the benefit of using familiar Python syntax. Rather
+than represent the square root of 2 by approximating 1.4142135623730951, it will
+preserve it as exactly sqrt 2 .
+So why not use SymPy for everything math-related? While we will use it throughout
+this book, it is important to still be comfortable doing Python math with plain
+decimals, as scikit-learn and other data science libraries take this approach. It is much
+faster for computers to use decimals rather than symbols. SymPy also struggles when
+mathematical expressions start to get too big. But keep SymPy in your back pocket as
+your advantage, and do not tell your high school and college-age kids about it. They
+can literally use it to do their math homework.
+Derivatives
+Let’s go back to talking about functions and look at them from a calculus perspective,
+starting with derivatives. A derivative tells the slope of a function, and it is useful to
+measure the rate of change at any point in a function.
+Why do we care about derivatives? They are often used in machine learning and
+other mathematical algorithms, especially with gradient descent. When the slope is 0,
+that means we are at the minimum or maximum of an output variable. This concept
+will be useful later when we do linear regression (Chapter 5), logistic regression
+(Chapter 6), and neural networks (Chapter 7).
+Let’s start with a simple example. Let’s take a look at the function f x = x2 in
+Figure 1-6. How “steep” is the curve at x = 2?
+Notice that we can measure “steepness” at any point in the curve, and we can visualize
+this with a tangent line. Think of a tangent line as a straight line that “just touches”
+the curve at a given point. It also provides the slope at a given point. You can crudely
+estimate a tangent line at a given x-value by creating a line intersecting that x-value
+and a really close neighboring x-value on the function.
+Take x = 2 and a nearby value x = 2.1, which when passed to the function f x = x2
+will yield f(2) = 4 and f(2.1) = 4.41 as shown in Figure 1-7. The resulting line that
+passes through these two points has a slope of 4.1.
+24 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 41 ---
+Figure 1-6. Observing steepness at a given part of the function
+Figure 1-7. A crude way of calculating slope
+Derivatives 
+| 
+25
+
+
+--- PAGE 42 ---
+You can quickly calculate the slope m between two points using the simple rise-over-
+run formula:
+m = y2 −y1
+x2 −x1
+ 
+m = 4.41 −4.0
+2.1 −2.0  
+m = 4.1 
+If I made the x step between the two points even smaller, like x = 2 and x = 2.00001,
+which would result in f(2) = 4 and f(2.00001) = 4.00004, that would get really close to
+the actual slope of 4. So the smaller the step is to the neighboring value, the closer we
+get to the slope value at a given point in the curve. Like so many important concepts
+in math, we find something meaningful as we approach infinitely large or infinitely
+small values.
+Example 1-17 shows a derivative calculator implemented in Python.
+Example 1-17. A derivative calculator in Python
+def derivative_x(f, x, step_size):
+    m = (f(x + step_size) - f(x)) / ((x + step_size) - x)
+    return m
+def my_function(x):
+    return x**2
+slope_at_2 = derivative_x(my_function, 2, .00001)
+print(slope_at_2) # prints 4.000010000000827
+Now the good news is there is a cleaner way to calculate the slope anywhere on a
+function. We have already been using SymPy to plot graphs, but I will show you how
+it can also do tasks like derivatives using the magic of symbolic computation.
+When you encounter an exponential function like f x = x2 the derivative function
+will make the exponent a multiplier and then decrement the exponent by 1, leaving
+us with the derivative d
+dxx2 = 2x. The d
+dx indicates a derivative with respect to x, which
+says we are building a derivative targeting the x-value to get its slope. So if we want
+to find the slope at x = 2, and we have the derivative function, we just plug in that
+x-value to get the slope:
+f x = x2
+26 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 43 ---
+d
+dx f x = d
+dxx2 = 2x
+d
+dx f 2 = 2 2 = 4
+If you intend to learn these rules to hand-calculate derivatives, there are plenty of
+calculus books for that. But there are some nice tools to calculate derivatives symboli‐
+cally for you. The Python library SymPy is free and open source, and it nicely adapts
+to using the Python syntax. Example 1-18 shows how to calculate the derivative for
+f x = x2 on SymPy.
+Example 1-18. Calculating a derivative in SymPy
+from sympy import *
+# Declare 'x' to SymPy
+x = symbols('x')
+# Now just use Python syntax to declare function
+f = x**2
+# Calculate the derivative of the function
+dx_f = diff(f)
+print(dx_f) # prints 2*x
+Wow! So by declaring variables using the symbols() function in SymPy, I can then
+proceed to use normal Python syntax to declare my function. After that I can use
+diff() to calculate the derivative function. In Example 1-19 we can then take our
+derivative function back to plain Python and simply declare it as another function.
+Example 1-19. A derivative calculator in Python
+def f(x):
+    return x**2
+def dx_f(x):
+    return 2*x
+slope_at_2 = dx_f(2.0)
+print(slope_at_2) # prints 4.0
+If you want to keep using SymPy, you can call the subs() function to swap the x
+variable with the value 2 as shown in Example 1-20.
+Derivatives 
+| 
+27
+
+
+--- PAGE 44 ---
+Example 1-20. Using the substitution feature in SymPy
+# Calculate the slope at x = 2
+print(dx_f.subs(x,2)) # prints 4
+Partial Derivatives
+Another concept we will encounter in this book is partial derivatives, which we will
+use in Chapters 5, 6, and 7. These are derivatives of functions that have multiple input
+variables.
+Think of it this way. Rather than finding the slope on a one-dimensional function,
+we have slopes with respect to multiple variables in several directions. For each given
+variable derivative, we assume the other variables are held constant. Take a look at the
+3D graph of f x, y = 2x3 + 3y3 in Figure 1-8, and you will see we have slopes in two
+directions for two variables.
+Let’s take the function f x, y = 2x3 + 3y3. The x and y variable each get their own
+derivatives d
+dx and d
+dy. These represent the slope values with respect to each variable
+on a multidimensional surface. We technically call these “slopes” gradients when
+dealing with multiple dimensions. These are the derivatives for x and y, followed by
+the SymPy code to calculate those derivatives:
+f x, y = 2x3 + 3y3
+d
+dx2x3 + 3y3 = 6x2
+d
+dy2x3 + 3y3 = 9y2
+Example 1-21 and Figure 1-8 show how we calculate the partial derivatives for x and
+y, respectively, with SymPy.
+Example 1-21. Calculating partial derivatives with SymPy
+from sympy import *
+from sympy.plotting import plot3d
+# Declare x and y to SymPy
+x,y = symbols('x y')
+# Now just use Python syntax to declare function
+f = 2*x**3 + 3*y**3
+# Calculate the partial derivatives for x and y
+dx_f = diff(f, x)
+28 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 45 ---
+dy_f = diff(f, y)
+print(dx_f) # prints 6*x**2
+print(dy_f) # prints 9*y**2
+# plot the function
+plot3d(f)
+Figure 1-8. Plotting a three-dimensional exponential function
+So for (x,y) values (1,2), the slope with respect to x is 6 1 = 6 and the slope with
+respect to y is 9 2 2 = 36.
+Using Limits to Calculate Derivatives
+Want to see where limits come into play calculating derivatives? If you are feeling
+good about what we learned so far, proceed! If you are still digesting, maybe consider
+coming back to this sidebar later.
+SymPy allows us to do some interesting explorations about math. Take our function
+f x = x2; we approximated a slope for x = 2 by drawing a line through a close
+neighboring point x = 2.0001 by adding a step 0.0001. Why not use a limit to forever
+decrease that step s and see what slope it approaches?
+lim
+s
+0
+x + s 2 −x2
+x + s −x
+Derivatives 
+| 
+29
+
+
+--- PAGE 46 ---
+In our example, we are interested in the slope where x = 2 so let’s substitute that:
+lim
+s
+0
+2 + s 2 −22
+2 + s −2 = 4
+By forever approaching a step size s to 0 but never reaching it (remember the
+neighboring point cannot touch the point at x = 2, else we have no line!), we can use
+a limit to see we converge on a slope of 4 as shown in Example 1-22.
+Example 1-22. Using limits to calculate a slope
+from sympy import *
+# "x" and step size "s"
+x, s = symbols('x s')
+# declare function
+f = x**2
+# slope between two points with gap "s"
+# substitute into rise-over-run formula
+slope_f = (f.subs(x, x + s) - f) / ((x+s) - x)
+# substitute 2 for x
+slope_2 = slope_f.subs(x, 2)
+# calculate slope at x = 2
+# infinitely approach step size _s_ to 0
+result = limit(slope_2, s, 0)
+print(result) # 4
+Now what if we do not assign a specific value to x and leave it alone? What happens if
+we decrease our step size s infinitely toward 0? Let’s look in Example 1-23.
+Example 1-23. Using limits to calculate a derivative
+from sympy import *
+# "x" and step size "s"
+x, s = symbols('x s')
+# declare function
+f = x**2
+# slope between two points with gap "s"
+# substitute into rise-over-run formula
+slope_f = (f.subs(x, x + s) - f) / ((x+s) - x)
+# calculate derivative function
+30 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 47 ---
+# infinitely approach step size +s+ to 0
+result = limit(slope_f, s, 0)
+print(result) # 2x
+That gave us our derivative function 2x. SymPy was smart enough to figure out to
+never let our step size reach 0 but forever approach 0. This converges f x = x2 to
+reach its derivative counterpart 2x.
+The Chain Rule
+In Chapter 7 when we build a neural network, we are going to need a special math
+trick called the chain rule. When we compose the neural network layers, we will have
+to untangle the derivatives from each layer. But for now let’s learn the chain rule with
+a simple algebraic example. Let’s say you are given two functions:
+y = x2 + 1
+z = y3 −2
+Notice that these two functions are linked, because the y is the output variable in the
+first function but is the input variable in the second. This means we can substitute the
+first function y into the second function z like this:
+z = x2 + 1 3 −2
+So what is the derivative for z with respect to x? We already have the substitution
+expressing z in terms of x. Let’s use SymPy to calculate that in Example 1-24.
+Example 1-24. Finding the derivative of z with respect to x
+from sympy import *
+z = (x**2 + 1)**3 - 2
+dz_dx = diff(z, x)
+print(dz_dx)
+# 6*x*(x**2 + 1)**2
+So our derivative for z with respect to x is 6x x2 + 1
+2:
+dz
+dx
+x2 + 1 3 −2
+Derivatives 
+| 
+31
+
+
+--- PAGE 48 ---
+= 6x x2 + 1 2
+But look at this. Let’s start over and take a different approach. If we take the deriva‐
+tives of the y and z functions separately, and then multiply them together, this also
+produces the derivative of z with respect to x! Let’s try it:
+dy
+dx x2 + 1 = 2x
+dz
+dy y3 −2 = 3y2
+dz
+dx = 2x 3y2 = 6xy2
+All right, 6xy2 may not look like 6x x2 + 1
+2, but that’s only because we have not
+substituted the y function yet. Do that so the entire dz
+dx derivative is expressed in
+terms of x without y.
+dz
+dx = 6xy2 = 6x x2 + 1 2
+Now we see we got the same derivative function 6x x2 + 1
+2!
+This is the chain rule, which says that for a given function y (with input variable x)
+composed into another function z (with input variable y), we can find the derivative
+of z with respect to x by multiplying the two respective derivatives together:
+dz
+dx = dz
+dy × dy
+dx
+Example 1-25 shows the SymPy code that makes this comparison, showing the
+derivative from the chain rule is equal to the derivative of the substituted function.
+32 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 49 ---
+Example 1-25. Calculating the derivative dz/dx with and without the chain rule, but still
+getting the same answer
+from sympy import *
+x, y = symbols('x y')
+# derivative for first function
+# need to underscore y to prevent variable clash
+_y = x**2 + 1
+dy_dx = diff(_y)
+# derivative for second function
+z = y**3 - 2
+dz_dy = diff(z)
+# Calculate derivative with and without
+# chain rule, substitute y function
+dz_dx_chain = (dy_dx * dz_dy).subs(y, _y)
+dz_dx_no_chain = diff(z.subs(y, _y))
+# Prove chain rule by showing both are equal
+print(dz_dx_chain) # 6*x*(x**2 + 1)**2
+print(dz_dx_no_chain) # 6*x*(x**2 + 1)**2
+The chain rule is a key part of training a neural network with the proper weights and
+biases. Rather than untangle the derivative of each node in a nested onion fashion, we
+can multiply the derivatives across each node instead, which is mathematically a lot
+easier.
+Integrals
+The opposite of a derivative is an integral, which finds the area under the curve for a
+given range. In Chapters 2 and 3, we will be finding the areas under probability distri‐
+butions. Although we will not use integrals directly, and instead will use cumulative
+density functions that are already integrated, it is good to be aware of how integrals
+find areas under curves. Appendix A contains examples of using this approach on
+probability distributions.
+I want to take an intuitive approach for learning integrals called the Reimann Sums,
+one that flexibly adapts to any continuous function. First, let’s point out that finding
+the area for a range under a straight line is easy. Let’s say I have a function f x = 2x
+and I want to find the area under the line between 0 and 1, as shaded in Figure 1-9.
+Integrals 
+| 
+33
+
+
+--- PAGE 50 ---
+Figure 1-9. Calculating an area under a linear function
+Notice that I am finding the area bounded between the line and the x-axis, and in
+the x range 0.0 to 1.0. If you recall basic geometry formulas, the area A for a triangle
+is A = 1
+2bℎ where b is the length of the base and h is the height. We can visually
+spot that b = 1 and ℎ= 2. So plugging into the formula, we get for our area 1.0 as
+calculated here:
+A = 1
+2bℎ
+A = 1
+2 * 1 * 2
+A = 1
+That was not bad, right? But let’s look at a function that is difficult to find the area
+under: f x = x2 + 1. What is the area between 0 and 1 as shaded in Figure 1-10?
+34 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 51 ---
+Figure 1-10. Calculating area under nonlinear functions is less straightforward
+Again we are interested in the area below the curve and above the x-axis, only within
+the x range between 0 and 1. The curviness here does not give us a clean geometric
+formula to find the area, but here is a clever little hack you can do.
+What if we packed five rectangles of equal length under the curve as shown in
+Figure 1-11, where the height of each one extends from the x-axis to where the
+midpoint touches the curve?
+The area of a rectangle is A = length × width, so we could easily sum the areas of the
+rectangles. Would that give us a good approximation of the area under the curve?
+What if we packed 100 rectangles? 1,000? 100,000? As we increase the number of
+rectangles while decreasing their width, would we not get closer to the area under the
+curve? Yes we would, and it is yet another case where we increase/decrease something
+toward infinity to approach an actual value.
+Integrals 
+| 
+35
+
+
+--- PAGE 52 ---
+Figure 1-11. Packing rectangles under a curve to approximate area
+Let’s try it out in Python. First we need a function that approximates an integral that
+we will call approximate_integral(). The arguments a and b will specify the min
+and max of the x range, respectively. n will be the number of rectangles to pack, and f
+will be the function we are integrating. We implement the function in Example 1-26,
+and then use it to integrate our function f x = x2 + 1 with five rectangles, between
+0.0 and 1.0.
+Example 1-26. An integral approximation in Python
+def approximate_integral(a, b, n, f):
+    delta_x = (b - a) / n
+    total_sum = 0
+    for i in range(1, n + 1):
+        midpoint = 0.5 * (2 * a + delta_x * (2 * i - 1))
+        total_sum += f(midpoint)
+    return total_sum * delta_x
+def my_function(x):
+    return x**2 + 1
+area = approximate_integral(a=0, b=1, n=5, f=my_function)
+36 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 53 ---
+print(area) # prints 1.33
+So we get an area of 1.33. What happens if we use 1,000 rectangles? Let’s try it out in
+Example 1-27.
+Example 1-27. Another integral approximation in Python
+area = approximate_integral(a=0, b=1, n=1000, f=my_function)
+print(area) # prints 1.333333250000001
+OK, we are getting some more precision here, and getting some more decimal places.
+What about one million rectangles as shown in Example 1-28?
+Example 1-28. Yet another integral approximation in Python
+area = approximate_integral(a=0, b=1, n=1_000_000, f=my_function)
+print(area) # prints 1.3333333333332733
+OK, I think we are getting a diminishing return here and converging on the value
+1.333 where the “.333” part is forever recurring. If this were a rational number, it is
+likely 4/3 = 1.333. As we increase the number of rectangles, the approximation starts
+to reach its limit at smaller and smaller decimals.
+Now that we have some intuition on what we are trying to achieve and why, let’s do
+a more exact approach with SymPy, which happens to support rational numbers, in
+Example 1-29.
+Example 1-29. Using SymPy to perform integration
+from sympy import *
+# Declare 'x' to SymPy
+x = symbols('x')
+# Now just use Python syntax to declare function
+f = x**2 + 1
+# Calculate the integral of the function with respect to x
+# for the area between x = 0 and 1
+area = integrate(f, (x, 0, 1))
+print(area) # prints 4/3
+Integrals 
+| 
+37
+
+
+--- PAGE 54 ---
+Cool! So the area actually is 4/3, which is what our previous method converged
+on. Unfortunately, plain Python (and many programming languages) only support
+decimals, but computer algebra systems like SymPy give us exact rational numbers.
+We will be using integrals to find areas under curves in Chapters 2 and 3, although we
+will have scikit-learn do the work for us.
+Calculating Integrals with Limits
+For the super curious, here is how we calculate definite integrals using limits in
+SymPy. Please! Skip or come back to this sidebar later if you have enough to digest.
+But if you are feeling good and want to deep dive into how integrals are derived using
+limits, proceed!
+The main idea follows much of what we did earlier: pack rectangles under a curve
+and make them infinitely smaller until we approach the exact area. But of course, the
+rectangles cannot have a width of 0…they just have to keep getting closer to 0 without
+ever reaching 0. It is another case of using limits.
+Khan Academy has a great article explaining how to use limits for Reimann Sums but
+here is how we do it in SymPy as shown in Example 1-30.
+Example 1-30. Using limits to calculate integrals
+from sympy import *
+# Declare variables to SymPy
+x, i, n = symbols('x i n')
+# Declare function and range
+f = x**2 + 1
+lower, upper = 0, 1
+# Calculate width and each rectangle height at index "i"
+delta_x = ((upper - lower) / n)
+x_i = (lower + delta_x * i)
+fx_i = f.subs(x, x_i)
+# Iterate all "n" rectangles and sum their areas
+n_rectangles = Sum(delta_x * fx_i, (i, 1, n)).doit()
+# Calculate the area by approaching the number
+# of rectangles "n" to infinity
+area = limit(n_rectangles, n, oo)
+print(area) # prints 4/3
+38 
+| 
+Chapter 1: Basic Math and Calculus Review
+
+
+--- PAGE 55 ---
+Here we determine the length of each rectangle delta_x and the start of each rectan‐
+gle x_i where i is the index of each rectangle. fx_i is the height of each rectangle at
+index i. We declare n number of rectangles and sum their areas delta_x * fx_i, but
+we have no area value yet because we have not committed a number for n. Instead we
+approach n toward infinity to see what area we converge on, and you should get 4/3!
+Conclusion
+In this chapter we covered some foundations we will use for the rest of this book.
+From number theory to logarithms and calculus integrals, we highlighted some
+important mathematical concepts relevant to data science, machine learning, and
+analytics. You may have questions about why these concepts are useful. That will
+come next!
+Before we move on to discuss probability, take a little time to skim these concepts one
+more time and then do the following exercises. You can always revisit this chapter
+as you progress through this book and refresh as necessary when you start applying
+these mathematical ideas.
+Exercises
+1. Is the value 62.6738 rational or irrational? Why or why not?
+1.
+2. Evaluate the expression: 10710−5
+2.
+3. Evaluate the expression: 81
+1
+2
+3.
+4. Evaluate the expression: 25
+3
+2
+4.
+5. Assuming no payments are made, how much would a $1,000 loan be worth at 5%
+5.
+interest compounded monthly after 3 years?
+6. Assuming no payments are made, how much would a $1,000 loan be worth at 5%
+6.
+interest compounded continuously after 3 years?
+7. For the function f x = 3x2 + 1 what is the slope at x = 3?
+7.
+8. For the function f x = 3x2 + 1 what is the area under the curve for x between 0
+8.
+and 2?
+Answers are in Appendix B.
+Conclusion 
+| 
+39
+
+
+--- PAGE 56 ---

@@ -1,0 +1,141 @@
+<svg width="100%" viewBox="0 0 960 580" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Cognitive Science Taxonomy of LLM Agent Memory</title>
+<desc>Detailed architectural comparison mapping Human Cognitive Memory to modern AI Agent engineering implementations</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M1 2L8 5L1 8" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Header -->
+<text x="40" y="38" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:16px;font-weight:600">The 4-Tier Memory Taxonomy for AI Agents</text>
+<text x="40" y="56" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:12px;font-weight:400">Mapping human cognitive neuroscience memory systems directly to production AI Engineering architecture</text>
+
+<!-- ============================================== -->
+<!-- 4-TIER GRID SYSTEM                             -->
+<!-- ============================================== -->
+
+<!-- TIER 1: WORKING MEMORY -->
+<g transform="translate(25, 80)">
+  <rect width="215" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+  
+  <rect x="15" y="15" width="115" height="22" rx="4" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+  <text x="72" y="26" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">TIER 1 : WORKING</text>
+
+  <text x="15" y="56" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:13px;font-weight:600">Working / Sensory</text>
+  <text x="15" y="74" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Human: Immediate focus</text>
+
+  <rect x="15" y="95" width="185" height="60" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="112" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Where it Lives:</text>
+  <text x="25" y="130" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">LLM Context Window</text>
+  <text x="25" y="144" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Active tokens in current call</text>
+
+  <rect x="15" y="165" width="185" height="110" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="182" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Contents:</text>
+  <text x="25" y="200" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Immediate user prompt</text>
+  <text x="25" y="216" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• ReAct scratchpad thoughts</text>
+  <text x="25" y="232" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Tool execution payload</text>
+  <text x="25" y="252" dominant-baseline="central" style="fill:rgb(153, 60, 29);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Lifetime: 1 Generation</text>
+
+  <rect x="15" y="285" width="185" height="80" rx="6" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+  <text x="25" y="302" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Analogy:</text>
+  <text x="25" y="320" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">CPU Registers / Cache —</text>
+  <text x="25" y="336" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">super fast, but vanishes</text>
+  <text x="25" y="350" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">once execution ends.</text>
+</g>
+
+<!-- TIER 2: SHORT-TERM MEMORY -->
+<g transform="translate(255, 80)">
+  <rect width="215" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+  
+  <rect x="15" y="15" width="125" height="22" rx="4" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+  <text x="77" y="26" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">TIER 2 : SHORT-TERM</text>
+
+  <text x="15" y="56" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:13px;font-weight:600">Short-Term Buffer</text>
+  <text x="15" y="74" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Human: Recent dialogue</text>
+
+  <rect x="15" y="95" width="185" height="60" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="112" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Where it Lives:</text>
+  <text x="25" y="130" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Redis / RAM / DB</text>
+  <text x="25" y="144" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Session conversation list</text>
+
+  <rect x="15" y="165" width="185" height="110" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="182" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Contents:</text>
+  <text x="25" y="200" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Last 10–20 chat messages</text>
+  <text x="25" y="216" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Follow-up clarifications</text>
+  <text x="25" y="232" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Session goal checkpoints</text>
+  <text x="25" y="252" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Lifetime: 1 Session (Hours)</text>
+
+  <rect x="15" y="285" width="185" height="80" rx="6" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183);stroke-width:0.5"/>
+  <text x="25" y="302" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Analogy:</text>
+  <text x="25" y="320" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">RAM (Main Memory) —</text>
+  <text x="25" y="336" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">fast access during the</text>
+  <text x="25" y="350" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">current app session.</text>
+</g>
+
+<!-- TIER 3: EPISODIC LONG-TERM -->
+<g transform="translate(485, 80)">
+  <rect width="215" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+  
+  <rect x="15" y="15" width="135" height="22" rx="4" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.5"/>
+  <text x="82" y="26" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">TIER 3 : EPISODIC</text>
+
+  <text x="15" y="56" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:13px;font-weight:600">Episodic Memory</text>
+  <text x="15" y="74" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Human: Past experiences</text>
+
+  <rect x="15" y="95" width="185" height="60" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="112" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Where it Lives:</text>
+  <text x="25" y="130" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Vector DB (Qdrant/Pine)</text>
+  <text x="25" y="144" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Dense embedding search</text>
+
+  <rect x="15" y="165" width="185" height="110" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="182" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Contents:</text>
+  <text x="25" y="200" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Past weeks' conversations</text>
+  <text x="25" y="216" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Solved errors &amp; logs</text>
+  <text x="25" y="232" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Project decisions history</text>
+  <text x="25" y="252" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Lifetime: Permanent (Years)</text>
+
+  <rect x="15" y="285" width="185" height="80" rx="6" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11);stroke-width:0.5"/>
+  <text x="25" y="302" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Analogy:</text>
+  <text x="25" y="320" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Autobiography / Diary —</text>
+  <text x="25" y="336" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">recalls specific past</text>
+  <text x="25" y="350" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">events when relevant.</text>
+</g>
+
+<!-- TIER 4: SEMANTIC LONG-TERM -->
+<g transform="translate(715, 80)">
+  <rect width="215" height="380" rx="10" style="fill:rgb(249, 250, 251);stroke:rgb(229, 231, 235);stroke-width:1"/>
+  
+  <rect x="15" y="15" width="135" height="22" rx="4" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+  <text x="82" y="26" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:700">TIER 4 : SEMANTIC</text>
+
+  <text x="15" y="56" style="fill:rgb(17, 24, 39);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:13px;font-weight:600">Semantic &amp; Persona</text>
+  <text x="15" y="74" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Human: Generalized facts</text>
+
+  <rect x="15" y="95" width="185" height="60" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="112" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Where it Lives:</text>
+  <text x="25" y="130" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:10px;font-weight:500">Knowledge Graph (Neo4j)</text>
+  <text x="25" y="144" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:9px;font-weight:400">Entity nodes &amp; constraints</text>
+
+  <rect x="15" y="165" width="185" height="110" rx="6" style="fill:rgb(255, 255, 255);stroke:rgb(229, 231, 235);stroke-width:0.8"/>
+  <text x="25" y="182" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">Contents:</text>
+  <text x="25" y="200" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• User Persona &amp; Constraints</text>
+  <text x="25" y="216" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Health: Diabetes (No sugar)</text>
+  <text x="25" y="232" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">• Relationships &amp; Facts</text>
+  <text x="25" y="252" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:ui-monospace, monospace;font-size:9px;font-weight:500">Lifetime: Permanent (Updated)</text>
+
+  <rect x="15" y="285" width="185" height="80" rx="6" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86);stroke-width:0.5"/>
+  <text x="25" y="302" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:600">Analogy:</text>
+  <text x="25" y="320" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">Semantic Encyclopedia —</text>
+  <text x="25" y="336" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">facts that hold true</text>
+  <text x="25" y="350" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:10px;font-weight:400">across all conversations.</text>
+</g>
+
+<!-- Bottom Summary Note -->
+<rect x="25" y="480" width="910" height="48" rx="8" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90);stroke-width:0.5"/>
+<text x="480" y="497" text-anchor="middle" dominant-baseline="central" style="fill:rgb(55, 65, 81);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:600">The Modern Agent Formula:</text>
+<text x="480" y="513" text-anchor="middle" dominant-baseline="central" style="fill:rgb(107, 114, 128);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Agent Brain = LLM Reasoning + Short-Term Working Buffer + Episodic Vector DB + Semantic Knowledge Graph.</text>
+
+<!-- Global Footer -->
+<text x="480" y="550" text-anchor="middle" style="fill:rgb(156, 163, 175);font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;font-size:11px;font-weight:400">Cognitive AI Architecture • 03 The 4-Tier Memory Taxonomy</text>
+</svg>

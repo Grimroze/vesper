@@ -1,0 +1,49 @@
+<svg width="100%" viewBox="0 0 800 390" role="img" xmlns="http://www.w3.org/2000/svg">
+<title style="font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">Idempotency Key Payment Flow</title>
+<desc style="font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;">Preventing duplicate charges during network retries by storing and checking a unique client-generated Idempotency-Key before executing payment logic</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- Client Box -->
+<rect x="25" y="135" width="135" height="90" rx="10" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90)"/>
+<text x="92" y="162" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">Client App</text>
+<text x="92" y="182" text-anchor="middle" dominant-baseline="central" style="fill:rgb(82, 81, 78);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">POST /pay ($50)</text>
+<text x="92" y="200" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">Key: uuid-9981</text>
+
+<!-- Arrow to Payment API -->
+<line x1="160" y1="180" x2="238" y2="180" marker-end="url(#arrow)" style="fill:none;stroke:rgb(137, 135, 129);stroke-width:1.5px"/>
+<text x="199" y="166" text-anchor="middle" style="fill:rgb(82, 81, 78);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">sends key</text>
+
+<!-- Payment Service (Gateway / Controller) -->
+<rect x="240" y="135" width="155" height="90" rx="10" stroke-width="0.5" style="fill:rgb(238, 237, 254);stroke:rgb(83, 74, 183)"/>
+<text x="317" y="162" text-anchor="middle" dominant-baseline="central" style="fill:rgb(60, 52, 137);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">Payment Service</text>
+<text x="317" y="182" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">checks key in store</text>
+<text x="317" y="198" text-anchor="middle" dominant-baseline="central" style="fill:rgb(83, 74, 183);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:400">before charging</text>
+
+<!-- Top Path: Path A (First Request - Key Miss) -->
+<path d="M395 158 L475 88" fill="none" stroke="rgb(0, 119, 99)" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="415" y="105" text-anchor="middle" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">Attempt 1 (Key MISS)</text>
+
+<rect x="480" y="38" width="295" height="110" rx="12" stroke-width="0.5" style="fill:rgb(225, 245, 238);stroke:rgb(15, 110, 86)"/>
+<text x="627" y="62" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">1st Request — New Key (uuid-9981)</text>
+<text x="627" y="85" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400">1. Lock key (status = IN_PROGRESS)</text>
+<text x="627" y="104" text-anchor="middle" dominant-baseline="central" style="fill:rgb(15, 110, 86);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400">2. Deduct $50 from ledger DB once</text>
+<text x="627" y="123" text-anchor="middle" dominant-baseline="central" style="fill:rgb(8, 80, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:500">3. Save response {status: 200, tx: #77} in Redis</text>
+
+<!-- Bottom Path: Path B (Network Retry - Key Hit) -->
+<path d="M395 202 L475 262" fill="none" stroke="rgb(133, 79, 11)" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow)"/>
+<text x="415" y="255" text-anchor="middle" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:11px;font-weight:500">Retry (Key HIT!)</text>
+
+<rect x="480" y="198" width="295" height="110" rx="12" stroke-width="0.5" style="fill:rgb(250, 238, 218);stroke:rgb(133, 79, 11)"/>
+<text x="627" y="222" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:14px;font-weight:500">2nd Request (Retry with same uuid-9981)</text>
+<text x="627" y="245" text-anchor="middle" dominant-baseline="central" style="fill:rgb(133, 79, 11);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400">1. Key found in Idempotency Store (Redis/DB)</text>
+<text x="627" y="264" text-anchor="middle" dominant-baseline="central" style="fill:rgb(142, 38, 38);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:500">2. SKIP payment execution (no second charge!)</text>
+<text x="627" y="283" text-anchor="middle" dominant-baseline="central" style="fill:rgb(99, 56, 6);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:500">3. Return cached {status: 200, tx: #77} immediately</text>
+
+<!-- Bottom Summary -->
+<rect x="25" y="330" width="750" height="40" rx="8" stroke-width="0.5" style="fill:rgb(241, 239, 232);stroke:rgb(95, 94, 90)"/>
+<text x="400" y="350" text-anchor="middle" dominant-baseline="central" style="fill:rgb(68, 68, 65);font-family:anthropic-sans, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:12px;font-weight:400">Formula: f(f(x)) = f(x) — calling the API 1 time or 10 times with the same Idempotency-Key produces the exact same state</text>
+</svg>

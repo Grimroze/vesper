@@ -29,4 +29,3 @@ dist-ssr
 *.py
 __pycache__/
 book_toc.json
-components/

@@ -12,15 +12,16 @@ import {
   Network, 
   Layers, 
   FileText,
-  Compass
+  Compass,
+  Briefcase
 } from 'lucide-react';
 
 function AppContent() {
-  const [activeTab, setActiveTab] = useState<'home' | 'dsa' | 'ai' | 'flows' | 'papers'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'dsa' | 'ai' | 'flows' | 'papers' | 'projects'>('home');
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
 
-  const handleNavigate = (tab: 'dsa' | 'ai' | 'flows' | 'papers') => {
+  const handleNavigate = (tab: 'dsa' | 'ai' | 'flows' | 'papers' | 'projects') => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -123,6 +124,20 @@ function AppContent() {
             <FileText size={14} strokeWidth={activeTab === 'papers' ? 2.3 : 1.8} />
             <span>Papers</span>
           </button>
+
+          <button 
+            onClick={() => setActiveTab('projects')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm rounded-lg transition-all cursor-pointer select-none font-reading ${
+              activeTab === 'projects' 
+                ? isDark 
+                  ? 'bg-white text-black font-semibold shadow-xs' 
+                  : 'bg-slate-900 text-white font-semibold shadow-xs'
+                : 'text-muted hover:text-primary hover:bg-surface-elevated/70'
+            }`}
+          >
+            <Briefcase size={14} strokeWidth={activeTab === 'projects' ? 2.3 : 1.8} />
+            <span>Projects</span>
+          </button>
         </div>
         
         {/* Right: Theme Toggle Button */}
@@ -147,6 +162,15 @@ function AppContent() {
         {activeTab === 'ai' && <Roadmap />}
         {activeTab === 'flows' && <FlowsHub />}
         {activeTab === 'papers' && <PapersHub />}
+        {activeTab === 'projects' && (
+          <div className="w-full h-[calc(100vh-3.5rem)]">
+            <iframe 
+              src="/projects_revision.html" 
+              className="w-full h-full border-0" 
+              title="Resume Projects Revision"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

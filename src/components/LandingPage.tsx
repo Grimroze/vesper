@@ -6,11 +6,12 @@ import {
   Code2,
   FileText,
   ArrowRight,
-  Maximize2
+  Maximize2,
+  Briefcase
 } from 'lucide-react';
 
 interface LandingPageProps {
-  onNavigate: (tab: 'dsa' | 'ai' | 'flows' | 'papers') => void;
+  onNavigate: (tab: 'dsa' | 'ai' | 'flows' | 'papers' | 'projects') => void;
 }
 
 export default function LandingPage({ onNavigate }: LandingPageProps) {
@@ -92,6 +93,13 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       title: 'Data Structures & Algorithms',
       count: '14 Patterns',
       desc: 'Pattern-driven problem revision with clean syntax highlighting, complexity analysis, and implementation mental models.',
+    },
+    {
+      tab: 'projects' as const,
+      icon: Briefcase,
+      title: 'Resume Projects',
+      count: '5 Projects',
+      desc: 'Architectural blueprints, interactive SVG diagrams, claims verification, and Q&A interview prep sheets.',
     }
   ];
 
@@ -272,6 +280,8 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
           <button onClick={() => onNavigate('papers')} className="hover:text-primary transition-colors cursor-pointer">Papers</button>
           <span>•</span>
           <button onClick={() => onNavigate('dsa')} className="hover:text-primary transition-colors cursor-pointer">DS &amp; Algo</button>
+          <span>•</span>
+          <button onClick={() => onNavigate('projects')} className="hover:text-primary transition-colors cursor-pointer">Projects</button>
         </div>
       </footer>
 

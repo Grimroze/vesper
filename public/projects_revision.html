@@ -4168,9 +4168,18 @@ AegisGateway solves these issues via a reverse-proxy providing sliding-window ra
         <section class="card" id="specurag-files" style="margin-bottom: 0;">
           <div class="card-header">
             <h2 class="card-title">Core Implementation Files</h2>
-            <span class="card-badge">0 Modules</span>
+            <span class="card-badge">9 Modules</span>
           </div>
           <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="file-item"><code class="inline-code">src/config.py</code> (Central configuration): Declares Ollama host, model names (<code class="inline-code">llama3.2:3b</code>, <code class="inline-code">llama3.1:latest</code>, <code class="inline-code">nomic-embed-text</code>), and hyper-parameters ($m=3$, $k \in [2, 3]$, $\text{RRF}_k=60$).</div>
+            <div class="file-item"><code class="inline-code">src/retrieval/document_loader.py</code> (Ingestion and chunking): Uses <code class="inline-code">PdfReader</code> and text extractors with word-level sliding window chunking (350 words, 50 word overlap).</div>
+            <div class="file-item"><code class="inline-code">src/retrieval/hybrid_search.py</code> (Dual-channel retrieval): Integrates ChromaDB dense embeddings with <code class="inline-code">BM25Okapi</code> inverted index and computes Reciprocal Rank Fusion ($k=60$).</div>
+            <div class="file-item"><code class="inline-code">src/clustering/partitioner.py</code> (Clustering and allocation): Computes Silhouette scores across $k \in \{2, 3\}$ and maps chunks into balanced subsets via inverted modulo snake pairing.</div>
+            <div class="file-item"><code class="inline-code">src/generation/drafter.py</code> (Parallel specialist drafting): Dispatches asynchronous drafting tasks to <code class="inline-code">llama3.2:3b</code> via <code class="inline-code">asyncio.gather()</code>, enforcing rationale ($\beta$) before answer ($\alpha$).</div>
+            <div class="file-item"><code class="inline-code">src/generation/verifier.py</code> (Context-free verification): Evaluates candidate drafts on <code class="inline-code">llama3.1:8b</code> using Self-Reflection and Self-Consistency without loading original documents.</div>
+            <div class="file-item"><code class="inline-code">src/pipeline.py</code> (Master pipeline orchestration): Integrates Phase 1 to Phase 5, tracks phase latencies in telemetry, and computes verification prompt token savings.</div>
+            <div class="file-item"><code class="inline-code">run_benchmark.py</code> (Comparative evaluation script): Runs side-by-side benchmarking of Standard Naive RAG versus SpecuRAG across test queries.</div>
+            <div class="file-item"><code class="inline-code">app.py</code> (Interactive dashboard): Streamlit web application providing side-by-side answer comparison, candidate inspection, and document upload.</div>
           </div>
         </section>
 

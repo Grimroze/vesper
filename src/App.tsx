@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
 import DSARevision from './DSARevision';
 import Roadmap from './components/Roadmap';
@@ -25,6 +25,13 @@ function AppContent() {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  useEffect(() => {
+    const iframe = document.querySelector('iframe');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'THEME_CHANGE', theme }, '*');
+    }
+  }, [theme]);
+
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-primary transition-colors duration-200">
@@ -165,7 +172,7 @@ function AppContent() {
         {activeTab === 'projects' && (
           <div className="w-full h-[calc(100vh-3.5rem)]">
             <iframe 
-              src="/projects_revision.html" 
+              src={`/projects_revision.html?embedded=true&theme=${theme}`} 
               className="w-full h-full border-0" 
               title="Resume Projects Revision"
             />

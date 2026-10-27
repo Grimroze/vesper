@@ -190,6 +190,13 @@
     /* =================================================================
        GLOBAL TOP NAV BAR
        ================================================================= */
+    body.embedded .header-nav {
+      display: none !important;
+    }
+    body.embedded .tabs-bar {
+      top: 0 !important;
+    }
+
     .header-nav {
       position: sticky;
       top: 0;
@@ -5430,9 +5437,28 @@ AegisGateway solves these issues via a reverse-proxy providing sliding-window ra
       } catch(e) {}
     }
 
-    // Load persisted theme
-    const savedTheme = localStorage.getItem('vesper-projects-theme') || 'dark';
-    setTheme(savedTheme);
+    // Check if embedded in iframe (e.g. within Vesper main app)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isEmbedded = urlParams.get('embedded') === 'true' || window.self !== window.top;
+    if (isEmbedded) {
+      document.body.classList.add('embedded');
+    }
+
+    // Set theme from URL param, parent message, or localStorage
+    const paramTheme = urlParams.get('theme');
+    if (paramTheme) {
+      setTheme(paramTheme);
+    } else {
+      const savedTheme = localStorage.getItem('vesper-projects-theme') || 'dark';
+      setTheme(savedTheme);
+    }
+
+    // Listen for theme change message from parent Vesper app
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'THEME_CHANGE') {
+        setTheme(event.data.theme);
+      }
+    });
 
     themeBtn.addEventListener('click', () => {
       const current = htmlElem.getAttribute('data-theme') || 'dark';
